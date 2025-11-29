@@ -1,0 +1,45 @@
+{
+  "name": "sanbagierbosound",
+  "version": "1.0.0",
+  "description": "Sanbagierbo,SnabagierElec are both writers tools to help write the perfect \"oeuvre\", but somrtime creation come from spoken examples, or registered text, this little app is clearly inspired by Audacity, it does less, more precisely, if the firsts 2 apps are centered around image, this one is working around sound.",
+  "keywords": [
+    "sound",
+    "electron",
+    "react",
+    "sanbagierbo",
+    "sanbagierboelect"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "sanbagiersound"
+  },
+  "license": "ISC",
+  "author": "tsurubaso",
+  "type": "commonjs",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev:electron": "electron . --dev",
+    "build": "vite build && electron-builder",
+    "dev:vite": "vite",
+    "electron": "electron .",
+    "start": "concurrently \"npm run dev:vite\" \"npm run dev:electron\""
+  },
+  "dependencies": {
+    "@tailwindcss/postcss": "^4.1.17",
+    "electron": "^39.2.4",
+    "ffmpeg-static": "^5.3.0",
+    "fluent-ffmpeg": "^2.1.3",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "wavesurfer.js": "^7.11.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.1.1",
+    "autoprefixer": "^10.4.22",
+    "concurrently": "^9.2.1",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.17",
+    "vite": "^7.2.4"
+  }
+}
