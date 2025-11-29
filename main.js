@@ -1,5 +1,6 @@
 const { app, BrowserWindow, dialog, ipcMain } = require('electron');
 const path = require('path');
+const fs = require("fs");
 //const { spawn } = require('child_process');
 //const ffmpegPath = require('ffmpeg-static');
 const { deleteRegion } = require("./ffmpeg");
@@ -22,10 +23,24 @@ app.whenReady().then(createWindow);
 
 // -------- FILE OPEN ------------
 ipcMain.handle("open-audio-dialog", async () => {
-  const result = await dialog.showOpenDialog({
-    filters: [{ name: "Audio", extensions: ["wav", "mp3"] }]
+  const { canceled, filePaths } = await dialog.showOpenDialog({
+    filters: [{ name: "Audio", extensions: ["wav", "mp3"] }],
+    properties: ["openFile"],
   });
-  return result.filePaths[0];
+
+  if (canceled || filePaths.length === 0) return null;
+
+  const filePath = filePaths[0];
+   console.log("filePaths:", filePaths[0]);
+   console.log("filePath:", filePath);
+
+  // Read file as Buffer
+  const buffer = fs.readFileSync(filePath);////////////////////////////////
+
+  // Convert buffer to ArrayBuffer for IPC
+  const arrayBuffer = buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength);
+
+  return { buffer: arrayBuffer, path: filePath };
 });
 
 // -------- DELETE REGION USING FFMPEG ----------
