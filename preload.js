@@ -21,5 +21,6 @@ contextBridge.exposeInMainWorld("electronAPI", {
     return { url, path: result.path };
   },
 
-  deleteRegion: (args) => ipcRenderer.invoke("delete-region", args),
+  saveAudioFile: (fileName, data) => 
+  ipcRenderer.invoke("save-audio-file", { fileName, data }),
 });

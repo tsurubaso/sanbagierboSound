@@ -1,9 +1,7 @@
 const { app, BrowserWindow, dialog, ipcMain } = require('electron');
 const path = require('path');
 const fs = require("fs");
-//const { spawn } = require('child_process');
-//const ffmpegPath = require('ffmpeg-static');
-const { deleteRegion } = require("./ffmpeg");
+
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -44,6 +42,23 @@ ipcMain.handle("open-audio-dialog", async () => {
 });
 
 // -------- DELETE REGION USING FFMPEG ----------
-ipcMain.handle("delete-region", async (event, args) => {
-  return deleteRegion(args.file, args.start, args.end);
+ipcMain.handle("save-audio-file", async (event, { fileName, data }) => {
+  try {
+    const filePath = path.join(__dirname, "public", "audio", fileName);
+    
+    // Créer le dossier s'il n'existe pas
+    const dir = path.dirname(filePath);
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+
+    // Écrire le fichier
+    await fs.promises.writeFile(filePath, Buffer.from(data));
+
+    console.log("✅ Audio saved:", filePath);
+    return { ok: true, path: filePath };
+  } catch (err) {
+    console.error("❌ Error saving audio:", err);
+    return { ok: false, error: err.message };
+  }
 });
