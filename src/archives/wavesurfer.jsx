@@ -23,9 +23,7 @@ export function useWaveSurfer(containerRef, file, setRegion, zoom) {
       container: containerRef.current,
       waveColor: "#77a",
       progressColor: "#337",
-      plugins: [
-        RegionsPlugin.create({ dragSelection: true })
-      ]
+      plugins: [RegionsPlugin.create({ dragSelection: true })],
     });
 
     console.log("WaveSurfer instance created");
