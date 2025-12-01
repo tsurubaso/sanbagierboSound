@@ -15,43 +15,6 @@ export default function App() {
     console.log("App rendered, current file:", file);
   });
 
-  // ✅ Create region button handler
-// ✅ Corrected createRegion function in App.jsx
-const createRegion = () => {
-  if (!wave?.current || !file) return;
-  
-  // The button's disabled prop already handles this check:
-  // if (region) return; 
-
-  // 1. Find the RegionsPlugin instance
-  const regionsPlugin = wave.current.plugins.find(
-    (p) => p.constructor.name === "RegionsPlugin"
-  );
-  
-  // 2. Check if the plugin was found. If it's not found, something is wrong with WaveSurfer setup.
-  if (!regionsPlugin) {
-    console.error("❌ Regions plugin is not initialized on the WaveSurfer instance.");
-    return;
-  }
-
-  // 3. Define the region coordinates
-  const start = wave.current.getCurrentTime();
-  const duration = Math.min(5, wave.current.getDuration() - start);
-  const end = start + duration;
-
-  // 4. Use the plugin's addRegion method
-  const newRegion = regionsPlugin.addRegion({
-    start,
-    end,
-    color: "rgba(255,0,0,0.3)",
-    drag: true,
-    resize: true,
-  });
-
-  setRegion(newRegion);
-  console.log("✅ Region created:", newRegion);
-};
-
   const selectFile = async () => {
     console.log("Opening audio file...");
     const selected = await window.electronAPI.openAudio();
@@ -250,13 +213,6 @@ const createRegion = () => {
           className="px-4 py-2 bg-red-500 text-white rounded disabled:bg-gray-400"
         >
           Delete Region
-        </button>
-        <button
-          onClick={createRegion}
-          disabled={!!region || !file}
-          className="px-4 py-2 bg-blue-500 text-white rounded disabled:bg-gray-400"
-        >
-          Create Region
         </button>
 
         <button
