@@ -23,61 +23,94 @@ export default function App() {
   };
 
   // ✅ Fonction pour supprimer la région sélectionnée
-  const deleteRegion = async () => {
-    if (!region || !waveRef.current) return;
+const deleteRegion = async () => {
+  if (!region || !wave?.current) {
+    console.warn("❌ No region or no Wavesurfer instance");
+    return;
+  }
 
-    const ws = waveRef.current;
-    const buffer = ws.getDecodedData();
+  const ws = wave.current;
+  const buffer = ws.getDecodedData();
 
-    // Créer un nouveau buffer sans la région
-    const audioContext = new AudioContext();
-    const sampleRate = buffer.sampleRate;
-    const startSample = Math.floor(region.start * sampleRate);
-    const endSample = Math.floor(region.end * sampleRate);
+  const sampleRate = buffer.sampleRate;
+  const startSample = Math.floor(region.start * sampleRate);
+  const endSample = Math.floor(region.end * sampleRate);
 
-    const channels = [];
-    for (let ch = 0; ch < buffer.numberOfChannels; ch++) {
-      const data = buffer.getChannelData(ch);
-      const before = data.slice(0, startSample);
-      const after = data.slice(endSample);
+  // Create new merged channels (audio without removed region)
+  const channelCount = buffer.numberOfChannels;
+  const mergedChannels = [];
 
-      const merged = new Float32Array(before.length + after.length);
-      merged.set(before);
-      merged.set(after, before.length);
-      channels.push(merged);
-    }
+  for (let ch = 0; ch < channelCount; ch++) {
+    const data = buffer.getChannelData(ch);
 
-    const newBuffer = audioContext.createBuffer(
-      buffer.numberOfChannels,
-      channels[0].length,
-      sampleRate
-    );
+    const before = data.slice(0, startSample);
+    const after = data.slice(endSample);
 
-    channels.forEach((data, ch) => {
-      newBuffer.copyToChannel(data, ch);
-    });
+    const merged = new Float32Array(before.length + after.length);
+    merged.set(before);
+    merged.set(after, before.length);
 
-    // Convertir en WAV blob
-    const blob = bufferToWave(newBuffer);
+    mergedChannels.push(merged);
+  }
 
-    // Recharger dans WaveSurfer
-    await ws.load(URL.createObjectURL(blob));
+  // Create new AudioBuffer
+  const audioContext = new AudioContext();
+  const newBuffer = audioContext.createBuffer(
+    channelCount,
+    mergedChannels[0].length,
+    sampleRate
+  );
 
-    region.remove();
-    setRegion(null);
-  };
+  mergedChannels.forEach((data, ch) => {
+    newBuffer.copyToChannel(data, ch);
+  });
+
+  // Convert to WAV blob
+  const blob = bufferToWave(newBuffer);
+  const newUrl = URL.createObjectURL(blob);
+
+  // Reload modified audio in WaveSurfer
+  await ws.load(newUrl);
+
+  // Clear region
+  region.remove();
+  setRegion(null);
+
+  // Update file state so saving works later
+  setFile({
+    url: newUrl,
+    path: file.path   // keep original path
+  });
+
+  console.log("✅ Region deleted and audio reloaded.");
+};
+
 
   // ✅ Sauvegarder le fichier édité
   const saveEditedFile = async () => {
-    if (!waveRef.current) return;
+    if (!wave?.current) {
+      console.error("❌ No Wavesurfer instance");
+      return;
+    }
 
-    const buffer = waveRef.current.getDecodedData();
+      if (!file?.path) {
+    console.error("❌ No file.path provided");
+    return;
+  }
+
+    console.log("🔍 wave object current:", wave.current);
+    console.log("🔍 wave object:", wave);
+    const buffer = wave.current.getDecodedData();
+    console.log("🔍 decoded buffer:", buffer);
     const blob = bufferToWave(buffer);
 
-    // Créer un nom avec suffix
-    const originalName = file.name.replace(/\.\w+$/, "");
-    const extension = file.name.match(/\.\w+$/)[0];
+  // Extract name from path
+  const fileName = file.path.split(/[/\\]/).pop();   // ex: "song.wav"
+  const originalName = fileName.replace(/\.\w+$/, ""); // "song"
+  const extension = fileName.match(/\.\w+$/)[0];       // ".wav"
     const newName = `${originalName}_remastered${extension}`;
+  // Audio processing
+
 
     // ✅ Utiliser l'API Electron pour sauvegarder
     const arrayBuffer = await blob.arrayBuffer();
@@ -164,14 +197,12 @@ export default function App() {
 
   return (
     <div style={{ padding: 20 }}>
-      <button onClick={selectFile}>Open audio</button>
-      <button onClick={deleteRegion} disabled={!region}>
-        Delete selection
-      </button>
-      <button onClick={togglePlay} disabled={!file} style={{ marginLeft: 10 }}>
+      <div className="flex gap-2">
+      <button className="px-4 py-2 bg-violet-500 text-white rounded disabled:bg-gray-400" onClick={selectFile}>Open audio</button>
+      <button className="px-4 py-2 bg-orange-500 text-white rounded disabled:bg-gray-400" onClick={togglePlay} disabled={!file} style={{ marginLeft: 10 }}>
         {isPlaying ? "Pause" : "Play"}
       </button>
-      <div className="flex gap-2">
+      
         <button
           onClick={deleteRegion}
           disabled={!region}
