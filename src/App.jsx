@@ -15,6 +15,43 @@ export default function App() {
     console.log("App rendered, current file:", file);
   });
 
+  // ✅ Create region button handler
+// ✅ Corrected createRegion function in App.jsx
+const createRegion = () => {
+  if (!wave?.current || !file) return;
+  
+  // The button's disabled prop already handles this check:
+  // if (region) return; 
+
+  // 1. Find the RegionsPlugin instance
+  const regionsPlugin = wave.current.plugins.find(
+    (p) => p.constructor.name === "RegionsPlugin"
+  );
+  
+  // 2. Check if the plugin was found. If it's not found, something is wrong with WaveSurfer setup.
+  if (!regionsPlugin) {
+    console.error("❌ Regions plugin is not initialized on the WaveSurfer instance.");
+    return;
+  }
+
+  // 3. Define the region coordinates
+  const start = wave.current.getCurrentTime();
+  const duration = Math.min(5, wave.current.getDuration() - start);
+  const end = start + duration;
+
+  // 4. Use the plugin's addRegion method
+  const newRegion = regionsPlugin.addRegion({
+    start,
+    end,
+    color: "rgba(255,0,0,0.3)",
+    drag: true,
+    resize: true,
+  });
+
+  setRegion(newRegion);
+  console.log("✅ Region created:", newRegion);
+};
+
   const selectFile = async () => {
     console.log("Opening audio file...");
     const selected = await window.electronAPI.openAudio();
@@ -23,68 +60,63 @@ export default function App() {
   };
 
   // ✅ Fonction pour supprimer la région sélectionnée
-const deleteRegion = async () => {
-  if (!region || !wave?.current) {
-    console.warn("❌ No region or no Wavesurfer instance");
-    return;
-  }
+  const deleteRegion = async () => {
+    if (!region || !wave.current || !file) {
+      console.warn("❌ No region or no Wavesurfer instance or no file");
+      return;
+    }
 
-  const ws = wave.current;
-  const buffer = ws.getDecodedData();
+    const ws = wave.current;
+    const buffer = ws.getDecodedData();
 
-  const sampleRate = buffer.sampleRate;
-  const startSample = Math.floor(region.start * sampleRate);
-  const endSample = Math.floor(region.end * sampleRate);
+    const audioContext = new AudioContext();
+    const sampleRate = buffer.sampleRate;
 
-  // Create new merged channels (audio without removed region)
-  const channelCount = buffer.numberOfChannels;
-  const mergedChannels = [];
+    const startSample = Math.floor(region.start * sampleRate);
+    const endSample = Math.floor(region.end * sampleRate);
 
-  for (let ch = 0; ch < channelCount; ch++) {
-    const data = buffer.getChannelData(ch);
+    // Rebuild buffer without region
+    const channels = [];
+    for (let ch = 0; ch < buffer.numberOfChannels; ch++) {
+      const data = buffer.getChannelData(ch);
+      const before = data.slice(0, startSample);
+      const after = data.slice(endSample);
 
-    const before = data.slice(0, startSample);
-    const after = data.slice(endSample);
+      const merged = new Float32Array(before.length + after.length);
+      merged.set(before);
+      merged.set(after, before.length);
 
-    const merged = new Float32Array(before.length + after.length);
-    merged.set(before);
-    merged.set(after, before.length);
+      channels.push(merged);
+    }
 
-    mergedChannels.push(merged);
-  }
+    const newBuffer = audioContext.createBuffer(
+      buffer.numberOfChannels,
+      channels[0].length,
+      sampleRate
+    );
 
-  // Create new AudioBuffer
-  const audioContext = new AudioContext();
-  const newBuffer = audioContext.createBuffer(
-    channelCount,
-    mergedChannels[0].length,
-    sampleRate
-  );
+    channels.forEach((data, ch) => newBuffer.copyToChannel(data, ch));
 
-  mergedChannels.forEach((data, ch) => {
-    newBuffer.copyToChannel(data, ch);
-  });
+    // Convert edited buffer → Blob → URL
+    const blob = bufferToWave(newBuffer);
+    const newUrl = URL.createObjectURL(blob);
 
-  // Convert to WAV blob
-  const blob = bufferToWave(newBuffer);
-  const newUrl = URL.createObjectURL(blob);
+    // Remove region visually
+    region.remove();
+    setRegion(null);
 
-  // Reload modified audio in WaveSurfer
-  await ws.load(newUrl);
+    // Clean old blob URL to avoid memory leaks
+    if (file.url && file.url.startsWith("blob:")) {
+      URL.revokeObjectURL(file.url);
+    }
 
-  // Clear region
-  region.remove();
-  setRegion(null);
-
-  // Update file state so saving works later
-  setFile({
-    url: newUrl,
-    path: file.path   // keep original path
-  });
-
-  console.log("✅ Region deleted and audio reloaded.");
-};
-
+    // Replace file so React forces WaveSurfer to reload
+    setFile({
+      url: newUrl, // 🔥 New edited blob
+      path: file.path, // Keep original disk location for "Save"
+    });
+    console.log("✅ Region deleted and audio reloaded.");
+  };
 
   // ✅ Sauvegarder le fichier édité
   const saveEditedFile = async () => {
@@ -93,10 +125,10 @@ const deleteRegion = async () => {
       return;
     }
 
-      if (!file?.path) {
-    console.error("❌ No file.path provided");
-    return;
-  }
+    if (!file?.path) {
+      console.error("❌ No file.path provided");
+      return;
+    }
 
     console.log("🔍 wave object current:", wave.current);
     console.log("🔍 wave object:", wave);
@@ -104,13 +136,12 @@ const deleteRegion = async () => {
     console.log("🔍 decoded buffer:", buffer);
     const blob = bufferToWave(buffer);
 
-  // Extract name from path
-  const fileName = file.path.split(/[/\\]/).pop();   // ex: "song.wav"
-  const originalName = fileName.replace(/\.\w+$/, ""); // "song"
-  const extension = fileName.match(/\.\w+$/)[0];       // ".wav"
+    // Extract name from path
+    const fileName = file.path.split(/[/\\]/).pop(); // ex: "song.wav"
+    const originalName = fileName.replace(/\.\w+$/, ""); // "song"
+    const extension = fileName.match(/\.\w+$/)[0]; // ".wav"
     const newName = `${originalName}_remastered${extension}`;
-  // Audio processing
-
+    // Audio processing
 
     // ✅ Utiliser l'API Electron pour sauvegarder
     const arrayBuffer = await blob.arrayBuffer();
@@ -198,17 +229,34 @@ const deleteRegion = async () => {
   return (
     <div style={{ padding: 20 }}>
       <div className="flex gap-2">
-      <button className="px-4 py-2 bg-violet-500 text-white rounded disabled:bg-gray-400" onClick={selectFile}>Open audio</button>
-      <button className="px-4 py-2 bg-orange-500 text-white rounded disabled:bg-gray-400" onClick={togglePlay} disabled={!file} style={{ marginLeft: 10 }}>
-        {isPlaying ? "Pause" : "Play"}
-      </button>
-      
+        <button
+          className="px-4 py-2 bg-violet-500 text-white rounded disabled:bg-gray-400"
+          onClick={selectFile}
+        >
+          Open audio
+        </button>
+        <button
+          className="px-4 py-2 bg-orange-500 text-white rounded disabled:bg-gray-400"
+          onClick={togglePlay}
+          disabled={!file}
+          style={{ marginLeft: 10 }}
+        >
+          {isPlaying ? "Pause" : "Play"}
+        </button>
+
         <button
           onClick={deleteRegion}
           disabled={!region}
           className="px-4 py-2 bg-red-500 text-white rounded disabled:bg-gray-400"
         >
           Delete Region
+        </button>
+        <button
+          onClick={createRegion}
+          disabled={!!region || !file}
+          className="px-4 py-2 bg-blue-500 text-white rounded disabled:bg-gray-400"
+        >
+          Create Region
         </button>
 
         <button

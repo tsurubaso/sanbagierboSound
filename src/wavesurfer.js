@@ -36,7 +36,7 @@ export function useWaveSurfer(containerRef, file, setRegion, zoom) {
         // 2. IMPORTANT: Do NOT define regions in the plugin creation here.
         // We will create them manually after the 'ready' event.
         RegionsPlugin.create({
-          dragSelection: true, // Keep this to allow user dragging
+          dragSelection: true, color: 'rgba(0,128,255,0.3)' // Keep this to allow user dragging
           // regions: initialRegions, // <-- REMOVED THIS LINE
         }),
       ],
@@ -82,7 +82,9 @@ export function useWaveSurfer(containerRef, file, setRegion, zoom) {
 
   // (The zoom useEffect hook remains the same)
   useEffect(() => {
-    // ...
+    if (waveRef.current) {
+      waveRef.current.zoom(zoom);
+    }
   }, [zoom]);
 
   return waveRef;
