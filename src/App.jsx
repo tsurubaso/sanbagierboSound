@@ -9,25 +9,92 @@ export default function App() {
   const [zoom, setZoom] = useState(100);
   const [isPlaying, setIsPlaying] = useState(false);
 
+  // NEW: automatic region parameters
+  const [start, setStart] = useState(0);
+  const DURATION_SEC = 2; // region length
+  const STEP = 300;       // 5 min = 300 seconds
+
   const wave = useWaveSurfer(containerRef, file, setRegion, zoom);
 
   useEffect(() => {
-    console.log("App rendered, current file:", file);
+    console.log("App rendered, file:", file);
   });
 
+  // ===========================================================================
+  // Auto-create or update the single region when start changes
+  // ===========================================================================
+  useEffect(() => {
+    if (!wave?.current || !file) return;
+
+    const ws = wave.current;
+    const regionsPlugin = ws.plugins?.find(
+      (p) => p.constructor.name === "RegionsPlugin"
+    );
+    if (!regionsPlugin) {
+      console.warn("Regions plugin not ready yet");
+      return;
+    }
+
+    const end = Math.min(ws.getDuration() || Infinity, start + DURATION_SEC);
+
+    // If region exists → update it
+    if (region) {
+      console.log("Updating region:", start, end);
+      try {
+        region.update({ start, end });
+      } catch (err) {
+        console.error("Region update failed:", err);
+      }
+      return;
+    }
+
+    // If no region → create one
+    console.log("Creating auto region:", start, end);
+    const newRegion = regionsPlugin.addRegion({
+      start,
+      end,
+      color: "rgba(255,0,0,0.3)",
+      drag: true,
+      resize: true,
+    });
+
+    newRegion.on("click", () => setRegion(newRegion));
+    setRegion(newRegion);
+  }, [start, file, wave]);
+
+  // ===========================================================================
+  // BUTTON HELPERS
+  // ===========================================================================
+  const bumpStart = (delta) => {
+    if (!wave?.current) return;
+    const duration = wave.current.getDuration() || 0;
+
+    let next = start + delta;
+    if (next < 0) next = 0;
+    if (next > duration - 1) next = Math.max(0, duration - DURATION_SEC);
+
+    setStart(next);
+  };
+
+  const createRegion = () => {
+    // simply re-trigger effect
+    setRegion(null);
+    setStart(start);
+  };
+
+  // ===========================================================================
+  // FILE SELECT
+  // ===========================================================================
   const selectFile = async () => {
-    console.log("Opening audio file...");
     const selected = await window.electronAPI.openAudio();
-    console.log("File selected:", selected);
     if (selected) setFile(selected);
   };
 
-  // ✅ Fonction pour supprimer la région sélectionnée
+  // ===========================================================================
+  // DELETE REGION + CUT AUDIO
+  // ===========================================================================
   const deleteRegion = async () => {
-    if (!region || !wave.current || !file) {
-      console.warn("❌ No region or no Wavesurfer instance or no file");
-      return;
-    }
+    if (!region || !wave.current || !file) return;
 
     const ws = wave.current;
     const buffer = ws.getDecodedData();
@@ -60,67 +127,46 @@ export default function App() {
 
     channels.forEach((data, ch) => newBuffer.copyToChannel(data, ch));
 
-    // Convert edited buffer → Blob → URL
     const blob = bufferToWave(newBuffer);
     const newUrl = URL.createObjectURL(blob);
 
-    // Remove region visually
     region.remove();
     setRegion(null);
 
-    // Clean old blob URL to avoid memory leaks
-    if (file.url && file.url.startsWith("blob:")) {
-      URL.revokeObjectURL(file.url);
-    }
+    if (file.url.startsWith("blob:")) URL.revokeObjectURL(file.url);
 
-    // Replace file so React forces WaveSurfer to reload
-    setFile({
-      url: newUrl, // 🔥 New edited blob
-      path: file.path, // Keep original disk location for "Save"
-    });
-    console.log("✅ Region deleted and audio reloaded.");
+    setFile({ url: newUrl, path: file.path });
+    console.log("Region deleted & audio rebuilt");
   };
 
-  // ✅ Sauvegarder le fichier édité
+  // ===========================================================================
+  // SAVE
+  // ===========================================================================
   const saveEditedFile = async () => {
-    if (!wave?.current) {
-      console.error("❌ No Wavesurfer instance");
-      return;
-    }
+    if (!wave?.current || !file?.path) return;
 
-    if (!file?.path) {
-      console.error("❌ No file.path provided");
-      return;
-    }
-
-    console.log("🔍 wave object current:", wave.current);
-    console.log("🔍 wave object:", wave);
     const buffer = wave.current.getDecodedData();
-    console.log("🔍 decoded buffer:", buffer);
     const blob = bufferToWave(buffer);
 
-    // Extract name from path
-    const fileName = file.path.split(/[/\\]/).pop(); // ex: "song.wav"
-    const originalName = fileName.replace(/\.\w+$/, ""); // "song"
-    const extension = fileName.match(/\.\w+$/)[0]; // ".wav"
-    const newName = `${originalName}_remastered${extension}`;
-    // Audio processing
+    const fileName = file.path.split(/[/\\]/).pop();
+    const base = fileName.replace(/\.\w+$/, "");
+    const ext = fileName.match(/\.\w+$/)[0];
 
-    // ✅ Utiliser l'API Electron pour sauvegarder
+    const newName = `${base}_remastered${ext}`;
     const arrayBuffer = await blob.arrayBuffer();
-    const uint8Array = new Uint8Array(arrayBuffer);
 
-    // Appeler votre IPC handler
-    const result = await window.electronAPI.saveAudioFile(newName, uint8Array);
+    const result = await window.electronAPI.saveAudioFile(
+      newName,
+      new Uint8Array(arrayBuffer)
+    );
 
-    if (result.ok) {
-      alert(`✅ Saved as: ${newName}`);
-    } else {
-      alert(`❌ Error: ${result.error}`);
-    }
+    if (result.ok) alert("Saved: " + newName);
+    else alert("Error: " + result.error);
   };
 
-  // ✅ Convertir AudioBuffer en WAV Blob
+  // ===========================================================================
+  // AUDIO BUFFER → WAV
+  // ===========================================================================
   const bufferToWave = (buffer) => {
     const numOfChan = buffer.numberOfChannels;
     const length = buffer.length * numOfChan * 2 + 44;
@@ -128,9 +174,9 @@ export default function App() {
     const view = new DataView(arrayBuffer);
 
     let offset = 0;
-    const writeString = (str) => {
-      for (let i = 0; i < str.length; i++)
-        view.setUint8(offset++, str.charCodeAt(i));
+    const writeString = (s) => {
+      for (let i = 0; i < s.length; i++)
+        view.setUint8(offset++, s.charCodeAt(i));
     };
 
     writeString("RIFF");
@@ -156,11 +202,9 @@ export default function App() {
     view.setUint32(offset, length - offset - 4, true);
     offset += 4;
 
-    // Interleave channels
     const channels = [];
-    for (let ch = 0; ch < numOfChan; ch++) {
+    for (let ch = 0; ch < numOfChan; ch++)
       channels.push(buffer.getChannelData(ch));
-    }
 
     for (let i = 0; i < buffer.length; i++) {
       for (let ch = 0; ch < numOfChan; ch++) {
@@ -177,32 +221,31 @@ export default function App() {
     return new Blob([arrayBuffer], { type: "audio/wav" });
   };
 
+  // ===========================================================================
+  // PLAY / ZOOM
+  // ===========================================================================
   const togglePlay = () => {
     if (!wave?.current) return;
-    console.log("Play/pause clicked");
     wave.current.playPause();
     setIsPlaying(wave.current.isPlaying());
   };
 
-  const applyZoom = (z) => {
-    console.log("Applying zoom:", z);
-    wave.current?.zoom(z);
-  };
+  const applyZoom = (z) => wave.current?.zoom(z);
 
+  // ===========================================================================
+  // RENDER
+  // ===========================================================================
   return (
     <div style={{ padding: 20 }}>
       <div className="flex gap-2">
-        <button
-          className="px-4 py-2 bg-violet-500 text-white rounded disabled:bg-gray-400"
-          onClick={selectFile}
-        >
+        <button className="px-4 py-2 bg-violet-500 text-white rounded" onClick={selectFile}>
           Open audio
         </button>
+
         <button
           className="px-4 py-2 bg-orange-500 text-white rounded disabled:bg-gray-400"
           onClick={togglePlay}
           disabled={!file}
-          style={{ marginLeft: 10 }}
         >
           {isPlaying ? "Pause" : "Play"}
         </button>
@@ -213,6 +256,28 @@ export default function App() {
           className="px-4 py-2 bg-red-500 text-white rounded disabled:bg-gray-400"
         >
           Delete Region
+        </button>
+
+        {/* region movement */}
+        <button onClick={() => bumpStart(-STEP)} className="px-2 py-1 bg-gray-200 rounded">
+          -5min
+        </button>
+        <button onClick={() => bumpStart(-10)} className="px-2 py-1 bg-gray-200 rounded">
+          -10s
+        </button>
+        <button onClick={() => bumpStart(10)} className="px-2 py-1 bg-gray-200 rounded">
+          +10s
+        </button>
+        <button onClick={() => bumpStart(STEP)} className="px-2 py-1 bg-gray-200 rounded">
+          +5min
+        </button>
+
+        <button
+          onClick={createRegion}
+          disabled={!!region || !file}
+          className="px-4 py-2 bg-blue-500 text-white rounded disabled:bg-gray-400"
+        >
+          Create Region
         </button>
 
         <button
