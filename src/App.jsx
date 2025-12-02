@@ -6,6 +6,7 @@ import Option from "./pages/Option";
 import Events from "./pages/Events";
 import Plugins from "./pages/Plugins";
 import HoverPlugin from "./pages/plugins/HoverPlugin";
+import TimelinePluginFunc from "./pages/plugins/TimelinePluginFunc";
 
 
 export default function App() {
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="/events" element={<Events />} />
         <Route path="/plugins" element={<Plugins />} />
         <Route path="/plugins/Hoverplugin" element={<HoverPlugin />} />
+        <Route path="/plugins/timelineplugin" element={<TimelinePluginFunc />} />
       </Routes>
     </Layout>
   );

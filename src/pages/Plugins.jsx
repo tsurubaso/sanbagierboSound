@@ -24,6 +24,19 @@ export default function Plugins() {
           </p>
         </Link>
       </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <Link
+          to="/plugins/timelineplugin"
+          className="p-4 rounded-xl bg-gray-800 hover:bg-gray-700 shadow"
+        >
+          <h2 className="text-xl font-semibold">Timeline Plugin</h2>
+          <p className="text-gray-400 text-sm">
+            Displays a visual timeline above the waveform showing time markers
+            along the track.
+          </p>
+        </Link>
+      </div>
     </div>
   );
 }
