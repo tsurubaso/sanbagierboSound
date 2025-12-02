@@ -60,7 +60,7 @@ const handleZoomChange = (e) => {
         <span className="text-gray-300">{zoom}</span>
       </label>
 
-      <div className="rounded-xl bg-gray-900 p-4 shadow">
+      <div className="rounded-xl bg-gray-300 p-4 shadow">
         <div ref={containerRef} className="w-full h-[150px]"></div>
       </div>
 
