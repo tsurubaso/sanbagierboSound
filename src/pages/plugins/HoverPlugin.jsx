@@ -30,11 +30,13 @@ export default function HoverPluginPage() {
     wsRef.current = ws;
 
     // load audio from preload exposed API
-    window.electronAPI.openAudio().then((audio) => {
+    // Open file only once
+    (async () => {
+      const audio = await window.electronAPI.openAudio();
       if (!audio) return;
-      ws.load(audio.url);
-    });
 
+      ws.load(audio.url); // load the Blob URL
+    })();
     ws.on("interaction", () => ws.play());
 
     return () => ws.destroy();
