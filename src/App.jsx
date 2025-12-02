@@ -5,6 +5,8 @@ import Basic from "./pages/Basic";
 import Option from "./pages/Option";
 import Events from "./pages/Events";
 import Plugins from "./pages/Plugins";
+import HoverPlugin from "./pages/plugins/HoverPlugin";
+
 
 export default function App() {
   return (
@@ -15,6 +17,7 @@ export default function App() {
         <Route path="/option" element={<Option />} />
         <Route path="/events" element={<Events />} />
         <Route path="/plugins" element={<Plugins />} />
+        <Route path="/plugins/Hoverplugin" element={<HoverPlugin />} />
       </Routes>
     </Layout>
   );
