@@ -15,6 +15,7 @@ function createWindow() {
   });
 
   win.loadURL("http://localhost:5173"); // Vite or React dev server
+  win.setMenuBarVisibility(false);
 }
 
 app.whenReady().then(createWindow);
