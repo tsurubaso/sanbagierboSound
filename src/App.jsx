@@ -8,6 +8,8 @@ import Plugins from "./pages/Plugins";
 import HoverPlugin from "./pages/plugins/HoverPlugin";
 import TimelinePluginFunc from "./pages/plugins/TimelinePluginFunc";
 import RegionPluginFunc from "./pages/plugins/RegionPlugin";
+import PitchPlugin from "./pages/plugins/pitchplugin";
+
 
 export default function App() {
   return (
@@ -21,6 +23,8 @@ export default function App() {
         <Route path="/plugins/Hoverplugin" element={<HoverPlugin />} />
         <Route path="/plugins/timelineplugin" element={<TimelinePluginFunc />} />
         <Route path="/plugins/RegionPlugin" element={<RegionPluginFunc/>} />
+        <Route path="/plugins/pitchplugin" element={<PitchPlugin />} />
+        
       </Routes>
     </Layout>
   );
