@@ -12,7 +12,7 @@ export default function PitchPlugin() {
   const [file, setFile] = useState(null);
   const [processing, setProcessing] = useState(false);
   const [debugInfo, setDebugInfo] = useState("");
-  const MIN_PX_PER_SEC = 200;
+  const MIN_PX_PER_SEC = 50; // REDUCED from 200 to make canvas smaller
 
   useEffect(() => {
     return () => {
@@ -66,6 +66,7 @@ export default function PitchPlugin() {
       height: 150,
       minPxPerSec: MIN_PX_PER_SEC,
       scrollParent: true,
+      hideScrollbar: false, // Show scrollbar for easier navigation
     });
 
     waveRef.current = ws;
@@ -166,12 +167,27 @@ export default function PitchPlugin() {
       addDebug("16. Creating new canvas element...");
       canvas = document.createElement("canvas");
       freqCanvasRef.current = canvas;
-      const wrapper = ws.renderer.getWrapper();
-      
-      if (!wrapper) {
-        addDebug("ERROR: Cannot find WaveSurfer wrapper!");
-        return;
-      }
+ const wrapper = ws.renderer.getWrapper();
+ // lower wavesurfer internal canvas layers
+wrapper.querySelectorAll("canvas").forEach((c) => {
+  c.style.zIndex = 1;
+});
+
+if (!wrapper) {
+  addDebug("ERROR: Cannot find WaveSurfer wrapper!");
+  return;
+}
+
+// 🟩 FIX: allow pitch canvas to be visible
+wrapper.style.overflowX = "auto";
+wrapper.style.overflowY = "hidden";
+wrapper.style.position = "relative";
+
+// the wrapper must size itself to match WaveSurfer width
+wrapper.style.width = width + "px";
+wrapper.style.minWidth = "100%";
+
+addDebug("WRAPPER FIX APPLIED: overflow + dynamic width");
       
       canvas.style.position = "absolute";
       canvas.style.left = "0";
@@ -186,7 +202,7 @@ export default function PitchPlugin() {
       overlay.style.position = "absolute";
       overlay.style.left = "0";
       overlay.style.top = "0";
-      overlay.style.zIndex = "20";
+      overlay.style.zIndex = "11";
       overlay.style.pointerEvents = "none";
       wrapper.appendChild(overlay);
       addDebug("18. Overlay canvas added");
@@ -210,9 +226,14 @@ export default function PitchPlugin() {
     ctx.scale(dpr, dpr);
     ctx.clearRect(0, 0, width, height);
 
-    // Background semi-transparent
-    ctx.fillStyle = "rgba(0, 0, 0, 0.3)";
+    // Background - lighter and more visible
+    ctx.fillStyle = "rgba(255, 255, 255, 0.15)"; // Light semi-transparent
     ctx.fillRect(0, 0, width, height);
+    
+    // Add border for visibility
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.4)";
+    ctx.lineWidth = 1;
+    ctx.strokeRect(0, 0, width, height);
     addDebug("20. Background drawn");
 
     const n = frequencies.length;
@@ -232,16 +253,16 @@ export default function PitchPlugin() {
       const y = height - Math.round(norm * height);
 
       const hue = 220 - Math.min(220, Math.round(norm * 220));
-      ctx.fillStyle = `hsl(${hue}, 70%, 55%)`;
-      ctx.fillRect(x, y, Math.max(2, Math.ceil(width / n)), 3);
+      ctx.fillStyle = `hsl(${hue}, 90%, 60%)`; // More saturated and brighter
+      ctx.fillRect(x, y, Math.max(2, Math.ceil(width / n)), 4); // Taller bars
       drawnCount++;
     }
 
     addDebug(`21. Vertical bars: ${drawnCount} drawn (${validFreqCount} valid frequencies)`);
 
-    // Draw pitch curve
-    ctx.strokeStyle = "rgba(255,200,0,0.9)";
-    ctx.lineWidth = 2;
+    // Draw pitch curve with more visible colors
+    ctx.strokeStyle = "rgba(255,255,0,1)"; // Bright yellow line
+    ctx.lineWidth = 3; // Thicker line
 
     let prevX = null;
     let prevY = null;
@@ -257,16 +278,17 @@ export default function PitchPlugin() {
       const norm = Math.log(Math.max(f, minF) / minF) / Math.log(maxF / minF);
       const y = height - Math.round(norm * height);
 
-      // Draw point
-      ctx.fillStyle = "rgba(255,230,100,1)";
+      // Draw point - bigger and brighter
+      ctx.fillStyle = "rgba(255,255,100,1)"; // Bright yellow
       ctx.beginPath();
-      ctx.arc(x, y, 4, 0, Math.PI * 2);
+      ctx.arc(x, y, 5, 0, Math.PI * 2); // Bigger radius
       ctx.fill();
       pointsDrawn++;
 
       // Draw line
       if (prevX !== null) {
-        ctx.strokeStyle = "rgba(255,200,0,0.9)";
+        ctx.strokeStyle = "rgba(255,255,0,1)"; // Bright yellow
+        ctx.lineWidth = 3;
         ctx.beginPath();
         ctx.moveTo(prevX, prevY);
         ctx.lineTo(x, y);
@@ -279,10 +301,11 @@ export default function PitchPlugin() {
 
     addDebug(`22. Points drawn: ${pointsDrawn}`);
 
-    canvas.style.top = (-height) + "px";
-    overlay.style.top = (-height) + "px";
+    canvas.style.top = "0px"; // Position at TOP of wrapper, not above it
+    overlay.style.top = "0px";
     
     addDebug(`23. Canvas positioned at top: ${canvas.style.top}`);
+    addDebug(`    Canvas is ${width}px wide - scroll horizontally to see all!`);
     addDebug("24. ✓ Drawing complete!");
     
     // Final check
@@ -354,7 +377,7 @@ export default function PitchPlugin() {
         {debugInfo || "Waiting for audio..."}
       </div>
 
-      <div style={{ position: "relative", width: "100%", height: 260 }}>
+      <div style={{ position: "relative", width: "100%", height: 300, overflow: "auto", border: "1px solid #444" }}>
         <div
           ref={containerRef}
           style={{
