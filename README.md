@@ -93,14 +93,10 @@ Chaque page de plugin :
 
 Exécutez l'application en mode développement :
 
-```bash
-yarn dev
-```
 
-ou
 
 ```bash
-npm run dev
+npm run start
 ```
 
 -----
