@@ -7,7 +7,7 @@ import Events from "./pages/Events";
 import Plugins from "./pages/Plugins";
 import HoverPlugin from "./pages/plugins/HoverPlugin";
 import TimelinePluginFunc from "./pages/plugins/TimelinePluginFunc";
-import RegionPluginFunc from "./pages/plugins/RegionPluginFunc";
+import RegionPluginFunc from "./pages/plugins/RegionPlugin";
 
 export default function App() {
   return (
@@ -20,7 +20,7 @@ export default function App() {
         <Route path="/plugins" element={<Plugins />} />
         <Route path="/plugins/Hoverplugin" element={<HoverPlugin />} />
         <Route path="/plugins/timelineplugin" element={<TimelinePluginFunc />} />
-        <Route path="/plugins/regionplugin" element={<RegionPluginFunc/>} />
+        <Route path="/plugins/RegionPlugin" element={<RegionPluginFunc/>} />
       </Routes>
     </Layout>
   );

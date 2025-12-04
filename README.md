@@ -124,5 +124,3 @@ Ce projet a été développé avec l'aide de **ChatGPT (OpenAI)** — fournissan
 **Licence MIT.**
 
 -----
-
-Voulez-vous que je résume les principales fonctionnalités ou technologies utilisées ?
