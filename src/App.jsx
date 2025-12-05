@@ -9,6 +9,7 @@ import HoverPlugin from "./pages/plugins/HoverPlugin";
 import TimelinePluginFunc from "./pages/plugins/TimelinePluginFunc";
 import RegionPluginFunc from "./pages/plugins/RegionPlugin";
 import PitchPlugin from "./pages/plugins/pitchplugin";
+import RecorderPlugin from "./pages/plugins/recorderplugin";
 
 
 export default function App() {
@@ -24,6 +25,7 @@ export default function App() {
         <Route path="/plugins/timelineplugin" element={<TimelinePluginFunc />} />
         <Route path="/plugins/RegionPlugin" element={<RegionPluginFunc/>} />
         <Route path="/plugins/pitchplugin" element={<PitchPlugin />} />
+        <Route path="/plugins/recorderplugin" element={<RecorderPlugin />} />
         
       </Routes>
     </Layout>
