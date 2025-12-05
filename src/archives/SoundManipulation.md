@@ -6,3 +6,21 @@
 | Compression Dynamique    | DynamicsCompressorNode | **Web Audio API / tone.js**        | Implémentation native optimisée.                   |
 
 
+[AUDIO SOURCE]
+     ↓
+Electron capture / import
+     ↓
+Raw AudioBuffer stored in state
+     ↓
+WaveSurfer BEFORE visualizer
+     ↓
+[ PROCESSORS ]
+    1. RNNoise denoise
+    2. Remove silence
+    3. Normalize peak
+    4. Compress dynamics
+    ...
+     ↓
+WaveSurfer AFTER visualizer
+     ↓
+Export WAV

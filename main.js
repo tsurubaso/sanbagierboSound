@@ -10,8 +10,8 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
-      preload: path.join(__dirname, "preload.js")
-      sandbox: false // !!!!!!!!!!!!!!!!!!//
+      preload: path.join(__dirname, "preload.js"),
+      sandbox: false, // !!!!!!!!!!!!!!!!!!//,
     }
   });
 
@@ -23,8 +23,8 @@ function createWindow() {
       return cb(true);  // autorise micro
     }
     cb(false);
+    
   });
-}
 }
 
 app.whenReady().then(createWindow);
