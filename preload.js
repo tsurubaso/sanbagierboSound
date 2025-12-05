@@ -20,7 +20,7 @@ contextBridge.exposeInMainWorld("electronAPI", {
 
     return { url, path: result.path };
   },
-
+getUserMedia: (constraints) => navigator.mediaDevices.getUserMedia(constraints)
   saveAudioFile: (fileName, data) => 
   ipcRenderer.invoke("save-audio-file", { fileName, data }),
 });
