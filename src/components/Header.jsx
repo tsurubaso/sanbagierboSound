@@ -29,6 +29,10 @@ export default function Header() {
       <NavLink to="/other" className={linkStyle}>
         Other Libraries
       </NavLink>
+      
+      <NavLink to="/audioprocessing" className={linkStyle}>
+        Audio Processing
+      </NavLink>
     </div>
   );
 }

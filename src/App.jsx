@@ -11,6 +11,7 @@ import TimelinePluginFunc from "./pages/plugins/TimelinePluginFunc";
 import RegionPluginFunc from "./pages/plugins/RegionPlugin";
 import PitchPlugin from "./pages/plugins/pitchplugin";
 import RecorderPlugin from "./pages/plugins/recorderplugin";
+import AudioProcessing from "./pages/AudioProcessing";
 
 
 export default function App() {
@@ -28,6 +29,7 @@ export default function App() {
         <Route path="/plugins/RegionPlugin" element={<RegionPluginFunc/>} />
         <Route path="/plugins/pitchplugin" element={<PitchPlugin />} />
         <Route path="/plugins/recorderplugin" element={<RecorderPlugin />} />
+        <Route path="/audioprocessing" element={<AudioProcessing />} />
         
       </Routes>
     </Layout>

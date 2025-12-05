@@ -1,12 +1,14 @@
-import RNNoise from "rnnoise-wasm";
+//import RNNoise from "rnnoise-wasm"; security
 
 export async function denoiseAudioBuffer(audioBuffer) {
-  const denoiser = await RNNoise.create();
+  const denoiser = await RNNoise.create({
+    wasmURL: "/rnnoise/rnnoise.wasm"  // <--- OBLIGATOIRE
+  });
 
   const input = audioBuffer.getChannelData(0);
   const sampleRate = audioBuffer.sampleRate;
 
-   // RNNoise fonctionne UNIQUEMENT en 48 kHz — sinon il faut resampler !
+  // RNNoise fonctionne UNIQUEMENT en 48 kHz — sinon il faut resampler !
   if (sampleRate !== 48000) {
     throw new Error("RNNoise requires 48kHz input.");
   }
@@ -19,7 +21,6 @@ export async function denoiseAudioBuffer(audioBuffer) {
   for (let i = 0; i < frames; i++) {
     const start = i * frameSize;
     const frame = input.slice(start, start + frameSize);
-
     const cleaned = denoiser.process(frame);
     output.set(cleaned, start);
   }

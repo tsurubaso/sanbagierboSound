@@ -3,6 +3,7 @@ const path = require('path');
 const fs = require("fs");
 
 
+
 function createWindow() {
   const win = new BrowserWindow({
     width: 1200,
@@ -51,27 +52,7 @@ ipcMain.handle("open-audio-dialog", async () => {
   return { buffer: arrayBuffer, path: filePath };
 });
 
-// -------- DELETE REGION USING FFMPEG ----------
-ipcMain.handle("save-audio-file", async (event, { fileName, data }) => {
-  try {
-    const filePath = path.join(__dirname, "public", "audio", fileName);
-    
-    // Créer le dossier s'il n'existe pas
-    const dir = path.dirname(filePath);
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
 
-    // Écrire le fichier
-    await fs.promises.writeFile(filePath, Buffer.from(data));
-
-    console.log("✅ Audio saved:", filePath);
-    return { ok: true, path: filePath };
-  } catch (err) {
-    console.error("❌ Error saving audio:", err);
-    return { ok: false, error: err.message };
-  }
-});
 
 
 

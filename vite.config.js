@@ -3,8 +3,11 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
+  assetsInclude: ['**/*.wasm'],
   server: {
     port: 5173,
     strictPort: true,
   },
 });
+
+
