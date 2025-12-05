@@ -5,6 +5,7 @@ import Basic from "./pages/Basic";
 import Option from "./pages/Option";
 import Events from "./pages/Events";
 import Plugins from "./pages/Plugins";
+import Other from "./pages/Other";
 import HoverPlugin from "./pages/plugins/HoverPlugin";
 import TimelinePluginFunc from "./pages/plugins/TimelinePluginFunc";
 import RegionPluginFunc from "./pages/plugins/RegionPlugin";
@@ -21,6 +22,7 @@ export default function App() {
         <Route path="/option" element={<Option />} />
         <Route path="/events" element={<Events />} />
         <Route path="/plugins" element={<Plugins />} />
+        <Route path="/other" element={<Other />} />
         <Route path="/plugins/Hoverplugin" element={<HoverPlugin />} />
         <Route path="/plugins/timelineplugin" element={<TimelinePluginFunc />} />
         <Route path="/plugins/RegionPlugin" element={<RegionPluginFunc/>} />

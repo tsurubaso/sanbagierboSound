@@ -25,6 +25,10 @@ export default function Header() {
       <NavLink to="/plugins" className={linkStyle}>
         Plugins
       </NavLink>
+
+      <NavLink to="/other" className={linkStyle}>
+        Other Libraries
+      </NavLink>
     </div>
   );
 }
