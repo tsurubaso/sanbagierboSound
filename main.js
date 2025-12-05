@@ -11,11 +11,20 @@ function createWindow() {
       nodeIntegration: false,
       contextIsolation: true,
       preload: path.join(__dirname, "preload.js")
+      sandbox: false // !!!!!!!!!!!!!!!!!!//
     }
   });
 
   win.loadURL("http://localhost:5173"); // Vite or React dev server
   win.setMenuBarVisibility(false);
+    // >>> Indispensable pour autoriser micro
+  win.webContents.session.setPermissionRequestHandler((wc, permission, cb) => {
+    if (permission === 'media') {
+      return cb(true);  // autorise micro
+    }
+    cb(false);
+  });
+}
 }
 
 app.whenReady().then(createWindow);
