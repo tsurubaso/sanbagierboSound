@@ -317,6 +317,14 @@ export default function MicRecorder() {
         </select>
       </div>
 
+      {/* REC indicator */}
+{record.isRecording() && (
+  <div className="flex items-center mb-4">
+    <div className="w-3 h-3 bg-red-500 rounded-full shadow-[0_0_10px_rgba(255,0,0,0.7)]"></div>
+    <span className="ml-2 text-red-500 font-semibold tracking-wide">REC</span>
+  </div>
+)}
+
       {/* Buttons */}
       <div className="flex gap-3">
         {!isRecording ? (
