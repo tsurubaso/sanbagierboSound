@@ -35,13 +35,6 @@ L'objectif de l'application est de fournir des **outils de traitement pratiques 
   - Égalisation
   - Exportation vers **WAV / MP3**
 
-**Utilise :**
-
-  - **Web Audio API**
-  - `audio-buffer-utils`
-  - `wavefile` pour l'encodage WAV
-  - `rnnoise-wasm` pour la réduction du bruit
-
 -----
 
 ## 🏗️ Pile Technologique
