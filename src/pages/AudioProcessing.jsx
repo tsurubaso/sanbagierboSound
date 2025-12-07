@@ -19,25 +19,25 @@ export default function AudioProcessingPage() {
     setLogs((l) => [...l, `[${new Date().toLocaleTimeString()}] ${msg}`]);
 
   // -------------------------
-  // LOAD AUDIO FROM ELECTRON
+  // Load audio (Electron)
   // -------------------------
   const handleLoad = async () => {
-    const result = await window.api.openAudioDialog();
+    const result = await window.electronAPI.openAudio2();
     if (!result) return;
 
-    const arrayBuffer = result.buffer;
+    addLog("Opening file: " + result.path);
 
     const audioContext = new AudioContext();
-    const decoded = await audioContext.decodeAudioData(arrayBuffer);
-
+    const decoded = await audioContext.decodeAudioData(result.buffer);
+    
     setAudioBuffer(decoded);
     setProcessedBuffer(null);
 
     setFormatInfo({
       sampleRate: decoded.sampleRate,
       channels: decoded.numberOfChannels,
-      length: decoded.length,
       duration: decoded.duration.toFixed(2),
+      length: decoded.length,
     });
 
     addLog("Audio loaded.");
@@ -45,7 +45,7 @@ export default function AudioProcessingPage() {
   };
 
   // -------------------------
-  // DENOISE
+  // Run RNNoise
   // -------------------------
   const handleDenoise = async () => {
     if (!audioBuffer) return;
@@ -59,14 +59,14 @@ export default function AudioProcessingPage() {
       addLog("Denoise complete.");
       renderWaveforms(audioBuffer, cleaned);
     } catch (e) {
-      addLog("❌ ERROR: " + e.message);
+      addLog("❌ RNNoise error: " + e.message);
     }
 
     setLoading(false);
   };
 
   // -------------------------
-  // EXPORT AFTER
+  // Export processed buffer
   // -------------------------
   const handleExport = async () => {
     if (!processedBuffer) {
@@ -76,12 +76,12 @@ export default function AudioProcessingPage() {
 
     addLog("Exporting WAV…");
 
-    const wavData = audioBufferToWav(processedBuffer);
-    const uint8 = new Uint8Array(wavData);
+    const wav = audioBufferToWav(processedBuffer);
+    const bytes = new Uint8Array(wav);
 
-    const result = await window.api.saveAudioFile({
+    const result = await window.electronAPI.saveAudioFile({
       fileName: "processed.wav",
-      data: uint8,
+      data: bytes,
     });
 
     if (result.ok) addLog("Saved → " + result.path);
@@ -89,60 +89,95 @@ export default function AudioProcessingPage() {
   };
 
   // -------------------------
-  // WAV ENCODER (simple)
+  // WAV encoder (CORRECTED)
   // -------------------------
-  function audioBufferToWav(abuffer) {
-    const numOfChan = abuffer.numberOfChannels;
-    const len = abuffer.length * numOfChan * 2;
-    const buffer = new ArrayBuffer(44 + len);
+  function audioBufferToWav(abuf) {
+    const numCh = abuf.numberOfChannels;
+    const sampleRate = abuf.sampleRate;
+    const length = abuf.length * numCh * 2 + 44;
+
+    const buffer = new ArrayBuffer(length);
     const view = new DataView(buffer);
 
-    let channels = [];
-    let sample = abuffer.getChannelData(0);
     let pos = 0;
 
-    // Write headers
-    function writeString(str) {
-      for (let i = 0; i < str.length; i++) view.setUint8(pos++, str.charCodeAt(i));
+    function writeString(s) {
+      for (let i = 0; i < s.length; i++) {
+        view.setUint8(pos++, s.charCodeAt(i));
+      }
     }
 
     writeString("RIFF");
-    view.setUint32(pos, 36 + len, true); pos += 4;
+    view.setUint32(pos, length - 8, true);
+    pos += 4;
     writeString("WAVE");
     writeString("fmt ");
-    view.setUint32(pos, 16, true); pos += 4;
-    view.setUint16(pos, 1, true); pos += 2;
-    view.setUint16(pos, numOfChan, true); pos += 2;
-    view.setUint32(pos, abuffer.sampleRate, true); pos += 4;
-    view.setUint32(pos, abuffer.sampleRate * numOfChan * 2, true); pos += 4;
-    view.setUint16(pos, numOfChan * 2, true); pos += 2;
-    view.setUint16(pos, 16, true); pos += 2;
+    view.setUint32(pos, 16, true);
+    pos += 4;
+    view.setUint16(pos, 1, true);
+    pos += 2;
+    view.setUint16(pos, numCh, true);
+    pos += 2;
+    view.setUint32(pos, sampleRate, true);
+    pos += 4;
+    view.setUint32(pos, sampleRate * numCh * 2, true);
+    pos += 4;
+    view.setUint16(pos, numCh * 2, true);
+    pos += 2;
+    view.setUint16(pos, 16, true);
+    pos += 2;
     writeString("data");
-    view.setUint32(pos, len, true); pos += 4;
+    view.setUint32(pos, abuf.length * numCh * 2, true);
+    pos += 4;
 
-    let offset = 44;
-    for (let i = 0; i < sample.length; i++, offset += 2) {
-      let s = Math.max(-1, Math.min(1, sample[i]));
-      view.setInt16(offset, s < 0 ? s * 0x8000 : s * 0x7fff, true);
+    const channels = [];
+    for (let ch = 0; ch < numCh; ch++) {
+      channels.push(abuf.getChannelData(ch));
     }
+
+    for (let i = 0; i < abuf.length; i++) {
+      for (let ch = 0; ch < numCh; ch++) {
+        let s = Math.max(-1, Math.min(1, channels[ch][i]));
+        view.setInt16(pos, s < 0 ? s * 0x8000 : s * 0x7fff, true);
+        pos += 2;
+      }
+    }
+
     return buffer;
   }
 
+  // ✅ Helper: AudioBuffer → Blob
+  function audioBufferToBlob(audioBuffer) {
+    const wav = audioBufferToWav(audioBuffer);
+    return new Blob([wav], { type: "audio/wav" });
+  }
+
   // -------------------------
-  // Wavesurfer Rendering
+  // Render wavesurfer (CORRECTED)
   // -------------------------
   const renderWaveforms = (before, after) => {
-    beforeWS.current?.destroy();
-    afterWS.current?.destroy();
+    // Cleanup
+    if (beforeWS.current) {
+      beforeWS.current.destroy();
+      beforeWS.current = null;
+    }
+    if (afterWS.current) {
+      afterWS.current.destroy();
+      afterWS.current = null;
+    }
 
+    // BEFORE
     beforeWS.current = WaveSurfer.create({
       container: beforeRef.current,
-      waveColor: "#666",
-      progressColor: "#333",
+      waveColor: "#999",
+      progressColor: "#666",
       height: 120,
     });
-    beforeWS.current.loadDecodedBuffer(before);
 
+    const beforeBlob = audioBufferToBlob(before);
+    beforeWS.current.loadBlob(beforeBlob);
+
+    // AFTER
     if (after) {
       afterWS.current = WaveSurfer.create({
         container: afterRef.current,
@@ -150,9 +185,14 @@ export default function AudioProcessingPage() {
         progressColor: "#0c77aa",
         height: 120,
       });
-      afterWS.current.loadDecodedBuffer(after);
+
+      const afterBlob = audioBufferToBlob(after);
+      afterWS.current.loadBlob(afterBlob);
     } else {
-      afterRef.current.innerHTML = "<p style='opacity:0.5'>No processed audio yet</p>";
+      if (afterRef.current) {
+        afterRef.current.innerHTML =
+          "<div style='opacity:0.5; padding: 40px; text-align: center; color: #999;'>No processed audio yet</div>";
+      }
     }
   };
 
@@ -162,51 +202,48 @@ export default function AudioProcessingPage() {
 
       {/* Buttons */}
       <div className="flex gap-4 mb-6">
-        <button onClick={handleLoad} className="px-4 py-2 bg-blue-600 rounded">
+        <button onClick={handleLoad} className="px-4 py-2 bg-blue-600 rounded hover:bg-blue-700">
           Load Audio
         </button>
 
         <button
           onClick={handleDenoise}
           disabled={!audioBuffer || loading}
-          className="px-4 py-2 bg-purple-600 rounded disabled:opacity-50"
+          className="px-4 py-2 bg-purple-600 rounded hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Denoise (RNNoise)
+          {loading ? "Processing..." : "Denoise"}
         </button>
 
         <button
           onClick={handleExport}
           disabled={!processedBuffer}
-          className="px-4 py-2 bg-green-600 rounded disabled:opacity-50"
+          className="px-4 py-2 bg-green-600 rounded hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Export WAV
         </button>
       </div>
 
-      {/* Format info */}
       {formatInfo && (
         <div className="mb-4 p-3 bg-gray-800 rounded">
-          <h2 className="font-semibold">Format</h2>
-          <p>Sample rate: {formatInfo.sampleRate}</p>
+          <p>Sample rate: {formatInfo.sampleRate} Hz</p>
           <p>Channels: {formatInfo.channels}</p>
           <p>Duration: {formatInfo.duration}s</p>
+          <p>Samples: {formatInfo.length}</p>
         </div>
       )}
 
-      {/* Before / After */}
       <div className="grid grid-cols-2 gap-6">
         <div>
-          <h2 className="mb-2 text-lg font-semibold">Before</h2>
+          <h2 className="mb-2 font-semibold">Before</h2>
           <div ref={beforeRef} className="h-[140px] bg-gray-900 rounded" />
         </div>
 
         <div>
-          <h2 className="mb-2 text-lg font-semibold">After</h2>
+          <h2 className="mb-2 font-semibold">After</h2>
           <div ref={afterRef} className="h-[140px] bg-gray-900 rounded" />
         </div>
       </div>
 
-      {/* Logs */}
       <div className="mt-6 p-3 bg-black/40 rounded h-40 overflow-auto text-sm font-mono">
         {logs.map((l, i) => (
           <div key={i}>{l}</div>

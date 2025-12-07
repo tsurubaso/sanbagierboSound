@@ -40,8 +40,8 @@ ipcMain.handle("open-audio-dialog", async () => {
   if (canceled || filePaths.length === 0) return null;
 
   const filePath = filePaths[0];
-   console.log("filePaths:", filePaths[0]);
-   console.log("filePath:", filePath);
+   //console.log("filePaths:", filePaths[0]);
+  // console.log("filePath:", filePath);
 
   // Read file as Buffer
   const buffer = fs.readFileSync(filePath);////////////////////////////////
