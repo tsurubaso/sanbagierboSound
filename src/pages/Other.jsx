@@ -3,62 +3,126 @@ import React from "react";
 export default function AudioProcessingPage() {
   return (
     <div className="p-6 space-y-10 text-gray-200">
-      <h1 className="text-3xl font-bold">🎧 Processus Audio & Librairies Avancées</h1>
+      <h1 className="text-3xl font-bold">🎧 Processus Audio & Pipeline de Traitement</h1>
 
       <p className="text-lg">
-        Cette page présente les différentes étapes critiques du traitement audio
-        ainsi que les librairies utilisées pour optimiser un signal vocal destiné
-        aux modèles de transcription IA. Cette section explore d'autres
-        traitements audio avancés pouvant être intégrés via WebAudio, WASM et des
-        modules spécialisés.
+        Cette page décrit le pipeline actuel de traitement audio utilisé dans l’application,
+        ainsi que les améliorations prévues. L’objectif est d’obtenir un signal vocal propre,
+        stable, optimisé, et parfaitement adapté aux modèles de transcription IA.
       </p>
 
       {/* Section 1 */}
       <section className="space-y-8">
-        <h2 className="text-2xl font-semibold">1. ⚙️ Workflow Optimal</h2>
+        <h2 className="text-2xl font-semibold">1. ⚙️ Workflow Actuel (implémenté)</h2>
         <p>
-          Le traitement audio suit un ordre strict pour garantir une qualité
-          maximale et optimiser l'analyse IA.
+          L’application suit un ordre précis afin de garantir une qualité maximale :
         </p>
 
-        <ol className="list-decimal list-inside space-y-2">
-          <li><strong>Réduction du bruit (OfflineAudioContext, AudioContext)</strong> — Nettoyage par librairies internes.</li>
-          <li><strong>Suppression des silences</strong> — Réduit la taille et focus IA.</li>
-          <li><strong>Normalisation du pic</strong> — Maximiser le niveau global.</li>
-          <li><strong>Compression dynamique</strong> — Niveau constant.</li>
-          <li><strong>EQ / De-essing</strong> — Corrections qualitatives.</li>
-          <li><strong>Exportation WAV</strong> — Format idéal pour l'analyse IA.</li>
+        <ol className="list-decimal list-inside space-y-3">
+          <li>
+            <strong>Réduction du bruit (High-pass / Low-pass / Compression légère)</strong><br/>
+            Suppression du bruit grave/aigu et égalisation du volume.
+          </li>
+
+          <li>
+            <strong>Normalisation (Peak Normalization)</strong><br/>
+            Augmente le niveau global sans distorsion.
+          </li>
+
+          <li>
+            <strong>Compression Dynamique</strong><br/>
+            Stabilise les variations de volume et rend la voix plus cohérente.
+          </li>
+
+          <li>
+            <strong>Égalisation (EQ)</strong><br/>
+            Amélioration de la clarté vocale.
+          </li>
+
+          <li>
+            <strong>Suppression intelligente des silences</strong><br/>
+            Détection RMS + fenêtres glissantes, avec padding pour éviter les coupes brutales.
+          </li>
+
+          <li>
+            <strong>Export WAV</strong><br/>
+            Encodage manuel (PCM 16-bit) pour un format IA-friendly.
+          </li>
         </ol>
       </section>
 
       {/* Section 2 */}
       <section className="space-y-8">
-        <h2 className="text-2xl font-semibold">2. 🧰 Librairies Recommandées</h2>
-        <p>Voici les outils clés pour chaque étape du traitement audio :</p>
+        <h2 className="text-2xl font-semibold">2. 🧰 Librairies & Technologies utilisées</h2>
+        <p>
+          Le pipeline repose exclusivement sur des outils sûrs et performants :
+        </p>
 
-        <ul className="list-disc list-inside space-y-1">
-          <li><strong>rnnoise-wasm</strong> — Utilisé peut-être dans le future</li>
-          <li><strong>audio-buffer-utils</strong> — Normalisation et manipulation audio.</li>
-          <li><strong>Web Audio API</strong> — Compression, EQ, filtres, pipeline natif.</li>
-          <li><strong>wavefile / audiobuffer-to-wav</strong> — Export WAV non compressé.</li>
-          <li><strong>Custom Logic (JS)</strong> — Analyse RMS, silence-trimming.</li>
+        <ul className="list-disc list-inside space-y-2">
+          <li>
+            <strong>Web Audio API</strong> — filtres, compresseur, EQ, OfflineAudioContext.
+          </li>
+          <li>
+            <strong>Wavesurfer.js</strong> — visualisation et pré-écoute.
+          </li>
+          <li>
+            <strong>Custom Logic (JS)</strong> — analyse RMS, détection et trimming des silences.
+          </li>
+          <li>
+            <strong>audiobuffer-to-wav (logic custom intégré)</strong> — export WAV PCM.
+          </li>
+          <li>
+            <strong>Electron IPC</strong> — chargement et sauvegarde des fichiers audio.
+          </li>
         </ul>
       </section>
 
       {/* Section 3 */}
       <section className="space-y-8">
-        <h2 className="text-2xl font-semibold">3. 🧠 Stratégie et Justification</h2>
-        <p>
-          L'objectif est d'obtenir un signal propre, stable et optimisé. Les points
-          essentiels sont :
-        </p>
-        <ul className="list-disc list-inside space-y-1">
-          <li>la reduction du Noise est crucial pour réduire les erreurs IA liées au bruit.</li>
-          <li>La suppression de silence dépend du contexte, donc custom.</li>
-          <li>La Web Audio API offre de hautes performances pour les traitements.</li>
+        <h2 className="text-2xl font-semibold">3. 🧠 Justification Technique</h2>
+
+        <ul className="list-disc list-inside space-y-2">
+          <li>La réduction de bruit donne un signal plus clair pour les modèles IA.</li>
+          <li>La normalisation et la compression stabilisent le niveau.</li>
+          <li>Le silence trimming réduit la taille et focalise sur la parole utile.</li>
+          <li>Les filtres WebAudio sont rapides, offline et sans dépendances dangereuses.</li>
         </ul>
       </section>
 
+      {/* Section 4 */}
+      <section className="space-y-8">
+        <h2 className="text-2xl font-semibold">4. 🧩 Améliorations Futures (Wishlist)</h2>
+        <p>
+          Ces traitements pourront être ajoutés dans une prochaine version :
+        </p>
+
+        <ul className="list-disc list-inside space-y-3">
+          <li>
+            ⭐ <strong>De-Esser</strong><br/>
+            Réduction des “sss” et consonnes sifflantes via un band-pass + compression.
+          </li>
+
+          <li>
+            ⭐ <strong>Limiter (Brickwall)</strong><br/>
+            Empêche tout clip numérique et permet un volume maximal propre.
+          </li>
+
+          <li>
+            ⭐ <strong>Gate intelligent (Voice Activity Detection)</strong><br/>
+            Réduction du bruit uniquement hors parole — upgrade du gate simple actuel.
+          </li>
+
+          <li>
+            ⭐ <strong>Loudness Target (LUFS)</strong><br/>
+            Normalisation vers des standards pro (ex: −16 LUFS pour podcasts).
+          </li>
+
+          <li>
+            ⭐ <strong>Resampling optimisé</strong><br/>
+            48 kHz → option idéal pour les modèles de transcriptions.
+          </li>
+        </ul>
+      </section>
     </div>
   );
 }

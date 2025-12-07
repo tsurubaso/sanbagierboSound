@@ -100,9 +100,247 @@ export default function AudioProcessingPage() {
     return newBuffer;
   }
 
+  function compressAudioBuffer(audioBuffer, opts = {}) {
+    const {
+      threshold = -20, // dB
+      ratio = 4,
+      attack = 0.01, // seconds
+      release = 0.1, // seconds
+    } = opts;
+
+    const input = audioBuffer.getChannelData(0);
+
+    const sampleRate = audioBuffer.sampleRate;
+    const out = new Float32Array(input.length);
+
+    let gain = 1.0;
+    const attackCoeff = Math.exp(-1 / (sampleRate * attack));
+    const releaseCoeff = Math.exp(-1 / (sampleRate * release));
+
+    for (let i = 0; i < input.length; i++) {
+      const x = input[i];
+      const level = Math.abs(x);
+
+      // Convert threshold to linear amplitude
+      const thresholdLin = Math.pow(10, threshold / 20);
+
+      let targetGain = 1.0;
+
+      if (level > thresholdLin) {
+        const dbAbove = 20 * Math.log10(level / thresholdLin);
+        const compressedDb = dbAbove / ratio;
+        const gainDb = compressedDb - dbAbove;
+        targetGain = Math.pow(10, gainDb / 20);
+      }
+
+      // Smooth gain
+      if (targetGain < gain)
+        gain = attackCoeff * (gain - targetGain) + targetGain;
+      else gain = releaseCoeff * (gain - targetGain) + targetGain;
+
+      out[i] = x * gain;
+    }
+
+    const outputBuffer = new AudioBuffer({
+      length: out.length,
+      sampleRate,
+    });
+
+    outputBuffer.copyToChannel(out, 0);
+
+    return outputBuffer;
+  }
+
+  async function equalizeAudioBuffer(audioBuffer, opts = {}) {
+    const { lowGain = 0, midGain = 0, highGain = 0 } = opts;
+
+    const ctx = new OfflineAudioContext(
+      1,
+      audioBuffer.length,
+      audioBuffer.sampleRate
+    );
+
+    const source = ctx.createBufferSource();
+    source.buffer = audioBuffer;
+
+    const low = ctx.createBiquadFilter();
+    low.type = "lowshelf";
+    low.frequency.value = 200;
+    low.gain.value = lowGain;
+
+    const mid = ctx.createBiquadFilter();
+    mid.type = "peaking";
+    mid.frequency.value = 1000;
+    mid.Q.value = 1; // ✅ FIX : use .value
+    mid.gain.value = midGain;
+
+    const high = ctx.createBiquadFilter();
+    high.type = "highshelf";
+    high.frequency.value = 4000;
+    high.gain.value = highGain;
+
+    source.connect(low).connect(mid).connect(high).connect(ctx.destination);
+    source.start();
+
+    return await ctx.startRendering();
+  }
+
+  async function removeSilenceSmart(audioBuffer, options = {}) {
+    const {
+      silenceThreshold = -50, // en dB
+      minSilenceDuration = 0.5, // 500ms = silence considéré trop long
+      prePadding = 0.15, // 150ms avant parole
+      postPadding = 0.2, // 200ms après parole
+      analysisWindow = 0.02, // 20ms fenêtre d’analyse
+    } = options;
+
+    const sampleRate = audioBuffer.sampleRate;
+    const windowSize = Math.floor(sampleRate * analysisWindow);
+
+    const numChannels = audioBuffer.numberOfChannels;
+    const channels = [];
+
+    for (let ch = 0; ch < numChannels; ch++) {
+      channels.push(audioBuffer.getChannelData(ch));
+    }
+
+    // Helper RMS
+    const rms = (arr, start, size) => {
+      let sum = 0;
+      for (let i = start; i < start + size; i++) {
+        const v = arr[i] || 0;
+        sum += v * v;
+      }
+      return Math.sqrt(sum / size);
+    };
+
+    const silenceThresholdLinear = Math.pow(10, silenceThreshold / 20);
+
+    const speakingRegions = [];
+    let currentStart = null;
+
+    // Scan
+    for (let i = 0; i < audioBuffer.length - windowSize; i += windowSize) {
+      const windowRMS = rms(channels[0], i, windowSize);
+
+      const isSpeech = windowRMS > silenceThresholdLinear;
+
+      if (isSpeech && currentStart === null) {
+        currentStart = i;
+      } else if (!isSpeech && currentStart !== null) {
+        const regionLength = i - currentStart;
+        if (regionLength / sampleRate > minSilenceDuration) {
+          speakingRegions.push({ start: currentStart, end: i });
+        }
+        currentStart = null;
+      }
+    }
+
+    // Nothing detected? Return original
+    if (speakingRegions.length === 0) return audioBuffer;
+
+    // Merge too-close regions
+    const merged = [];
+    let prev = speakingRegions[0];
+
+    for (let i = 1; i < speakingRegions.length; i++) {
+      const cur = speakingRegions[i];
+      if (cur.start - prev.end < sampleRate * 0.15) {
+        prev.end = cur.end;
+      } else {
+        merged.push(prev);
+        prev = cur;
+      }
+    }
+    merged.push(prev);
+
+    // Add paddings
+    const padded = merged.map((r) => ({
+      start: Math.max(0, r.start - prePadding * sampleRate),
+      end: Math.min(audioBuffer.length, r.end + postPadding * sampleRate),
+    }));
+
+    // Compute output length
+    let totalSamples = 0;
+    for (const r of padded) totalSamples += r.end - r.start;
+
+    const offline = new OfflineAudioContext(
+      numChannels,
+      totalSamples,
+      sampleRate
+    );
+    const output = offline.createBuffer(numChannels, totalSamples, sampleRate);
+
+    // Fill output buffer
+    let writeIndex = 0;
+
+    padded.forEach((region) => {
+      const regionLength = region.end - region.start;
+
+      for (let ch = 0; ch < numChannels; ch++) {
+        const out = output.getChannelData(ch);
+        const src = channels[ch];
+        out.set(src.subarray(region.start, region.end), writeIndex);
+      }
+
+      writeIndex += regionLength;
+    });
+
+    return output;
+  }
+
   //add log
   const addLog = (msg) =>
     setLogs((l) => [...l, `[${new Date().toLocaleTimeString()}] ${msg}`]);
+
+  const handleCompress = async () => {
+    if (!audioBuffer) return addLog("Load an audio first");
+
+    addLog("Applying compression…");
+
+    const buf = compressAudioBuffer(audioBuffer, {
+      threshold: -18,
+      ratio: 3,
+      attack: 0.01,
+      release: 0.1,
+    });
+
+    setProcessedBuffer(buf);
+    addLog("Compression done.");
+  };
+
+  const handleEQ = async () => {
+    if (!audioBuffer) return addLog("Load an audio first");
+
+    addLog("Applying EQ…");
+
+    const buf = await equalizeAudioBuffer(audioBuffer, {
+      lowGain: +3,
+      midGain: +1,
+      highGain: +4,
+    });
+
+    setProcessedBuffer(buf);
+    addLog("EQ done.");
+  };
+
+  const handleRemoveSilence = async () => {
+    if (!audioBuffer) return;
+
+    setLoading(true);
+    addLog("Removing silence…");
+
+    try {
+      const cleaned = await removeSilenceSmart(audioBuffer);
+      setProcessedBuffer(cleaned);
+      renderWaveforms(audioBuffer, cleaned);
+      addLog("Silence removed.");
+    } catch (e) {
+      addLog("❌ Silence removal error: " + e.message);
+    }
+
+    setLoading(false);
+  };
 
   // -------------------------
   // Load audio (Electron)
@@ -332,9 +570,31 @@ export default function AudioProcessingPage() {
         <button
           onClick={handleNormalize}
           disabled={!audioBuffer}
-          className="px-4 py-2 bg-yellow-600 rounded hover:bg-yellow-700"
+          className="px-4 py-2 bg-pink-600 rounded hover:bg-pink-700 disabled:opacity-50"
         >
           Normalize
+        </button>
+        <button
+          onClick={handleCompress}
+          disabled={!audioBuffer}
+          className="px-4 py-2 bg-indigo-600 rounded hover:bg-indigo-700 disabled:opacity-50"
+        >
+          Compress
+        </button>
+        <button
+          onClick={handleEQ}
+          disabled={!audioBuffer}
+          className="px-4 py-2 bg-orange-600 rounded hover:bg-orange-700 disabled:opacity-50"
+        >
+          EQ
+        </button>
+
+        <button
+          onClick={handleRemoveSilence}
+          disabled={!audioBuffer || loading}
+          className="px-4 py-2 bg-yellow-600 rounded hover:bg-yellow-700 disabled:opacity-50"
+        >
+          {loading ? "Processing..." : "Remove Silence"}
         </button>
 
         <button
