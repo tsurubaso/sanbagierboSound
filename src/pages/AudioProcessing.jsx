@@ -1,7 +1,6 @@
 import React, { useRef, useState } from "react";
 import WaveSurfer from "wavesurfer.js";
 
-
 export default function AudioProcessingPage() {
   const beforeRef = useRef(null);
   const afterRef = useRef(null);
@@ -15,6 +14,7 @@ export default function AudioProcessingPage() {
   const [loading, setLoading] = useState(false);
   const [formatInfo, setFormatInfo] = useState(null);
 
+  //clean
   async function cleanAudio(audioBuffer, options = {}) {
     const {
       highPassFreq = 80, // Couper en dessous de 80Hz
@@ -63,7 +63,44 @@ export default function AudioProcessingPage() {
 
     return await offlineCtx.startRendering();
   }
+  //normalisation
 
+  function normalizeAudioBuffer(buffer) {
+    const numCh = buffer.numberOfChannels;
+    const sampleRate = buffer.sampleRate;
+    const length = buffer.length;
+
+    // Trouver le peak absolu
+    let peak = 0;
+    for (let ch = 0; ch < numCh; ch++) {
+      const data = buffer.getChannelData(ch);
+      for (let i = 0; i < data.length; i++) {
+        peak = Math.max(peak, Math.abs(data[i]));
+      }
+    }
+
+    if (peak === 0) return buffer; // silence
+
+    // Facteur de normalisation (target peak = 0.99)
+    const gain = 0.99 / peak;
+
+    // Nouveau buffer
+    const ctx = new AudioContext();
+    const newBuffer = ctx.createBuffer(numCh, length, sampleRate);
+
+    for (let ch = 0; ch < numCh; ch++) {
+      const input = buffer.getChannelData(ch);
+      const output = newBuffer.getChannelData(ch);
+
+      for (let i = 0; i < input.length; i++) {
+        output[i] = input[i] * gain;
+      }
+    }
+
+    return newBuffer;
+  }
+
+  //add log
   const addLog = (msg) =>
     setLogs((l) => [...l, `[${new Date().toLocaleTimeString()}] ${msg}`]);
 
@@ -91,6 +128,23 @@ export default function AudioProcessingPage() {
 
     addLog("Audio loaded.");
     renderWaveforms(decoded, null);
+  };
+
+  // -------------------------
+  // Normalize Audio
+  // -------------------------
+
+  const handleNormalize = async () => {
+    if (!audioBuffer) return;
+
+    addLog("Normalizing audio…");
+
+    const normalized = normalizeAudioBuffer(audioBuffer);
+
+    setProcessedBuffer(normalized);
+    renderWaveforms(audioBuffer, normalized);
+
+    addLog("Normalization complete.");
   };
 
   // -------------------------
@@ -209,128 +263,135 @@ export default function AudioProcessingPage() {
   // -------------------------
   // Render wavesurfer (CORRECTED)
   // -------------------------
-const renderWaveforms = (before, after) => {
-  // Cleanup
-  if (beforeWS.current) {
-    beforeWS.current.destroy();
-    beforeWS.current = null;
-  }
-  if (afterWS.current) {
-    afterWS.current.destroy();
-    afterWS.current = null;
-  }
+  const renderWaveforms = (before, after) => {
+    // Cleanup
+    if (beforeWS.current) {
+      beforeWS.current.destroy();
+      beforeWS.current = null;
+    }
+    if (afterWS.current) {
+      afterWS.current.destroy();
+      afterWS.current = null;
+    }
 
-  // ✅ Nettoyer le HTML aussi
-  if (beforeRef.current) beforeRef.current.innerHTML = "";
-  if (afterRef.current) afterRef.current.innerHTML = "";
+    // ✅ Nettoyer le HTML aussi
+    if (beforeRef.current) beforeRef.current.innerHTML = "";
+    if (afterRef.current) afterRef.current.innerHTML = "";
 
-  // BEFORE
-  beforeWS.current = WaveSurfer.create({
-    container: beforeRef.current,
-    waveColor: "#999",
-    progressColor: "#666",
-    height: 120,
-  });
-
-  const beforeBlob = audioBufferToBlob(before);
-  beforeWS.current.loadBlob(beforeBlob);
-
-  // AFTER
-  if (after) {
-    afterWS.current = WaveSurfer.create({
-      container: afterRef.current,
-      waveColor: "#11aaff",
-      progressColor: "#0c77aa",
+    // BEFORE
+    beforeWS.current = WaveSurfer.create({
+      container: beforeRef.current,
+      waveColor: "#999",
+      progressColor: "#666",
       height: 120,
     });
 
-    const afterBlob = audioBufferToBlob(after);
-    afterWS.current.loadBlob(afterBlob);
-  } else {
-    // ✅ Message uniquement si pas de "after"
-    if (afterRef.current) {
-      afterRef.current.innerHTML =
-        "<div style='opacity:0.5; padding: 40px; text-align: center; color: #999;'>No processed audio yet</div>";
+    const beforeBlob = audioBufferToBlob(before);
+    beforeWS.current.loadBlob(beforeBlob);
+
+    // AFTER
+    if (after) {
+      afterWS.current = WaveSurfer.create({
+        container: afterRef.current,
+        waveColor: "#11aaff",
+        progressColor: "#0c77aa",
+        height: 120,
+      });
+
+      const afterBlob = audioBufferToBlob(after);
+      afterWS.current.loadBlob(afterBlob);
+    } else {
+      // ✅ Message uniquement si pas de "after"
+      if (afterRef.current) {
+        afterRef.current.innerHTML =
+          "<div style='opacity:0.5; padding: 40px; text-align: center; color: #999;'>No processed audio yet</div>";
+      }
     }
-  }
-};
+  };
 
-return (
-  <div className="p-6 text-gray-200">
-    <h1 className="text-3xl font-bold mb-4">🎧 Audio Processing</h1>
+  return (
+    <div className="p-6 text-gray-200">
+      <h1 className="text-3xl font-bold mb-4">🎧 Audio Processing</h1>
 
-    {/* Buttons */}
-    <div className="flex gap-4 mb-6">
-      <button
-        onClick={handleLoad}
-        className="px-4 py-2 bg-blue-600 rounded hover:bg-blue-700"
-      >
-        Load Audio
-      </button>
+      {/* Buttons */}
+      <div className="flex gap-4 mb-6">
+        <button
+          onClick={handleLoad}
+          className="px-4 py-2 bg-blue-600 rounded hover:bg-blue-700"
+        >
+          Load Audio
+        </button>
 
-      <button
-        onClick={handleClean}
-        disabled={!audioBuffer || loading}
-        className="px-4 py-2 bg-purple-600 rounded hover:bg-purple-700 disabled:opacity-50"
-      >
-        {loading ? "Processing..." : "Clean Audio"}
-      </button>
+        <button
+          onClick={handleClean}
+          disabled={!audioBuffer || loading}
+          className="px-4 py-2 bg-purple-600 rounded hover:bg-purple-700 disabled:opacity-50"
+        >
+          {loading ? "Processing..." : "Clean Audio"}
+        </button>
+        <button
+          onClick={handleNormalize}
+          disabled={!audioBuffer}
+          className="px-4 py-2 bg-yellow-600 rounded hover:bg-yellow-700"
+        >
+          Normalize
+        </button>
 
-      <button
-        onClick={handleExport}
-        disabled={!processedBuffer}
-        className="px-4 py-2 bg-green-600 rounded hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        Export WAV
-      </button>
-    </div>
-
-    {formatInfo && (
-      <div className="mb-4 p-3 bg-gray-800 rounded">
-        <p>Sample rate: {formatInfo.sampleRate} Hz</p>
-        <p>Channels: {formatInfo.channels}</p>
-        <p>Duration: {formatInfo.duration}s</p>
-        <p>Samples: {formatInfo.length}</p>
+        <button
+          onClick={handleExport}
+          disabled={!processedBuffer}
+          className="px-4 py-2 bg-green-600 rounded hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Export WAV
+        </button>
       </div>
-    )}
 
-    <div className="grid grid-cols-2 gap-6">
-      {/* BEFORE */}
-      <div>
-        <div className="flex justify-between items-center mb-2">
-          <h2 className="font-semibold">Before</h2>
-          <button
-            onClick={() => beforeWS.current?.playPause()}
-            disabled={!audioBuffer}
-            className="px-3 py-1 text-sm bg-gray-700 rounded hover:bg-gray-600 disabled:opacity-50"
-          >
-            ▶️ Play/Pause
-          </button>
+      {formatInfo && (
+        <div className="mb-4 p-3 bg-gray-800 rounded">
+          <p>Sample rate: {formatInfo.sampleRate} Hz</p>
+          <p>Channels: {formatInfo.channels}</p>
+          <p>Duration: {formatInfo.duration}s</p>
+          <p>Samples: {formatInfo.length}</p>
         </div>
-        <div ref={beforeRef} className="h-[140px] bg-gray-900 rounded" />
-      </div>
+      )}
 
-      {/* AFTER */}
-      <div>
-        <div className="flex justify-between items-center mb-2">
-          <h2 className="font-semibold">After</h2>
-          <button
-            onClick={() => afterWS.current?.playPause()}
-            disabled={!processedBuffer}
-            className="px-3 py-1 text-sm bg-gray-700 rounded hover:bg-gray-600 disabled:opacity-50"
-          >
-            ▶️ Play/Pause
-          </button>
+      <div className="grid grid-cols-2 gap-6">
+        {/* BEFORE */}
+        <div>
+          <div className="flex justify-between items-center mb-2">
+            <h2 className="font-semibold">Before</h2>
+            <button
+              onClick={() => beforeWS.current?.playPause()}
+              disabled={!audioBuffer}
+              className="px-3 py-1 text-sm bg-gray-700 rounded hover:bg-gray-600 disabled:opacity-50"
+            >
+              ▶️ Play/Pause
+            </button>
+          </div>
+          <div ref={beforeRef} className="h-[140px] bg-gray-900 rounded" />
         </div>
-        <div ref={afterRef} className="h-[140px] bg-gray-900 rounded" />
+
+        {/* AFTER */}
+        <div>
+          <div className="flex justify-between items-center mb-2">
+            <h2 className="font-semibold">After</h2>
+            <button
+              onClick={() => afterWS.current?.playPause()}
+              disabled={!processedBuffer}
+              className="px-3 py-1 text-sm bg-gray-700 rounded hover:bg-gray-600 disabled:opacity-50"
+            >
+              ▶️ Play/Pause
+            </button>
+          </div>
+          <div ref={afterRef} className="h-[140px] bg-gray-900 rounded" />
+        </div>
+      </div>
+
+      <div className="mt-6 p-3 bg-black/40 rounded h-40 overflow-auto text-sm font-mono">
+        {logs.map((l, i) => (
+          <div key={i}>{l}</div>
+        ))}
       </div>
     </div>
-
-    <div className="mt-6 p-3 bg-black/40 rounded h-40 overflow-auto text-sm font-mono">
-      {logs.map((l, i) => (
-        <div key={i}>{l}</div>
-      ))}
-    </div>
-  </div>
-);
+  );
 }

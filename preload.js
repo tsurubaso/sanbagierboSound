@@ -40,6 +40,10 @@ contextBridge.exposeInMainWorld("electronAPI", {
 },
   getUserMedia: (constraints) =>
     navigator.mediaDevices.getUserMedia(constraints),
-  saveAudioFile: (fileName, data) =>
-    ipcRenderer.invoke("save-audio-file", { fileName, data }),
+ saveAudioFile: (options) =>
+  // options est l'objet { fileName, data } passé par le renderer
+  ipcRenderer.invoke("save-audio-file", options),
+
+
+
 });

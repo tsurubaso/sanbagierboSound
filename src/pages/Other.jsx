@@ -22,7 +22,7 @@ export default function AudioProcessingPage() {
         </p>
 
         <ol className="list-decimal list-inside space-y-2">
-          <li><strong>Réduction du bruit (RNNoise)</strong> — Nettoyage ML avancé.</li>
+          <li><strong>Réduction du bruit (OfflineAudioContext, AudioContext)</strong> — Nettoyage par librairies internes.</li>
           <li><strong>Suppression des silences</strong> — Réduit la taille et focus IA.</li>
           <li><strong>Normalisation du pic</strong> — Maximiser le niveau global.</li>
           <li><strong>Compression dynamique</strong> — Niveau constant.</li>
@@ -37,7 +37,7 @@ export default function AudioProcessingPage() {
         <p>Voici les outils clés pour chaque étape du traitement audio :</p>
 
         <ul className="list-disc list-inside space-y-1">
-          <li><strong>rnnoise-wasm</strong> — Débruitage vocal haute précision.</li>
+          <li><strong>rnnoise-wasm</strong> — Utilisé peut-être dans le future</li>
           <li><strong>audio-buffer-utils</strong> — Normalisation et manipulation audio.</li>
           <li><strong>Web Audio API</strong> — Compression, EQ, filtres, pipeline natif.</li>
           <li><strong>wavefile / audiobuffer-to-wav</strong> — Export WAV non compressé.</li>
@@ -53,7 +53,7 @@ export default function AudioProcessingPage() {
           essentiels sont :
         </p>
         <ul className="list-disc list-inside space-y-1">
-          <li>RNNoise est crucial pour réduire les erreurs IA liées au bruit.</li>
+          <li>la reduction du Noise est crucial pour réduire les erreurs IA liées au bruit.</li>
           <li>La suppression de silence dépend du contexte, donc custom.</li>
           <li>La Web Audio API offre de hautes performances pour les traitements.</li>
         </ul>

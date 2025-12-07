@@ -58,6 +58,9 @@ ipcMain.handle("open-audio-dialog", async () => {
 
 // -------- SAVE AUDIO FILE ----------
 ipcMain.handle("save-audio-file", async (event, { fileName, data }) => {
+  const filePathtest = path.join(__dirname, "public", "audio", fileName);
+  console.log(fileName);
+  console.log(filePathtest);
   try {
     const filePath = path.join(__dirname, "public", "audio", fileName);
 
@@ -68,10 +71,11 @@ ipcMain.handle("save-audio-file", async (event, { fileName, data }) => {
 
     await fs.promises.writeFile(filePath, Buffer.from(data));
 
-    console.log("✅ Audio saved:", filePath);
-    return { ok: true, path: filePath };
+    console.log("✅ Audio saved:", "test");
+    return { ok: true, path: "test" };
   } catch (err) {
     console.error("❌ Error saving audio:", err);
     return { ok: false, error: err.message };
   }
 });
+
