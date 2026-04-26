@@ -31,3 +31,37 @@ export async function POST(req) {
     );
   }
 }
+
+// ============================
+
+/*
+
+
+
+export async function saveFile(fileName, content, branch = "main") {
+  const url = `${process.env.FORGEJO_URL}/api/v1/repos/${process.env.FORGEJO_REPO}/contents/public/books/${fileName}`;
+
+  const encoded = Buffer.from(content).toString("base64");
+
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      Authorization: `token ${process.env.FORGEJO_TOKEN}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      content: encoded,
+      message: `update ${fileName}`,
+      branch,
+    }),
+  });
+
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error("Forgejo error: " + text);
+  }
+
+  return await response.json();
+}
+
+*/
