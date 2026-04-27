@@ -30,7 +30,6 @@ export default function App() {
         <Route path="/plugins/pitchplugin" element={<PitchPlugin />} />
         <Route path="/plugins/recorderplugin" element={<RecorderPlugin />} />
         <Route path="/audioprocessing" element={<AudioProcessing />} />
-        
       </Routes>
     </Layout>
   );

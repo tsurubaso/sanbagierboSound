@@ -212,7 +212,9 @@ ipcMain.handle("write-markdown", async (event, args) => {
 
     const result = await response.json();
 
-    // 🔄 refresh cache
+    // 🔄 refresh cache///mais reflechis ca risque de prendre du temps
+    //vaut mieux passer ca en background et faire un systeme de notification pour dire "hey le livre machin a été mis à jour, clique ici pour refresh"
+    // j'adore comment copilote il finit mes phrases et me lit dans mes pensées....euh non.
     await fetchBooksFromRepo().catch(console.error);
 
     return { ok: true, result };
@@ -286,8 +288,8 @@ app.whenReady().then(async () => {
   console.log("Electron ready");
 
   // 🔥 IMPORTANT : initial fetch
-  await fetchBooksFromRepo().catch(console.error);
-
+  const books = await fetchBooksFromRepo().catch(console.error);
+console.log(`Fetched ${books.length} books from Forgejo`);
   createWindow();
 });
 

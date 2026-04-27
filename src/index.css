@@ -1,1 +1,86 @@
 @import "tailwindcss";
+
+:root {
+  --background: #0f0f0f;
+  --foreground: #bbbbbb;
+  --card-background: #1a1a1a;
+  --border-color: #333;
+}
+
+/* Global styles */
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+/* For Cards or divs that contain text */
+.card {
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+  overflow: hidden;          /* prevent overflow */
+  box-sizing: border-box;    /* include padding/border in width/height */
+  max-width: 100%;           /* respect parent size */
+}
+
+/* Global styles for centering and styling markdown content */
+.markdown-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  background-color: var(--background);
+  text-align: justify;
+}
+
+.markdown-content > * {
+  max-width: 1100px;
+  width: 100%;
+  font-family: 'Georgia', serif;
+  line-height: 1.8;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  white-space: normal;
+}
+
+/* Headings */
+.markdown-content h1 {
+  color: #636363;
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.markdown-content h2 {
+  font-size: 2rem;
+  margin-top: 30px;
+  margin-bottom: 15px;
+}
+
+.markdown-content h3 {
+  font-size: 1.75rem;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.markdown-content p {
+  margin-bottom: 15px;
+  font-size: 20px;
+  color: var(--foreground); 
+}
+
+.markdown-content blockquote {
+  border-left: 4px solid #ccc;
+  padding-left: 15px;
+  margin: 20px 0;
+  color: var(--foreground); 
+}
