@@ -1,9 +1,8 @@
 // =======================================================
 // 🧱 CORE SETUP (Node / Electron base)
 // =======================================================
-
-
-
+import dotenv from "dotenv";
+dotenv.config();
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import Store from "electron-store";
@@ -12,12 +11,9 @@ import { app, BrowserWindow, shell, dialog, ipcMain } from "electron";
 import path from "path";
 import fs from "fs";
 
-
-
 // =======================================================
 // 📁 PATHS / ENV CONFIG / Consts
 // =======================================================
-
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -78,7 +74,7 @@ function createWindow() {
         }
       }
       cb(false);
-    }
+    },
   );
 }
 
@@ -103,12 +99,12 @@ contenu chargé à la demande via URL
 async function fetchBooksFromRepo() {
   try {
     const response = await fetch(
-      `${FORGEJO_BASE}/api/v1/repos/${REPO}/contents/public/books`,
+      `${FORGEJO_BASE}/api/v1/repos/${REPO}/contents/`,
       {
         headers: {
           Authorization: `token ${FORGEJO_TOKEN}`, // ⚠️ À migrer vers API
         },
-      }
+      },
     );
 
     if (!response.ok) {
@@ -117,13 +113,21 @@ async function fetchBooksFromRepo() {
 
     const data = await response.json();
 
+    // SAFE GUARD
+    if (!Array.isArray(data)) {
+      console.error("❌ Expected array, got:", data);
+      return [];
+    }
+
     const books = data
       .filter((file) => file.type === "file")
       .map((file) => ({
         name: file.name,
         path: file.path,
         status: file.status,
-        url: file.download_url, // ⚠️ dépend auth/public
+        url: file.download_url,
+        description: file.description || "",
+
       }));
 
     store.set("books", books);
@@ -234,7 +238,7 @@ ipcMain.handle("open-audio-dialog", async () => {
   return {
     buffer: buffer.buffer.slice(
       buffer.byteOffset,
-      buffer.byteOffset + buffer.byteLength
+      buffer.byteOffset + buffer.byteLength,
     ),
     path: filePaths[0],
   };
