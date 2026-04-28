@@ -127,7 +127,6 @@ async function fetchBooksFromRepo() {
         status: file.status,
         url: file.download_url,
         description: file.description || "",
-
       }));
 
     store.set("books", books);
@@ -147,7 +146,7 @@ async function fetchBooksFromRepo() {
 // =======================================================
 
 // 📥 UI → récupère le cache local
-ipcMain.handle("read-books-json", () => {
+ipcMain.handle("read-books", () => {
   return store.get("books", []);
 });
 
@@ -288,8 +287,9 @@ app.whenReady().then(async () => {
   console.log("Electron ready");
 
   // 🔥 IMPORTANT : initial fetch
+
   const books = await fetchBooksFromRepo().catch(console.error);
-console.log(`Fetched ${books.length} books from Forgejo`);
+  console.log(`Fetched ${books.length} books from Forgejo`);
   createWindow();
 });
 

@@ -46,7 +46,7 @@ contextBridge.exposeInMainWorld("electronAPI", {
   ipcRenderer.invoke("save-audio-file", options),
 
   //  fonctions lies a la gestion de fichiers markdown
-  readBooksJson: () => ipcRenderer.invoke("read-books-json"),
+  readBooks: () => ipcRenderer.invoke("read-books"),
   rescanBooks: () => ipcRenderer.invoke("rescan-books"), //
   readMarkdown: (filePath) => ipcRenderer.invoke("read-markdown", filePath),
   readMarkdownEditing: (filePath) =>
