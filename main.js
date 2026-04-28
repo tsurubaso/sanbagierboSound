@@ -98,31 +98,29 @@ UI lit le store
 ↓
 contenu chargé à la demande via URL
 */
+let isRefreshing = false;
 
-async function fetchBooksFromRepo() {
-  const lastScan = store.get("books_last_scan");
+async function fetchBooksFromForgejo() {
   const cached = store.get("books", []);
+  const lastScan = store.get("books_last_scan");
 
-  // ============================
-  // ⚡ CACHE HIT (rapide)
-  // ============================
-  if (lastScan && Date.now() - new Date(lastScan).getTime() < CACHE_TTL) {
+  const CACHE_TTL = 5 * 60 * 1000; // 5 min
+
+  // ✅ Use cache if still fresh
+  if (
+    cached.length > 0 &&
+    lastScan &&
+    Date.now() - new Date(lastScan).getTime() < CACHE_TTL
+  ) {
     console.log("📦 Using cached books");
-
-    // refresh en background (non bloquant)
-    refreshBooksInBackground();
-
     return cached;
   }
 
-  // ============================
-  // 🌐 FETCH FROM FORGEJO
-  // ============================
-  try {
-    console.log("🌐 Fetching books from Forgejo...");
+  console.log("🌐 Fetching books from Forgejo...");
 
+  try {
     const response = await fetch(
-      `${FORGEJO_BASE}/api/v1/repos/${REPO}/contents/`,
+      `${FORGEJO_BASE}/api/v1/repos/${REPO}/contents/`
     );
 
     if (!response.ok) {
@@ -136,11 +134,7 @@ async function fetchBooksFromRepo() {
       return cached;
     }
 
-    // ============================
-    // ⚡ PARALLEL FETCH + LIMIT
-    // ============================
-
-    const LIMIT = 5; // limite de requêtes simultanées
+    const LIMIT = 5;
     const results = [];
 
     for (let i = 0; i < data.length; i += LIMIT) {
@@ -148,42 +142,33 @@ async function fetchBooksFromRepo() {
 
       const chunkResults = await Promise.all(
         chunk
-          .filter((file) => file.type === "file" && file.name.endsWith(".md"))
+          .filter((f) => f.type === "file" && f.name.endsWith(".md"))
           .map(async (file) => {
             try {
               const res = await fetch(file.download_url);
               const raw = await res.text();
-
               const { data: meta } = matter(raw);
 
               return {
+                id: file.sha || file.path,
                 name: file.name,
                 path: file.path,
                 url: file.download_url,
-
-                // 🧠 frontmatter
                 title: meta.title || file.name.replace(".md", ""),
                 status: meta.status || "unknown",
                 description: meta.description || "",
                 type: meta.type || "",
                 author: meta.text_author || "",
-
-                // debug / futur
-                lastModified: file.last_commit_sha || null,
               };
             } catch (err) {
-              console.error("❌ File parse error:", file.name, err);
+              console.error("Parse error:", file.name);
               return null;
             }
-          }),
+          })
       );
 
       results.push(...chunkResults.filter(Boolean));
     }
-
-    // ============================
-    // 💾 SAVE CACHE
-    // ============================
 
     store.set("books", results);
     store.set("books_last_scan", new Date().toISOString());
@@ -191,18 +176,37 @@ async function fetchBooksFromRepo() {
     console.log(`✅ ${results.length} books loaded`);
 
     return results;
-  } catch (err) {
-    console.error("❌ Forgejo fetch error:", err);
 
-    // fallback cache
+  } catch (err) {
+    console.error("❌ Fetch failed, using cache", err);
     return cached;
   }
 }
 
-function refreshBooksInBackground() {
-  fetchBooksFromRepo()
-    .then(() => console.log("🔄 Background refresh done"))
-    .catch((err) => console.error("❌ Background refresh failed", err));
+async function fetchBooksFromRepo() {
+  const lastScan = store.get("books_last_scan");
+  const cached = store.get("books", []);
+
+  const isValid =
+    lastScan && Date.now() - new Date(lastScan).getTime() < CACHE_TTL;
+
+  if (isValid) {
+    console.log("📦 Using cached books");
+
+    // ✅ SAFE background refresh (NO recursion)
+    if (!isRefreshing) {
+      isRefreshing = true;
+
+      fetchBooksFromForgejo().finally(() => {
+        isRefreshing = false;
+      });
+    }
+
+    return cached;
+  }
+
+  // ❗ ONLY HERE we fetch
+  return await fetchBooksFromForgejo();
 }
 
 // =======================================================
@@ -222,7 +226,9 @@ ipcMain.handle("read-books", async () => {
   }
 
   // 👉 CAS NORMAL
-  fetchBooksFromRepo().catch(console.error); // refresh background
+  if (!isRefreshing) {
+    fetchBooksFromRepo().catch(console.error);
+  } // refresh background
 
   return cached;
 });
@@ -287,11 +293,6 @@ ipcMain.handle("write-markdown", async (event, args) => {
     }
 
     const result = await response.json();
-
-    // 🔄 refresh cache///mais reflechis ca risque de prendre du temps
-    //vaut mieux passer ca en background et faire un systeme de notification pour dire "hey le livre machin a été mis à jour, clique ici pour refresh"
-    // j'adore comment copilote il finit mes phrases et me lit dans mes pensées....euh non.
-    await fetchBooksFromRepo().catch(console.error);
 
     return { ok: true, result };
   } catch (err) {
