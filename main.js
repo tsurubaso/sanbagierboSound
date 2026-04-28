@@ -10,6 +10,7 @@ import { spawn } from "child_process";
 import { app, BrowserWindow, shell, dialog, ipcMain } from "electron";
 import path from "path";
 import fs from "fs";
+import matter from "gray-matter";
 
 // =======================================================
 // 📁 PATHS / ENV CONFIG / Consts
@@ -18,6 +19,8 @@ import fs from "fs";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const store = new Store();
+
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
 // ⚠️ En prod Electron → __dirname faux → utiliser resourcesPath
 const BASE_PATH = app.isPackaged ? process.resourcesPath : __dirname;
@@ -97,14 +100,29 @@ contenu chargé à la demande via URL
 */
 
 async function fetchBooksFromRepo() {
+  const lastScan = store.get("books_last_scan");
+  const cached = store.get("books", []);
+
+  // ============================
+  // ⚡ CACHE HIT (rapide)
+  // ============================
+  if (lastScan && Date.now() - new Date(lastScan).getTime() < CACHE_TTL) {
+    console.log("📦 Using cached books");
+
+    // refresh en background (non bloquant)
+    refreshBooksInBackground();
+
+    return cached;
+  }
+
+  // ============================
+  // 🌐 FETCH FROM FORGEJO
+  // ============================
   try {
+    console.log("🌐 Fetching books from Forgejo...");
+
     const response = await fetch(
       `${FORGEJO_BASE}/api/v1/repos/${REPO}/contents/`,
-      {
-        headers: {
-          Authorization: `token ${FORGEJO_TOKEN}`, // ⚠️ À migrer vers API
-        },
-      },
     );
 
     if (!response.ok) {
@@ -113,32 +131,78 @@ async function fetchBooksFromRepo() {
 
     const data = await response.json();
 
-    // SAFE GUARD
     if (!Array.isArray(data)) {
       console.error("❌ Expected array, got:", data);
-      return [];
+      return cached;
     }
 
-    const books = data
-      .filter((file) => file.type === "file")
-      .map((file) => ({
-        name: file.name,
-        path: file.path,
-        status: file.status,
-        url: file.download_url,
-        description: file.description || "",
-      }));
+    // ============================
+    // ⚡ PARALLEL FETCH + LIMIT
+    // ============================
 
-    store.set("books", books);
+    const LIMIT = 5; // limite de requêtes simultanées
+    const results = [];
+
+    for (let i = 0; i < data.length; i += LIMIT) {
+      const chunk = data.slice(i, i + LIMIT);
+
+      const chunkResults = await Promise.all(
+        chunk
+          .filter((file) => file.type === "file" && file.name.endsWith(".md"))
+          .map(async (file) => {
+            try {
+              const res = await fetch(file.download_url);
+              const raw = await res.text();
+
+              const { data: meta } = matter(raw);
+
+              return {
+                name: file.name,
+                path: file.path,
+                url: file.download_url,
+
+                // 🧠 frontmatter
+                title: meta.title || file.name.replace(".md", ""),
+                status: meta.status || "unknown",
+                description: meta.description || "",
+                type: meta.type || "",
+                author: meta.text_author || "",
+
+                // debug / futur
+                lastModified: file.last_commit_sha || null,
+              };
+            } catch (err) {
+              console.error("❌ File parse error:", file.name, err);
+              return null;
+            }
+          }),
+      );
+
+      results.push(...chunkResults.filter(Boolean));
+    }
+
+    // ============================
+    // 💾 SAVE CACHE
+    // ============================
+
+    store.set("books", results);
     store.set("books_last_scan", new Date().toISOString());
 
-    return books;
+    console.log(`✅ ${results.length} books loaded`);
+
+    return results;
   } catch (err) {
     console.error("❌ Forgejo fetch error:", err);
 
     // fallback cache
-    return store.get("books", []);
+    return cached;
   }
+}
+
+function refreshBooksInBackground() {
+  fetchBooksFromRepo()
+    .then(() => console.log("🔄 Background refresh done"))
+    .catch((err) => console.error("❌ Background refresh failed", err));
 }
 
 // =======================================================
@@ -146,8 +210,21 @@ async function fetchBooksFromRepo() {
 // =======================================================
 
 // 📥 UI → récupère le cache local
-ipcMain.handle("read-books", () => {
-  return store.get("books", []);
+ipcMain.handle("read-books", async () => {
+  const cached = store.get("books", []);
+
+  // 👉 PREMIER LANCEMENT
+  if (!cached || cached.length === 0) {
+    console.log("🆕 First load → fetching");
+
+    const fresh = await fetchBooksFromRepo();
+    return fresh;
+  }
+
+  // 👉 CAS NORMAL
+  fetchBooksFromRepo().catch(console.error); // refresh background
+
+  return cached;
 });
 
 // 🔄 refresh manuel depuis UI

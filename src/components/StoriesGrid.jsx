@@ -16,7 +16,9 @@ useEffect(() => {
   const fetchStories = async () => {
     try {
       const data = await getBooksData();
+      console.log("📚 Stories fetched:", data);
       setStories(data.filter((s) => s.status === status));
+      console.log(`📚 Filtered stories for status "${status}":`, stories);
     } catch (error) {
       console.error("Erreur lors du chargement des stories :", error);
     }
