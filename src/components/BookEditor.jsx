@@ -2,18 +2,25 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Editor from "@monaco-editor/react";
+import { useLocation } from "react-router-dom";
 
-export default function BookEditor({ book }) {
+export default function BookEditor({ url, raw =true}) {
   const [content, setContent] = useState("");
   const [status, setStatus] = useState("loading");
   const navigate = useNavigate();
 
-  const fileName = `${book}.md`;
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const url = location.state?.url || params.get("url");
+  console.log("📖 Final URL:", url);
 
   useEffect(() => {
     const load = async () => {
       try {
-        const txt = await window.electronAPI.readMarkdownEditing(book);
+        const txt = await window.electronAPI.readMarkdown({
+          url: url,
+          raw: raw,
+        });
         setContent(txt);
         setStatus("ready");
       } catch (e) {
