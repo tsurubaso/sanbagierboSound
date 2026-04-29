@@ -3,42 +3,44 @@ import { useNavigate } from "react-router-dom";
 import SearchBar from "@/components/SearchBar.jsx"; // ton composant Search séparé
 import { getBooksData } from "@/services/getBooksData.jsx";
 import ThemeToggle from "@/components/ThemeToggle";
-export default function StoriesGrid({
-  status,
-  basePath,
-  textDePresentation,
-}) {
+export default function StoriesGrid({ status, basePath, textDePresentation }) {
   const [stories, setStories] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
 
-useEffect(() => {
-  const fetchStories = async () => {
-    try {
-      const data = await getBooksData();
-      console.log("📚 Stories fetched:", data);
-      setStories(data.filter((s) => s.status === status));
-      console.log(`📚 Filtered stories for status "${status}":`, stories);
-    } catch (error) {
-      console.error("Erreur lors du chargement des stories :", error);
-    }
-  };
-  fetchStories();
-}, [status]);
+  useEffect(() => {
+    const fetchStories = async () => {
+      try {
+        const data = await getBooksData();
+        const filtered = data.filter((s) => s.status === status);
+        setStories(filtered);
+        console.log(`📚 Filtered stories for status "${status}":`, filtered);
+      } catch (error) {
+        console.error("Erreur lors du chargement des stories :", error);
+      }
+    };
+    fetchStories();
+  }, [status]);
 
   // 🔍 Filtrage par recherche
   const filteredStories = stories.filter((story) =>
-    story.title.toLowerCase().includes(searchQuery.toLowerCase())
+    (story.title || "").toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   // 🔗 Navigation interne
   const handleClick = (story) => {
-    navigate(`/${basePath}/${status}list/${story.link}/reader`);
+    navigate(`/${basePath}/${status}list/${story.link}/reader`, {
+      state: { url: story.url },
+    });
+    console.log(
+      `Navigating to: /${basePath}/${status}list/${story.link}/reader`,
+      `and the url is:`, { url: story.url }
+    );
   };
 
   return (
     <div className="relative min-h-screen bg-[var(--background)] text-[var(--foreground)]">
-         {/* Theme toggle button */}
+      {/* Theme toggle button */}
       <ThemeToggle />
       <div className="py-12 px-6 max-w-7xl mx-auto">
         <div className="text-center mb-12">
@@ -67,9 +69,11 @@ useEffect(() => {
                   borderColor: "var(--border-color)",
                 }}
               >
-                <h3 className="text-xl font-semibold">{story.title}</h3>
+                <h3 className="text-xl font-semibold">
+                  {story.title || "Titre non disponible"}
+                </h3>
                 <p className="mt-2 opacity-80 line-clamp-3">
-                  {story.description}
+                  {story.description || "Description non disponible"}
                 </p>
                 <p className="text-sm mt-4 italic opacity-60">{story.type}</p>
               </div>

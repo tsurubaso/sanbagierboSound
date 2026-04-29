@@ -74,7 +74,7 @@ export default function PersonLayout({ children }) {
         navItemsTop={navItemsTop}
         actionButtons={actionButtons} // ✅ Passer les boutons
         rightSidebarContent={<DictionarySidebarSimple />}
-        showRightDefault={true}
+        showRightDefault={false}
       >
         {children}
       </ClientWrapper>
@@ -92,7 +92,7 @@ export default function PersonLayout({ children }) {
             <ImportTranscriptionButton />
           </div>
         }
-        showRightDefault={true}
+        showRightDefault={false}
       >
         <AudioPlayerWaveform />
         {children}
@@ -106,7 +106,7 @@ export default function PersonLayout({ children }) {
         navItemsTop={navItemsTop}
         actionButtons={actionButtons}
         rightSidebarContent={<DictionarySidebarFull />}
-        showRightDefault={true}
+        showRightDefault={false}
       >
         {children}
       </ClientWrapper>
@@ -119,6 +119,7 @@ export default function PersonLayout({ children }) {
       <ClientWrapper
         // navItemsTop={navItemsTop}
         actionButtons={actionButtons}
+        showRightDefault={false}
         rightSidebarContent={
           <div>
             <p> Nothing now </p>
