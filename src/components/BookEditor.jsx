@@ -2,35 +2,38 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Editor from "@monaco-editor/react";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { getBooksData } from "@/services/getBooksData.jsx";
 
-export default function BookEditor({ url, raw =true}) {
+export default function BookEditor() {
   const [content, setContent] = useState("");
   const [status, setStatus] = useState("loading");
   const navigate = useNavigate();
+  const { id } = useParams();
 
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  const url = location.state?.url || params.get("url");
-  console.log("📖 Final URL:", url);
+  console.log("📖 BookEditor mounted with id:", id);
+
 
   useEffect(() => {
     const load = async () => {
-      try {
-        const txt = await window.electronAPI.readMarkdown({
-          url: url,
-          raw: raw,
-        });
-        setContent(txt);
-        setStatus("ready");
-      } catch (e) {
-        console.error("Failed to load markdown:", e);
-        setStatus("error");
+      const data = await getBooksData();
+      console.log("📚 Books data loaded for editor:", data);
+      const book = data.find((b) => b.id === id);
+
+      if (!book) {
+        console.error("❌ Book not found: ", id);
+        return;
       }
+
+      const content = await window.electronAPI.readMarkdown({
+        url: book.url,
+      });
+
+      setContent(content);
     };
 
     load();
-  }, [book]);
+  }, [id]);
 
   const saveFile = async () => {
     try {
@@ -48,12 +51,13 @@ export default function BookEditor({ url, raw =true}) {
 
     try {
       await window.electronAPI.eraseMarkdown(book); // nouvelle API côté main.js
-    
 
       alert(`✅ ${fileName} deleted.`);
       navigate("/"); // retour à la home
       // Lancer le rescan sans bloquer
-    window.electronAPI.rescanBooks().catch(err => console.error("Rescan failed:", err));
+      window.electronAPI
+        .rescanBooks()
+        .catch((err) => console.error("Rescan failed:", err));
     } catch (err) {
       console.error("Delete failed:", err);
       alert("❌ Failed to delete file.");

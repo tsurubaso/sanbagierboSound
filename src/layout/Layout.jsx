@@ -63,7 +63,7 @@ export default function PersonLayout({ children }) {
 
     {
       label: "🔄 Rescan Books",
-      onClick: handleRescan,
+      // onClick: handleRescan,/////////////////////////////////////////////on block for now
     },
   ];
 

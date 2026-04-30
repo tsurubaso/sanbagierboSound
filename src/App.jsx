@@ -49,7 +49,7 @@ function App() {
 
                   {/* ✏️ Editor */}
                   <Route
-                    path="/:person/:statuslist/:link/editor"
+                    path="/:person/:statuslist/:id/editor"
                     element={<Editor />}
                   />
 

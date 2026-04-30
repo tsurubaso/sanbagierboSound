@@ -19,7 +19,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const store = new Store();
 
-const CACHE_TTL = 5 * 60 * 1000;
+const CACHE_TTL = 60 * 60 * 1000;
 // ⚠️ En prod Electron → __dirname faux → utiliser resourcesPath
 const BASE_PATH = app.isPackaged ? process.resourcesPath : __dirname;
 const OUTPUT_DIR = path.join(BASE_PATH, "output");
