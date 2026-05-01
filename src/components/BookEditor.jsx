@@ -9,63 +9,74 @@ export default function BookEditor() {
   const [content, setContent] = useState("");
   const [status, setStatus] = useState("");
   const [fileName, setFileName] = useState("");
+  const [book, setBook] = useState(null);
   const navigate = useNavigate();
   const { link } = useParams();
 
   console.log("📖 BookEditor mounted with link:", link);
 
-
   useEffect(() => {
     const load = async () => {
       const data = await getBooksData();
-      console.log("📚 Books data loaded for editor:", data);
-      const book = data.find((b) => b.link === link);
+      const found = data.find((b) => b.link === link);
 
-      if (!book) {
-        console.error("❌ Book not found: ", link);
+      if (!found) {
+        console.error("❌ Book not found:", link);
         return;
       }
 
+      setBook(found); // ✅ IMPORTANT
+
       const content = await window.electronAPI.readMarkdown({
-        url: book.url,
+        url: found.url,
       });
 
       setContent(content);
-      setFileName(book.name);
+      setFileName(found.name);
+      setStatus("ready");
     };
 
     load();
   }, [link]);
 
-  const saveFile = async () => {
-    try {
-      await window.electronAPI.writeMarkdown(book, content);
-      alert("Saved!");
-    } catch (err) {
-      console.error("Save failed:", err);
-      alert("Failed to save file.");
-    }
-  };
+const saveFile = async () => {
+  if (!book) return;
 
-  const deleteFile = async () => {
-    if (!window.confirm(`⚠️ Are you sure you want to delete ${fileName}?`))
-      return;
+  try {
+    await window.electronAPI.writeMarkdown({
+      fileName: book.name,
+      content,
+    });
 
-    try {
-      await window.electronAPI.eraseMarkdown(book); // nouvelle API côté main.js
+    alert("Saved!");
+  } catch (err) {
+    console.error("Save failed:", err);
+    alert("Failed to save file.");
+  }
+};
 
-      alert(`✅ ${fileName} deleted.`);
-      navigate("/"); // retour à la home
-      // Lancer le rescan sans bloquer
-      window.electronAPI
-        .rescanBooks()
-        .catch((err) => console.error("Rescan failed:", err));
-    } catch (err) {
-      console.error("Delete failed:", err);
-      alert("❌ Failed to delete file.");
-    }
-  };
+const deleteFile = async () => {
+  if (!book) return;
 
+  if (!window.confirm(`⚠️ Are you sure you want to delete ${book.name}?`))
+    return;
+
+  try {
+    await window.electronAPI.eraseMarkdown({
+      fileName: book.name,
+    });
+
+    alert(`✅ ${book.name} deleted.`);
+    navigate("/");
+
+    window.electronAPI
+      .rescanBooks()
+      .catch((err) => console.error("Rescan failed:", err));
+  } catch (err) {
+    console.error("Delete failed:", err);
+    alert("❌ Failed to delete file.");
+  }
+};
   if (status === "loading") return <p className="p-4">Loading…</p>;
   if (status === "error")
     return <p className="p-4 text-red-400">File not found.</p>;
