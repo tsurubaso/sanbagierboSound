@@ -11,6 +11,7 @@ const Editor = lazy(() => import("@/pages/Editor"));
 const GridPage = lazy(() => import("@/pages/GridPage"));
 const Creator = lazy(() => import("@/pages/Creator"));
 const Lecturer = lazy(() => import("@/pages/Lecturer"));
+const Merger = lazy(() => import("@/pages/Merger"));
 
 function App() {
   return (
@@ -51,6 +52,11 @@ function App() {
                   <Route
                     path="/:person/:statuslist/:link/editor"
                     element={<Editor />}
+                  />
+                  {/* 🔄 Merger */}
+                  <Route
+                    path="/:person/:statuslist/:link/merger"
+                    element={<Merger />}
                   />
 
                   {/* 🌈 Creator */}

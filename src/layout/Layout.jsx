@@ -24,9 +24,10 @@ export default function PersonLayout({ children }) {
   const isEditor = pathname.includes("/editor");
   const isCreator = pathname.includes("/creator");
   const isLecturer = pathname.includes("/lecturer");
+  const isMerger = pathname.includes("/merger");
 
   // Base path
-  const basePath = pathname.replace(/\/(reader|editor|creator|lecturer)$/, "");
+  const basePath = pathname.replace(/\/(reader|editor|creator|lecturer|merger)$/, "");
 
   //  Fonction pour rescanner
   const handleRescan = async () => {
@@ -43,8 +44,10 @@ export default function PersonLayout({ children }) {
   const navItemsTop = [
     { href: `${basePath}/reader`, label: "📖 Reader" },
     { href: `${basePath}/editor`, label: "✏️ Editor" },
+     { href: `${basePath}/merger`, label: "🔄 Merger" },
     { href: `${basePath}/creator`, label: "🖋️ Creator" },
     { href: `${basePath}/lecturer`, label: "🎤 Lecturer" },
+   
   ];
 
   // Boutons d'action
@@ -100,7 +103,7 @@ export default function PersonLayout({ children }) {
     );
   }
 
-  if (isEditor || isCreator) {
+  if (isEditor || isCreator || isMerger) {
     return (
       <ClientWrapper
         navItemsTop={navItemsTop}
