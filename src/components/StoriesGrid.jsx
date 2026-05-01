@@ -29,11 +29,11 @@ export default function StoriesGrid({ status, basePath, textDePresentation }) {
 
   // 🔗 Navigation interne
   const handleClick = (story) => {
-    navigate(`/${basePath}/${status}list/${story.id}/reader`, {
+    navigate(`/${basePath}/${status}list/${story.link}/reader`, {
       state: { url: story.url },
     });
     console.log(
-      `Navigating to: /${basePath}/${status}list/${story.id}/reader`,
+      `Navigating to: /${basePath}/${status}list/${story.link}/reader`,
       `and the url is:`, { url: story.url }
     );
   };

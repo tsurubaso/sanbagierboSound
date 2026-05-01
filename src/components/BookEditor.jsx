@@ -7,21 +7,22 @@ import { getBooksData } from "@/services/getBooksData.jsx";
 
 export default function BookEditor() {
   const [content, setContent] = useState("");
-  const [status, setStatus] = useState("loading");
+  const [status, setStatus] = useState("");
+  const [fileName, setFileName] = useState("");
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { link } = useParams();
 
-  console.log("📖 BookEditor mounted with id:", id);
+  console.log("📖 BookEditor mounted with link:", link);
 
 
   useEffect(() => {
     const load = async () => {
       const data = await getBooksData();
       console.log("📚 Books data loaded for editor:", data);
-      const book = data.find((b) => b.id === id);
+      const book = data.find((b) => b.link === link);
 
       if (!book) {
-        console.error("❌ Book not found: ", id);
+        console.error("❌ Book not found: ", link);
         return;
       }
 
@@ -30,10 +31,11 @@ export default function BookEditor() {
       });
 
       setContent(content);
+      setFileName(book.name);
     };
 
     load();
-  }, [id]);
+  }, [link]);
 
   const saveFile = async () => {
     try {

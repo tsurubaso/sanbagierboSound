@@ -44,12 +44,15 @@ let win = null;
 async function getBooks(force = false) {
   const cached = store.get("books", []);
   const lastScan = store.get("books_last_scan");
+ // console.log(store.get("books"));
+  console.log(store.path);
+  console.log(lastScan);
+  
 
-  const isExpired =
-    !lastScan || Date.now() - new Date(lastScan).getTime() > CACHE_TTL;
+
 
   // On renvoie le cache si : pas de force refresh ET cache pas expiré ET cache non vide
-  if (!force && !isExpired && cached.length > 0) {
+  if (!force && cached.length > 0) {
     console.log("📦 Serving from cache");
     return cached;
   }
@@ -112,6 +115,7 @@ async function refreshBooks() {
     console.error("❌ Fetch failed", err);
     return store.get("books", []); // Fallback sur le cache si le réseau plante
   }
+
 }
 
 // =======================================================
@@ -119,7 +123,7 @@ async function refreshBooks() {
 // =======================================================
 
 // --- BOOKS ---
-ipcMain.handle("read-books", () => getBooks());
+ipcMain.handle("read-books", () => getBooks(false));
 ipcMain.handle("rescan-books", () => getBooks(true));
 
 // --- MARKDOWN (Fusionné) ---
@@ -235,7 +239,7 @@ function createWindow() {
 app.whenReady().then(async () => {
   await fs.promises.mkdir(OUTPUT_DIR, { recursive: true });
   createWindow();
-  getBooks(); // Initialisation du cache en arrière-plan
+  getBooks(false); // Initialisation du cache en arrière-plan
 });
 
 app.on("window-all-closed", () => {
