@@ -7,7 +7,7 @@ import { getBooksData } from "@/services/getBooksData.jsx";
 
 export default function BookEditor() {
   const [content, setContent] = useState("");
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState("loading");
   const [fileName, setFileName] = useState("");
   const [book, setBook] = useState(null);
   const [branches, setBranches] = useState([]);
@@ -18,44 +18,74 @@ export default function BookEditor() {
   console.log("📖 BookEditor mounted with link:", link);
 
   useEffect(() => {
-    const load = async () => {
+    const loadMeta = async () => {
       const data = await getBooksData();
       const found = data.find((b) => b.link === link);
 
       if (!found) {
         console.error("❌ Book not found:", link);
+        setStatus("error");
         return;
       }
 
-      setBook(found); // ✅ IMPORTANT
+      setBook(found);
+      setFileName(found.name);
 
-      const content = await window.electronAPI.readMarkdown({
-        url: `${found.url}?ref=${selectedBranch}`,
-      });
-
-      const branches = await window.electronAPI.getFileBranches({
+      // 🔥 Fetch branches ONLY here
+      const branchList = await window.electronAPI.getFileBranches({
         fileName: found.name,
       });
 
-      setBranches(branches);
-
-      setContent(content);
-      setFileName(found.name);
-      setStatus("ready");
+      setBranches(branchList);
+      console.log("✅ Available branches:", branchList);
     };
 
-    load();
+    loadMeta();
   }, [link]);
+
+  useEffect(() => {
+    if (!book) return;
+
+    const loadContent = async () => {
+      setStatus("loading");
+
+      try {
+        const content = await window.electronAPI.readMarkdown({
+          url: `${book.url}?ref=${selectedBranch}`,
+        });
+
+        setContent(content);
+        setStatus("ready");
+      } catch (err) {
+        console.error("❌ Failed to load content:", err);
+        setStatus("error");
+      }
+    };
+
+    loadContent();
+  }, [book, selectedBranch]);
 
   const saveFile = async () => {
     if (!book) return;
 
     try {
-      await window.electronAPI.writeMarkdown({
+      const result = await window.electronAPI.writeMarkdown({
         fileName: book.name,
-        content,
+        content, // Le contenu actuel de l'éditeur
+        branch: selectedBranch, // 🔥 REQUIRED
       });
 
+      console.log("💾 Saving:", {
+        fileName: book?.name,
+        contentLength: content.length,
+        branch: selectedBranch,
+      });
+
+      if (result.ok) {
+        console.log("✅ Saved successfully");
+      } else {
+        throw new Error(result.error);
+      }
       alert("Saved!");
     } catch (err) {
       console.error("Save failed:", err);
@@ -64,6 +94,7 @@ export default function BookEditor() {
   };
 
   const deleteFile = async () => {
+    ////we implement that later
     if (!book) return;
 
     if (!window.confirm(`⚠️ Are you sure you want to delete ${book.name}?`))
@@ -72,6 +103,7 @@ export default function BookEditor() {
     try {
       await window.electronAPI.eraseMarkdown({
         fileName: book.name,
+        branch: selectedBranch, // 🔥 REQUIRED
       });
 
       alert(`✅ ${book.name} deleted.`);
@@ -106,12 +138,15 @@ export default function BookEditor() {
             ))}
           </select>
           <button
+            disabled={status !== "ready"}
             onClick={saveFile}
             className="px-4 py-1 bg-green-600 hover:bg-green-700 rounded"
           >
             Save
           </button>
+
           <button
+            disabled //</div>={status !== "ready"} // we disable delete for now
             onClick={deleteFile}
             className="px-4 py-1 bg-red-600 hover:bg-red-700 rounded"
           >
