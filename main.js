@@ -145,18 +145,33 @@ ipcMain.handle(
   "write-markdown",
   async (event, { fileName, content, branch = "main" }) => {
     try {
+      const encoded = Buffer.from(content, "utf-8").toString("base64");
+
       const response = await fetch(
-        `${FORGEJO_CONFIG.base}/api/forgejo/create-file`,
+        `${FORGEJO_CONFIG.base}/api/v1/repos/${FORGEJO_CONFIG.repo}/contents/${fileName}`,
         {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ book: fileName, content, branch }),
+          method: "PUT", // ⚠️ important
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `token ${FORGEJO_CONFIG.token}`,
+          },
+          body: JSON.stringify({
+            content: encoded,
+            message: `update ${fileName}`,
+            sha: fileData.sha, // 🔥 REQUIRED
+            branch,
+          }),
         },
       );
 
-      if (!response.ok) throw new Error("API error: " + response.status);
-      return { ok: true, result: await response.json() };
+      if (!response.ok) {
+        const errText = await response.text();
+        throw new Error(errText);
+      }
+
+      return { ok: true };
     } catch (err) {
+      console.error("❌ Write failed:", err);
       return { ok: false, error: err.message };
     }
   },
@@ -245,3 +260,52 @@ app.whenReady().then(async () => {
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") app.quit();
 });
+
+///////////////////
+//A travailler
+/////////////////
+
+ipcMain.handle("get-file-branches", async (event, { fileName }) => {
+  try {
+    // 1. récupérer toutes les branches
+    const branchesRes = await fetch(
+      `${FORGEJO_CONFIG.base}/api/v1/repos/${FORGEJO_CONFIG.repo}/branches`,
+      {
+        headers: {
+          Authorization: `token ${FORGEJO_CONFIG.token}`,
+        },
+      }
+    );
+
+    const branches = await branchesRes.json();
+
+    // 2. vérifier présence du fichier
+    const results = [];
+
+    for (const branch of branches) {
+      try {
+        const res = await fetch(
+          `${FORGEJO_CONFIG.base}/api/v1/repos/${FORGEJO_CONFIG.repo}/contents/${fileName}?ref=${branch.name}`,
+          {
+            headers: {
+              Authorization: `token ${FORGEJO_CONFIG.token}`,
+            },
+          }
+        );
+
+        if (res.ok) {
+          results.push(branch.name);
+        }
+      } catch {
+        // ignore erreurs
+      }
+    }
+
+    return results;
+  } catch (err) {
+    console.error("❌ Branch fetch error:", err);
+    return [];
+  }
+});
+
+

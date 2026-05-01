@@ -10,6 +10,8 @@ export default function BookEditor() {
   const [status, setStatus] = useState("");
   const [fileName, setFileName] = useState("");
   const [book, setBook] = useState(null);
+  const [branches, setBranches] = useState([]);
+  const [selectedBranch, setSelectedBranch] = useState("main");
   const navigate = useNavigate();
   const { link } = useParams();
 
@@ -28,8 +30,14 @@ export default function BookEditor() {
       setBook(found); // ✅ IMPORTANT
 
       const content = await window.electronAPI.readMarkdown({
-        url: found.url,
+        url: `${found.url}?ref=${selectedBranch}`,
       });
+
+      const branches = await window.electronAPI.getFileBranches({
+        fileName: found.name,
+      });
+
+      setBranches(branches);
 
       setContent(content);
       setFileName(found.name);
@@ -39,44 +47,44 @@ export default function BookEditor() {
     load();
   }, [link]);
 
-const saveFile = async () => {
-  if (!book) return;
+  const saveFile = async () => {
+    if (!book) return;
 
-  try {
-    await window.electronAPI.writeMarkdown({
-      fileName: book.name,
-      content,
-    });
+    try {
+      await window.electronAPI.writeMarkdown({
+        fileName: book.name,
+        content,
+      });
 
-    alert("Saved!");
-  } catch (err) {
-    console.error("Save failed:", err);
-    alert("Failed to save file.");
-  }
-};
+      alert("Saved!");
+    } catch (err) {
+      console.error("Save failed:", err);
+      alert("Failed to save file.");
+    }
+  };
 
-const deleteFile = async () => {
-  if (!book) return;
+  const deleteFile = async () => {
+    if (!book) return;
 
-  if (!window.confirm(`⚠️ Are you sure you want to delete ${book.name}?`))
-    return;
+    if (!window.confirm(`⚠️ Are you sure you want to delete ${book.name}?`))
+      return;
 
-  try {
-    await window.electronAPI.eraseMarkdown({
-      fileName: book.name,
-    });
+    try {
+      await window.electronAPI.eraseMarkdown({
+        fileName: book.name,
+      });
 
-    alert(`✅ ${book.name} deleted.`);
-    navigate("/");
+      alert(`✅ ${book.name} deleted.`);
+      navigate("/");
 
-    window.electronAPI
-      .rescanBooks()
-      .catch((err) => console.error("Rescan failed:", err));
-  } catch (err) {
-    console.error("Delete failed:", err);
-    alert("❌ Failed to delete file.");
-  }
-};
+      window.electronAPI
+        .rescanBooks()
+        .catch((err) => console.error("Rescan failed:", err));
+    } catch (err) {
+      console.error("Delete failed:", err);
+      alert("❌ Failed to delete file.");
+    }
+  };
   if (status === "loading") return <p className="p-4">Loading…</p>;
   if (status === "error")
     return <p className="p-4 text-red-400">File not found.</p>;
@@ -86,6 +94,17 @@ const deleteFile = async () => {
       <div className="p-3 bg-[#1e1e1e] text-gray-200 border-b border-gray-600 flex justify-between items-center">
         <div className="font-semibold">{fileName}</div>
         <div className="flex gap-2">
+          <select
+            value={selectedBranch}
+            onChange={(e) => setSelectedBranch(e.target.value)}
+            className="bg-[#2a2a2a] text-white px-2 py-1 rounded"
+          >
+            {branches.map((b) => (
+              <option key={b} value={b}>
+                {b}
+              </option>
+            ))}
+          </select>
           <button
             onClick={saveFile}
             className="px-4 py-1 bg-green-600 hover:bg-green-700 rounded"

@@ -14,7 +14,7 @@ export default function StoriesGrid({ status, basePath, textDePresentation }) {
         const data = await getBooksData();
         const filtered = data.filter((s) => s.status === status);
         setStories(filtered);
-        console.log(`📚 Filtered stories for status "${status}":`, filtered);
+        console.log(`📚 Filtered stories for status "${status}":`);
       } catch (error) {
         console.error("Erreur lors du chargement des stories :", error);
       }
