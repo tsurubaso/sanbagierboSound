@@ -58,28 +58,41 @@ export default function InteractiveMerge({ original, modified, onMerge }) {
             }`}
           >
             <pre className="whitespace-pre-wrap">{block.value}</pre>
-            {(block.added || block.removed) && (
-              <div className="mt-1 flex gap-2">
-                <button
-                  className="px-2 py-1 text-xs bg-blue-500 text-white rounded"
-                  onClick={() => handleChoice(block.id, "original")}
-                >
-                  Original
-                </button>
-                <button
-                  className="px-2 py-1 text-xs bg-green-500 text-white rounded"
-                  onClick={() => handleChoice(block.id, "modified")}
-                >
-                  Modifié
-                </button>
-                <button
-                  className="px-2 py-1 text-xs bg-gray-500 text-white rounded"
-                  onClick={() => handleChoice(block.id, "both")}
-                >
-                  Les deux
-                </button>
-              </div>
-            )}
+{(block.added || block.removed) && (
+  <div className="mt-1 flex gap-2">
+
+    {/* Only show ORIGINAL if it's a removed block */}
+    {block.removed && (
+      <button
+        className="px-2 py-1 text-xs bg-blue-500 text-white rounded"
+        onClick={() => handleChoice(block.id, "original")}
+      >
+        Original
+      </button>
+    )}
+
+    {/* Only show MODIFIED if it's an added block */}
+    {block.added && (
+      <button
+        className="px-2 py-1 text-xs bg-green-500 text-white rounded"
+        onClick={() => handleChoice(block.id, "modified")}
+      >
+        Modifié
+      </button>
+    )}
+
+    {/* Only show BOTH if both sides exist (rare but possible) */}
+    {block.added && block.removed && (
+      <button
+        className="px-2 py-1 text-xs bg-gray-500 text-white rounded"
+        onClick={() => handleChoice(block.id, "both")}
+      >
+        Les deux
+      </button>
+    )}
+
+  </div>
+)}
           </div>
         ))}
       </div>

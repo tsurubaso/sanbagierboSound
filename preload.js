@@ -58,12 +58,16 @@ contextBridge.exposeInMainWorld("electronAPI", {
   ///////////////////////////////////////////////////////////////
 
 
-  writeMarkdown: (data) =>
+  writeMarkdownCreate: (data) =>
+    ipcRenderer.invoke("write-markdown-Create",  data ),
+
+    writeMarkdown: (data) =>
     ipcRenderer.invoke("write-markdown",  data ),
 
 
   getFileBranches: (data) => ipcRenderer.invoke("get-file-branches", data),
 
+  getAllBranches: (data) => ipcRenderer.invoke("get-all-branches", data),
   // effacer fichier
   eraseMarkdown: (book) => ipcRenderer.invoke("erase-markdown", book),
   // creer fichier

@@ -120,7 +120,7 @@ async function refreshBooks() {
         results.push({
           id: file.sha || file.path,
           name: file.name,
-          url: file.download_url,
+          url: file.download_url, ////////// est-ce que tu utilises cette URL dans tes composants ? sinon on peut la retirer du store pour alléger
 
           title: meta.title || file.name.replace(".md", ""),
           link: meta.link || "",
@@ -150,6 +150,7 @@ async function refreshBooks() {
 // =======================================================
 
 ipcMain.handle("read-markdown", async (_, { url, raw = false }) => {
+  console.log("📥 read-markdown called with URL:", url, " | raw:", raw);
   const res = await fetch(url);
   const text = await res.text();
 
@@ -163,7 +164,7 @@ ipcMain.handle("read-markdown", async (_, { url, raw = false }) => {
 ipcMain.handle("write-markdown", async (event, data) => {
   console.log("📥 Raw Payload received in Main:", data);
   // Déstructuration sécurisée
-  console.log(`\n--- 📝 START WRITE-MARKDOWN ---`)
+  console.log(`\n--- 📝 START WRITE-MARKDOWN ---`);
   console.log(`📍 File: ${data.fileName} | Branch: ${data.branch || "main"}`);
   const { fileName, content, branch = "main" } = data;
   if (!fileName || !content) {
@@ -230,6 +231,94 @@ ipcMain.handle("write-markdown", async (event, data) => {
   } catch (err) {
     console.error("💥 CRITICAL ERROR in write-markdown:");
     console.error(err);
+    return { ok: false, error: err.message };
+  }
+});
+
+ipcMain.handle("write-markdown-Create", async (event, data) => {
+  const { fileName, content, branch = "main" } = data;
+  if (!fileName || !content)
+    return { ok: false, error: "Missing fileName or content" };
+
+  try {
+    // 1. CHECK : Est-ce que le fichier existe ?
+    let currentSha = null;
+    const metaUrl = `${FORGEJO.base}/api/v1/repos/${FORGEJO.repo}/contents/${fileName}?ref=${branch}`;
+
+    console.log(`🔍 Vérification de l'existence : ${fileName} sur ${branch}`);
+
+    const metaRes = await fetch(metaUrl, {
+      headers: { Authorization: `token ${FORGEJO.token}` },
+    });
+
+    if (metaRes.ok) {
+      const fileData = await metaRes.json();
+      currentSha = fileData.sha;
+      console.log(
+        `✅ EXISTE : SHA trouvé (${currentSha}). On passe en mode UPDATE.`,
+      );
+    } else if (metaRes.status === 404) {
+      console.log(`ℹ️ INEXISTANT (404). On passe en mode CRÉATION.`);
+    } else {
+      const errText = await metaRes.text();
+      throw new Error(`Erreur check existence: ${metaRes.status} - ${errText}`);
+    }
+
+    // 2. PRÉPARATION DU PAYLOAD
+    const encoded = Buffer.from(content, "utf-8").toString("base64");
+    const putUrl = `${FORGEJO.base}/api/v1/repos/${FORGEJO.repo}/contents/${fileName}`;
+
+    const payload = {
+      content: encoded,
+      message: currentSha ? `🛠 update ${fileName}` : `✨ create ${fileName}`,
+      branch: branch,
+    };
+
+    // La clé du succès : on n'ajoute le SHA que si le fichier existe
+    let response;
+
+    if (currentSha) {
+      // UPDATE
+      response = await fetch(putUrl, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `token ${FORGEJO.token}`,
+        },
+        body: JSON.stringify({
+          content: encoded,
+          message: `🛠 update ${fileName}`,
+          sha: currentSha,
+          branch,
+        }),
+      });
+    } else {
+      // CREATE
+      response = await fetch(putUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `token ${FORGEJO.token}`,
+        },
+        body: JSON.stringify({
+          content: encoded,
+          message: `✨ create ${fileName}`,
+          branch,
+        }),
+      });
+    }
+
+    if (!response.ok) {
+      const errBody = await response.text();
+      console.error("❌ Échec du PUT Forgejo:", errBody);
+      throw new Error(`Forgejo error ${response.status}: ${errBody}`);
+    }
+
+    const result = await response.json();
+    console.log(`🚀 Opération réussie pour ${fileName}`);
+    return { ok: true, result };
+  } catch (err) {
+    console.error("💥 Erreur dans write-markdown:", err.message);
     return { ok: false, error: err.message };
   }
 });
@@ -324,6 +413,29 @@ ipcMain.handle("get-file-branches", async (_, { fileName }) => {
     return [];
   }
 });
+
+
+
+ipcMain.handle("get-all-branches", async () => {
+  try {
+    const res = await fetch(
+      `${FORGEJO.base}/api/v1/repos/${FORGEJO.repo}/branches`,
+      {
+        headers: {
+          Authorization: `token ${FORGEJO.token}`,
+        },
+      }
+    );
+
+    const branches = await res.json();
+
+    return branches.map((b) => b.name);
+  } catch (err) {
+    console.error("❌ Branch fetch error:", err);
+    return [];
+  }
+});
+
 
 // =======================================================
 // 🔌 IPC BOOKS

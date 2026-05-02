@@ -66,8 +66,8 @@ export default function PersonLayout({ children }) {
 
     {
       label: "🔄 Rescan Books",
-      // onClick: handleRescan,/////////////////////////////////////////////on block for now
-    },
+      onClick: handleRescan,
+    }
   ];
 
   // === PRIORITÉ AUX MODES ===
