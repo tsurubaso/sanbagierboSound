@@ -11,24 +11,12 @@ export default function Header() {
       <NavLink to="/" className={linkStyle} end>
         Home
       </NavLink>
-      <NavLink to="/basic" className={linkStyle}>
-        Basic
-      </NavLink>
-      <NavLink to="/option" className={linkStyle}>
-        Options
-      </NavLink>
 
-      <NavLink to="/events" className={linkStyle}>
-        Events
-      </NavLink>
 
       <NavLink to="/plugins" className={linkStyle}>
         Plugins
       </NavLink>
 
-      <NavLink to="/other" className={linkStyle}>
-        Other Libraries
-      </NavLink>
       
       <NavLink to="/audioprocessing" className={linkStyle}>
         Audio Processing

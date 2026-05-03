@@ -24,6 +24,8 @@ export default function MicRecorder() {
     });
   }, []);
 
+
+
   // ----------------------------------------------------
   // Initialize Wavesurfer + Recorder
   // ----------------------------------------------------
@@ -60,9 +62,27 @@ export default function MicRecorder() {
     });
   };
 
+    // ----------------------------------------------------
+  // Ajout recent de l'IA
+  // ----------------------------------------------------
+
+  useEffect(() => {
+  initWaveSurfer();
+
+  return () => {
+    if (wavesurferRef.current) {
+      wavesurferRef.current.destroy();
+    }
+  };
+}, []);
+
+/*
+
+// Alternative : ce qu'il y avait avant.
   useEffect(() => {
     initWaveSurfer();
   }, []);
+*/
 
   // ----------------------------------------------------
   // Start Recording
