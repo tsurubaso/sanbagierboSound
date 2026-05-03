@@ -1,1 +1,0 @@
-${FORGEJO_BASE}/api/v1/repos/${FORGEJO_REPO}/raw/${book.path}?ref=${selectedBranch}`

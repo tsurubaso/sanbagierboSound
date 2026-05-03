@@ -38,7 +38,6 @@
     "react-markdown": "^10.1.0",
     "react-router-dom": "^7.14.2",
     "rehype-raw": "^7.0.0",
-    "simple-git": "^3.36.0",
     "wavesurfer.js": "^7.12.6"
   },
   "devDependencies": {

@@ -1,0 +1,36 @@
+{
+  "$schema": "https://unpkg.com/knip/schema.json",
+  "entry": [
+    "next.config.js",
+    "next.config.mjs",
+    "pages/**/*.{ts,tsx,js,jsx}",
+    "app/**/*.{ts,tsx,js,jsx}",
+    "src/pages/**/*.{ts,tsx,js,jsx}",
+    "src/app/**/*.{ts,tsx,js,jsx}"
+  ],
+  "project": [
+    "src/**/*.{ts,tsx,js,jsx}",
+    "pages/**/*.{ts,tsx,js,jsx}",
+    "app/**/*.{ts,tsx,js,jsx}",
+    "components/**/*.{ts,tsx,js,jsx}",
+    "lib/**/*.{ts,tsx,js,jsx}"
+  ],
+  "ignore": [
+    "**/*.d.ts",
+    "next-env.d.ts",
+    "**/*.config.{js,ts,mjs,cjs}",
+    "**/middleware.{ts,js}",
+    "**/instrumentation.{ts,js}",
+    "**/*.stories.{ts,tsx}",
+    "**/*.test.{ts,tsx}",
+    "**/*.spec.{ts,tsx}",
+    "src/archives/**"
+  ],
+  "ignoreDependencies": [
+    "eslint",
+    "prettier",
+    "postcss",
+    "tailwindcss",
+    "@types/*"
+  ]
+}
