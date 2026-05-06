@@ -25,6 +25,4 @@ dist-ssr
 *.sln
 *.sw?
 
-ERASEME.js
-eraseme.md
-ERASEME2.js
+eraseme*

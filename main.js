@@ -379,6 +379,33 @@ ipcMain.handle("run-python-stt", (event, config) => {
   );
 });
 
+
+ipcMain.handle("save-audio-file", async (_, { fileName, data }) => {
+  try {
+    // 1. Ouvrir la fenêtre "Enregistrer sous"
+    const { filePath, canceled } = await dialog.showSaveDialog({
+      title: 'Exporter le fichier audio nettoyé',
+       defaultPath: path.join(app.getPath('downloads'), fileName),
+      filters: [
+        { name: 'Audio Files', extensions: ['wav'] }
+      ]
+    });
+
+    // 2. Si l'utilisateur a cliqué sur annuler
+    if (canceled || !filePath) {
+      return { ok: false, error: "Sauvegarde annulée" };
+    }
+
+    // 3. Écrire le fichier au chemin choisi
+    await fs.promises.writeFile(filePath, Buffer.from(data));
+    
+    return { ok: true, path: filePath };
+  } catch (err) {
+    console.error("❌ Error saving audio file:", err);
+    return { ok: false, error: err.message };
+  }
+});
+
 // =======================================================
 // 🌿 BRANCHES (Forgejo)
 // =======================================================

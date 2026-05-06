@@ -12,6 +12,7 @@ export default function SoundPlayerWave({ onAudioBuffer }) {
   const [zoom, setZoom] = useState(100);
   const [isPlaying, setIsPlaying] = useState(false);
   const [audioInfo, setAudioInfo] = useState(null);
+  const audioCtxRef = useRef(null);
 
   // INIT WaveSurfer (UNE SEULE FOIS)
   useEffect(() => {
@@ -78,7 +79,12 @@ export default function SoundPlayerWave({ onAudioBuffer }) {
     // récupérer AudioBuffer pour traitements futurs
     const response = await fetch(audio.url);
     const arrayBuffer = await response.arrayBuffer();
-    const audioBuffer = await wsRef.current.backend.ac.decodeAudioData(arrayBuffer);
+
+    if (!audioCtxRef.current) {
+      audioCtxRef.current = new AudioContext();
+    }
+
+    const audioBuffer = await audioCtxRef.current.decodeAudioData(arrayBuffer);
 
     const data = {
       audioBuffer,
@@ -142,20 +148,12 @@ export default function SoundPlayerWave({ onAudioBuffer }) {
       {audioInfo && (
         <div className="text-gray-300 text-sm">
           <p>Path: {audioInfo.path}</p>
-          <p>
-            Duration: {audioInfo.audioBuffer.duration.toFixed(2)} s
-          </p>
+          <p>Duration: {audioInfo.audioBuffer.duration.toFixed(2)} s</p>
         </div>
       )}
     </div>
   );
 }
-
-
-
-
-
-
 
 /*
 
