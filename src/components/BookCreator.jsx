@@ -15,11 +15,58 @@ timelineStart:
 timelineEnd: 
 ---
 
+Be sure to fill in the link, it will determine the file name on Forgejo and is required for saving!
+
 # Titre
 `;
 
   const [code, setCode] = useState(initialTemplate);
   const [saving, setSaving] = useState(false);
+  const [transcribing, setTranscribing] = useState(false);
+
+  const handleTranscription = async () => {
+    try {
+      setTranscribing(true);
+
+      // choisir audio
+      const audio = await window.electronAPI.openAudio();
+
+      if (!audio) return;
+
+      const outputPath = audio.path.replace(/\.[^/.]+$/, "") + ".txt";
+
+      // lancer whisper python
+      const result = await window.electronAPI.speechToText(
+        audio.path,
+        outputPath,
+      );
+
+      if (!result.ok) {
+        alert(`Erreur transcription : ${result.error}`);
+        console.error(result.errors);
+        return;
+      }
+
+      // lire txt
+      const content = await window.electronAPI.readTextFile(outputPath);
+
+      // déclencher event global
+      window.dispatchEvent(
+        new CustomEvent("transcription-imported", {
+          detail: {
+            content,
+          },
+        }),
+      );
+
+      alert("✅ Transcription terminée !");
+    } catch (err) {
+      console.error(err);
+      alert("Erreur critique transcription");
+    } finally {
+      setTranscribing(false);
+    }
+  };
 
   // Écoute les imports de transcription (ton workflow Python/Ollama)
   useEffect(() => {
@@ -98,7 +145,19 @@ timelineEnd:
           }}
         />
       </div>
-
+      <button
+        onClick={handleTranscription}
+        disabled={transcribing || saving}
+        className={`mt-4 py-3 px-6 rounded-lg text-white font-bold transition-all shadow-lg ${
+          transcribing
+            ? "bg-gray-600 opacity-50"
+            : "bg-purple-600 hover:bg-purple-700"
+        }`}
+      >
+        {transcribing
+          ? "Transcription IA en cours..."
+          : "🎤 Transcrire Audio (Whisper Local)"}
+      </button>
       <button
         onClick={handleSave}
         disabled={saving || !code.trim()}

@@ -120,7 +120,7 @@ export default function PersonLayout({ children }) {
     );
   }
 
-  if (isSoundWork || isAudioProcessing) {
+  if (isSoundWork) {
     return (
       <ClientWrapper
         navItemsTop={navItemsTop}

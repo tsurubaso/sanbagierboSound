@@ -4,15 +4,16 @@
 import dotenv from "dotenv";
 dotenv.config();
 
+
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import { app, BrowserWindow, dialog, ipcMain } from "electron";
 import path from "path";
 import fs from "fs";
+import fsp from "fs/promises";
 import Store from "electron-store";
 import { spawn } from "child_process";
 import matter from "gray-matter";
-import { data } from "react-router-dom";
 
 // =======================================================
 // 📁 PATHS & GLOBAL CONFIG
@@ -30,9 +31,6 @@ const BASE_PATH = app.isPackaged ? process.resourcesPath : __dirname;
 
 // 🔹 Output folder (audio / python)
 const OUTPUT_DIR = path.join(BASE_PATH, "output");
-
-// 🔹 Cache TTL (⚠️ inutilisé actuellement → voir note plus bas)
-const CACHE_TTL = 60 * 60 * 1000;
 
 // 🔹 Forgejo config centralisée
 const FORGEJO = {
@@ -349,34 +347,61 @@ ipcMain.handle("open-audio-dialog", async () => {
 // 🐍 PYTHON
 // =======================================================
 
-ipcMain.handle("run-python-stt", (event, config) => {
-  const exe = path.join(BASE_PATH, "dist", "speech_to_text8Elec.exe");
+ipcMain.handle("speech-to-text", async (_, args) => {
+  return new Promise((resolve) => {
 
-  if (!fs.existsSync(exe)) {
-    console.error("❌ EXE not found");
-    return;
-  }
+    const pythonPath = path.join(
+      process.cwd(),
+      "python",
+      "venv",
+      "Scripts",
+      "python.exe"
+    );
 
-  config.output_path = path.join(OUTPUT_DIR, `transcription_${Date.now()}.md`);
+    const scriptPath = path.join(
+      process.cwd(),
+      "python",
+      "transcribe.py"
+    );
 
-  const child = spawn(exe, [JSON.stringify(config)], {
-    stdio: ["ignore", "pipe", "pipe"],
+    const py = spawn(pythonPath, [
+      scriptPath,
+      args.input,
+      args.output,
+    ]);
+
+    let logs = "";
+    let errors = "";
+
+    py.stdout.on("data", (data) => {
+      const text = data.toString();
+
+      console.log(text);
+
+      logs += text;
+    });
+
+    py.stderr.on("data", (data) => {
+      const text = data.toString();
+
+      console.error(text);
+
+      errors += text;
+    });
+
+    py.on("close", (code) => {
+      resolve({
+        ok: code === 0,
+        code,
+        logs,
+        errors,
+      });
+    });
   });
+});
 
-  child.stdout.on("data", (d) =>
-    event.sender.send("python-output", d.toString()),
-  );
-
-  child.stderr.on("data", (d) =>
-    event.sender.send("python-error", d.toString()),
-  );
-
-  child.on("close", (code) =>
-    event.sender.send("python-exit", {
-      code,
-      output_path: config.output_path,
-    }),
-  );
+ipcMain.handle("read-text-file", async (_, path) => {
+  return await fsp.readFile(path, "utf-8");
 });
 
 

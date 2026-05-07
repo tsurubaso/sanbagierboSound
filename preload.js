@@ -52,18 +52,13 @@ contextBridge.exposeInMainWorld("electronAPI", {
   readMarkdownEditing: (filePath) =>
     ipcRenderer.invoke("read-markdown-editing", filePath),
 
-
-
   //fonctions liées à Manipulation de fichiers sur Forgejo
   ///////////////////////////////////////////////////////////////
 
-
   writeMarkdownCreate: (data) =>
-    ipcRenderer.invoke("write-markdown-Create",  data ),
+    ipcRenderer.invoke("write-markdown-Create", data),
 
-    writeMarkdown: (data) =>
-    ipcRenderer.invoke("write-markdown",  data ),
-
+  writeMarkdown: (data) => ipcRenderer.invoke("write-markdown", data),
 
   getFileBranches: (data) => ipcRenderer.invoke("get-file-branches", data),
 
@@ -73,7 +68,6 @@ contextBridge.exposeInMainWorld("electronAPI", {
   // creer fichier
   createOrUpdateBook: (fileName, content) =>
     ipcRenderer.invoke("create-or-update-book", { fileName, content }),
-
 
   //fonctions liées à Gitthub
   githubProfile: () => ipcRenderer.invoke("github-profile"),
@@ -103,6 +97,17 @@ contextBridge.exposeInMainWorld("electronAPI", {
   showOpenDialog: () => ipcRenderer.invoke("open-dialog"),
   selectTranscriptionFile: () => ipcRenderer.invoke("select-transcription"),
   readFile: (path) => ipcRenderer.invoke("read-file", path),
+  speechToText: (input, output) =>
+    ipcRenderer.invoke("speech-to-text", {
+      input,
+      output,
+    }),
+
+  readTextFile: (path) => ipcRenderer.invoke("read-text-file", path),
 });
 
 console.log("preload loaded");
+
+// ...
+
+// ...
