@@ -106,6 +106,7 @@ export default function SoundPlayerWave({ onAudioBuffer }) {
     if (!wsRef.current) return;
     wsRef.current.playPause();
   };
+  
 
   return (
     <div className="space-y-4">

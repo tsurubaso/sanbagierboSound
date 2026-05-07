@@ -13,7 +13,7 @@ const Creator = lazy(() => import("@/pages/Creator"));
 const Lecturer = lazy(() => import("@/pages/Lecturer"));
 const Merger = lazy(() => import("@/pages/Merger"));
 const SoundWork = lazy(() => import("@/pages/SoundWork"));
-const AudioProcessing = lazy(() => import("@/pages/AudioProcessing"));
+
 
 function App() {
   return (
@@ -75,11 +75,6 @@ function App() {
                   <Route
                     path="/:person/:statuslist/:link/soundwork"
                     element={<SoundWork />}
-                  />
-                  {/* 🎵 Audio Processing*/}
-                  <Route
-                    path="/:person/:statuslist/:link/audioprocessing"
-                    element={<AudioProcessing />}
                   />
                 </Routes>
               </PersonLayout>

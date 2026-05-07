@@ -24,8 +24,6 @@ export default function MicRecorder() {
     });
   }, []);
 
-
-
   // ----------------------------------------------------
   // Initialize Wavesurfer + Recorder
   // ----------------------------------------------------
@@ -44,7 +42,7 @@ export default function MicRecorder() {
         renderRecordedAudio: false,
         scrollingWaveform: true,
         continuousWaveform: false,
-      })
+      }),
     );
 
     wavesurferRef.current = ws;
@@ -62,21 +60,21 @@ export default function MicRecorder() {
     });
   };
 
-    // ----------------------------------------------------
+  // ----------------------------------------------------
   // Ajout recent de l'IA
   // ----------------------------------------------------
 
   useEffect(() => {
-  initWaveSurfer();
+    initWaveSurfer();
 
-  return () => {
-    if (wavesurferRef.current) {
-      wavesurferRef.current.destroy();
-    }
-  };
-}, []);
+    return () => {
+      if (wavesurferRef.current) {
+        wavesurferRef.current.destroy();
+      }
+    };
+  }, []);
 
-/*
+  /*
 
 // Alternative : ce qu'il y avait avant.
   useEffect(() => {
@@ -124,9 +122,177 @@ export default function MicRecorder() {
     }
   };
 
+  // ----------------------------------------------------
+  // LOAD AUDIO (AUTOMATIC - DRAG & DROP)
+  const wsRef = useRef(null);
+
+  useEffect(() => {
+    const ws = wsRef.current;
+    if (!ws) return;
+
+    const handleDrop = (e) => {
+      e.preventDefault();
+      if (e.dataTransfer.files.length > 0) {
+        const file = e.dataTransfer.files[0];
+        ws.load(URL.createObjectURL(file));
+      }
+    };
+
+    wsRef.current
+      .getWrapper()
+      .addEventListener("dragover", (e) => e.preventDefault());
+    wsRef.current.getWrapper().addEventListener("drop", handleDrop);
+
+    ws.registerPlugin({
+      name: "customCursor",
+      params: {
+        color: "#ff66cc",
+      },
+      instance: {
+        init() {
+          const cursor = document.createElement("div");
+          cursor.style.position = "absolute";
+          cursor.style.top = "0";
+          cursor.style.width = "2px";
+          cursor.style.height = "100%";
+          cursor.style.backgroundColor = this.params.color;
+          cursor.style.pointerEvents = "none";
+          this.cursor = cursor;
+          this.wrapper.appendChild(cursor);
+        },
+      },
+    });
+
+    return () => {
+      if (ws) {
+        ws.getWrapper().removeEventListener("dragover", (e) =>
+          e.preventDefault(),
+        );
+        ws.getWrapper().removeEventListener("drop", handleDrop);
+      }
+    };
+  }, []);
+
+  const handleExportWav = async (blob, index) => {
+    try {
+      // 1. Préparation du nom de fichier (Format: recording_1_2026-05-07_1430.wav)
+      const date = new Date().toISOString().split("T")[0];
+      const time = new Date()
+        .toLocaleTimeString("fr-FR")
+        .replace(/:/g, "")
+        .split(" ")[0]
+        .slice(0, 4);
+
+      const newName = `recording_${index + 1}_${date}_${time}.wav`;
+
+      // 2. Conversion Blob -> AudioBuffer
+      const arrayBuffer = await blob.arrayBuffer();
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+      await audioCtx.close(); // Libère les ressources matérielles audio//////////////////////////////
+
+
+
+      // 3. Conversion AudioBuffer -> WAV (via ta fonction utilitaire)
+      const wavArrayBuffer = audioBufferToWav(audioBuffer);
+      const bytes = new Uint8Array(wavArrayBuffer);
+
+      // 4. Appel à Electron (Vérifie bien si c'est electronAPI ou electron dans ton preload)
+      const result = await window.electronAPI.saveAudioFile({
+        fileName: newName,
+        data: bytes,
+      });
+
+      if (result.ok) {
+        console.log("Succès !", result.path);
+      }
+    } catch (err) {
+      console.error("Erreur lors de l'export WAV :", err);
+      alert(
+        "Erreur de communication avec Electron. Vérifie window.electronAPI dans ton preload.",
+      );
+    }
+  };
+
+  // --- Utility: AudioBuffer to WAV ---
+  function audioBufferToWav(buffer) {
+    const numChannels = buffer.numberOfChannels;
+    const sampleRate = buffer.sampleRate;
+    const format = 1; // PCM
+    const bitDepth = 16;
+
+    const bytesPerSample = bitDepth / 8;
+    const blockAlign = numChannels * bytesPerSample;
+
+    const bufferLength = buffer.length;
+    const dataSize = bufferLength * blockAlign;
+    const headerSize = 44;
+    const totalSize = headerSize + dataSize;
+
+    const arrayBuffer = new ArrayBuffer(totalSize);
+    const view = new DataView(arrayBuffer);
+
+    const writeString = (offset, string) => {
+      for (let i = 0; i < string.length; i++) {
+        view.setUint8(offset + i, string.charCodeAt(i));
+      }
+    };
+
+    /* RIFF identifier */
+    writeString(0, "RIFF");
+    /* file length */
+    view.setUint32(4, totalSize - 8, true);
+    /* RIFF type */
+    writeString(8, "WAVE");
+    /* format chunk identifier */
+    writeString(12, "fmt ");
+    /* format chunk length */
+    view.setUint32(16, 16, true);
+    /* sample format (raw) */
+    view.setUint16(20, format, true);
+    /* channel count */
+    view.setUint16(22, numChannels, true);
+    /* sample rate */
+    view.setUint32(24, sampleRate, true);
+    /* byte rate (sample rate * block align) */
+    view.setUint32(28, sampleRate * blockAlign, true);
+    /* block align (channel count * bytes per sample) */
+    view.setUint16(32, blockAlign, true);
+    /* bits per sample */
+    view.setUint16(34, bitDepth, true);
+    /* data chunk identifier */
+    writeString(36, "data");
+    /* data chunk length */
+    view.setUint32(40, dataSize, true);
+
+    // Write PCM samples
+    const offset = 44;
+    const channelData = [];
+    for (let i = 0; i < numChannels; i++) {
+      channelData.push(buffer.getChannelData(i));
+    }
+
+    let index = 0;
+    for (let i = 0; i < bufferLength; i++) {
+      for (let ch = 0; ch < numChannels; ch++) {
+        let sample = channelData[ch][i];
+        // Clamp sample to [-1, 1]
+        sample = Math.max(-1, Math.min(1, sample));
+        // Convert to 16-bit PCM
+        view.setInt16(
+          offset + index,
+          sample < 0 ? sample * 0x8000 : sample * 0x7fff,
+          true,
+        );
+        index += 2;
+      }
+    }
+
+    return arrayBuffer;
+  }
+
   return (
     <div className="p-4 space-y-4 text-white">
-
       {/* Device select */}
       <div>
         <label className="block mb-1 font-semibold">Microphone</label>
@@ -194,15 +360,30 @@ export default function MicRecorder() {
       {/* Recordings list */}
       <div className="space-y-3">
         {recordings.map((r, index) => (
-          <div key={index} className="bg-gray-900 p-3 rounded">
+          <div
+            key={index}
+            className="bg-gray-900 p-3 rounded flex flex-col gap-2"
+          >
             <audio controls src={r.url} className="w-full" />
-            <a
-              href={r.url}
-              download={`recording-${index}.webm`}
-              className="text-blue-400 underline text-sm"
-            >
-              Download recording
-            </a>
+
+            <div className="flex justify-between items-center">
+              {/* Ton lien existant pour le téléchargement WebM direct */}
+              <a
+                href={r.url}
+                download={`recording-${index}.webm`}
+                className="text-blue-400 underline text-sm"
+              >
+                Download (WebM)
+              </a>
+
+              {/* Nouveau bouton pour l'export WAV via Electron */}
+              <button
+                onClick={() => handleExportWav(r.blob, index)}
+                className="bg-blue-600 hover:bg-blue-700 text-white text-xs py-1 px-3 rounded transition-colors"
+              >
+                💾 Save as WAV
+              </button>
+            </div>
           </div>
         ))}
       </div>

@@ -26,7 +26,7 @@ export default function PersonLayout({ children }) {
   const isLecturer = pathname.endsWith("/lecturer");
   const isMerger = pathname.endsWith("/merger");
   const isSoundWork = pathname.endsWith("/soundwork");
-  const isAudioProcessing = pathname.endsWith("/audioprocessing");
+
 
   // Base path
   const basePath = pathname.split("/").slice(0, -1).join("/");
@@ -51,7 +51,7 @@ export default function PersonLayout({ children }) {
     { href: `${basePath}/creator`, label: "🖋️ Creator" },
     { href: `${basePath}/lecturer`, label: "🎤 Lecturer" },
     { href: `${basePath}/soundwork`, label: "🎵 Sound Work" },
-    { href: `${basePath}/audioprocessing`, label: "🎚️ Audio Processing" },
+
   ];
 
   // Boutons d'action
