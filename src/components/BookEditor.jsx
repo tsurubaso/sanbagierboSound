@@ -1,8 +1,9 @@
 // src/components/BookEditor.jsx
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Editor from "@monaco-editor/react";
 import { getBooksData } from "@/services/getBooksData.jsx";
+import { Pin } from "lucide-react";
 
 export default function BookEditor() {
   const [content, setContent] = useState("");
@@ -14,6 +15,10 @@ export default function BookEditor() {
   const [isRawMode, setIsRawMode] = useState(false);
   const navigate = useNavigate();
   const { link } = useParams();
+  // state en haut de ton composant
+  const [showPinterestModal, setShowPinterestModal] = useState(false);
+  const [pinterestUrl, setPinterestUrl] = useState("");
+  const editorRef = useRef(null);
 
   // 1. Charger les métadonnées et la liste des branches au montage
   useEffect(() => {
@@ -94,6 +99,65 @@ export default function BookEditor() {
       alert("Failed to save file.");
     }
   };
+  // Insert Pinterest embed
+
+  // ton extracteur (légèrement renforcé)
+  function extractPinterestId(url) {
+    try {
+      const u = new URL(url);
+      const match = u.pathname.match(/\/pin\/(\d+)(\/|$)/);
+      return match ? match[1] : null;
+    } catch {
+      return null;
+    }
+  }
+
+  // 👉 bouton appelle juste ça maintenant
+  function insertPinterestEmbed() {
+    setPinterestUrl("");
+    setShowPinterestModal(true);
+  }
+
+  // 👉 vraie insertion ici
+  function confirmPinterestEmbed() {
+    const id = extractPinterestId(pinterestUrl);
+
+    if (!id) {
+      alert("URL Pinterest invalide");
+      return;
+    }
+
+    const embed = `
+<iframe 
+  src="https://assets.pinterest.com/ext/embed.html?id=${id}"
+  height="700"
+  width="345"
+  frameborder="2"
+  scrolling="no"
+  sandbox="allow-scripts"
+  referrerpolicy="no-referrer"
+></iframe>
+`;
+
+    const editor = editorRef.current;
+    if (!editor) return;
+
+    const position = editor.getPosition();
+
+    editor.executeEdits("", [
+      {
+        range: {
+          startLineNumber: position.lineNumber,
+          startColumn: position.column,
+          endLineNumber: position.lineNumber,
+          endColumn: position.column,
+        },
+        text: embed,
+      },
+    ]);
+
+    setShowPinterestModal(false);
+  }
 
   // Affichage des états
   if (status === "loading" && !content) return <p className="p-4">Loading…</p>;
@@ -108,6 +172,14 @@ export default function BookEditor() {
         </div>
 
         <div className="flex gap-2">
+          <button
+            onClick={insertPinterestEmbed}
+            className="flex items-center gap-2 px-3 py-1.5 rounded-md border border-gray-500 text-gray-200 hover:bg-gray-700 transition"
+          >
+            <Pin size={16} />
+            Ajouter Image Pinterest
+          </button>
+
           {/* Nouveau bouton Raw */}
           <button
             onClick={() => setIsRawMode(!isRawMode)}
@@ -146,6 +218,9 @@ export default function BookEditor() {
 
       <div className="flex-1">
         <Editor
+          onMount={(editor) => {
+            editorRef.current = editor;
+          }}
           height="100%"
           defaultLanguage="markdown"
           theme="vs-dark"
@@ -161,6 +236,37 @@ export default function BookEditor() {
           }}
         />
       </div>
+      {showPinterestModal && (
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+          <div className="bg-gray-800 p-4 rounded-lg w-[400px]">
+            <h2 className="text-white mb-2">Ajouter un pin Pinterest</h2>
+
+            <input
+              type="text"
+              value={pinterestUrl}
+              onChange={(e) => setPinterestUrl(e.target.value)}
+              placeholder="https://www.pinterest.com/pin/123456789/"
+              className="w-full p-2 rounded bg-gray-700 text-white mb-3"
+            />
+
+            <div className="flex justify-end gap-2">
+              <button
+                onClick={() => setShowPinterestModal(false)}
+                className="px-3 py-1 bg-gray-600 rounded"
+              >
+                Annuler
+              </button>
+
+              <button
+                onClick={confirmPinterestEmbed}
+                className="px-3 py-1 bg-blue-600 rounded"
+              >
+                Insérer
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

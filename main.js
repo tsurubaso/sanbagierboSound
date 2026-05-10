@@ -512,3 +512,19 @@ app.whenReady().then(async () => {
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") app.quit();
 });
+
+
+// =======================================================
+//Pinterest
+// =======================================================
+
+ipcMain.handle("ask-pinterest-url", async () => {
+  const result = await dialog.showInputBox({
+    title: "Pinterest",
+    label: "Colle une URL Pinterest :",
+    placeholder: "https://www.pinterest.com/pin/123456789/",
+    value: "",
+  });
+
+  return result.value; // la valeur saisie
+});
