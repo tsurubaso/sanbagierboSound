@@ -3,6 +3,8 @@ import { HashRouter, Routes, Route } from "react-router-dom";
 import Home from "@/pages/Home";
 import PersonLayout from "@/layout/layout";
 
+import { IconNotFound,IconLoader } from "@/components/icons";
+
 // Lazy load pages
 const Rules = lazy(() => import("@/pages/Rules"));
 const IllustrationList = lazy(() => import("@/pages/illustrationlist"));
@@ -14,11 +16,17 @@ const Lecturer = lazy(() => import("@/pages/Lecturer"));
 const Merger = lazy(() => import("@/pages/Merger"));
 const SoundWork = lazy(() => import("@/pages/SoundWork"));
 
-
 function App() {
   return (
     <>
-      <Suspense fallback={<div className="p-6">Chargement...</div>}>
+      <Suspense
+        fallback={
+          <div className="p-6 flex items-center gap-2">
+            <IconLoader className="animate-spin" size={18} />
+            Chargement...
+          </div>
+        }
+      >
         <Routes>
           {/* 🏠 Home page - does not need layout */}
           <Route path="/" element={<Home />} />
@@ -82,7 +90,15 @@ function App() {
           />
 
           {/* ⚠️ Fallback */}
-          <Route path="*" element={<div>Page non trouvée</div>} />
+          <Route
+            path="*"
+            element={
+              <div className="p-6 flex items-center gap-2 text-red-500">
+                <IconNotFound size={18} />
+                Page non trouvée
+              </div>
+            }
+          />
         </Routes>
       </Suspense>
     </>

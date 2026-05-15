@@ -6,6 +6,17 @@ import SpeechToTextLauncher from "@/components/SpeechToTextLauncher";
 import ImportTranscriptionButton from "@/components/ImportTranscriptionButton";
 import AudioPlayerWaveform from "@/components/AudioPlayerWaveform";
 
+import {
+  IconReader,
+  IconEditor,
+  IconMerger,
+  IconCreator,
+  IconLecturer,
+  IconSoundWork,
+  IconBack,
+  IconRescan,
+} from "@/components/icons";
+
 export default function PersonLayout({ children }) {
   const location = useLocation();
   const navigate = useNavigate();
@@ -44,35 +55,88 @@ export default function PersonLayout({ children }) {
     }
   };
 
-  const navItemsTop = [
-    { href: `${basePath}/reader`, label: "📖 Reader" },
-    { href: `${basePath}/editor`, label: "✏️ Editor" },
-    { href: `${basePath}/merger`, label: "🔄 Merger" },
-    { href: `${basePath}/creator`, label: "🖋️ Creator" },
-    { href: `${basePath}/lecturer`, label: "🎤 Lecturer" },
-    { href: `${basePath}/soundwork`, label: "🎵 Sound Work" },
-
-  ];
+const navItemsTop = [
+  {
+    href: `${basePath}/reader`,
+    label: (
+      <span className="flex items-center gap-2">
+        <IconReader size={18} /> Reader
+      </span>
+    ),
+  },
+  {
+    href: `${basePath}/editor`,
+    label: (
+      <span className="flex items-center gap-2">
+        <IconEditor size={18} /> Editor
+      </span>
+    ),
+  },
+  {
+    href: `${basePath}/merger`,
+    label: (
+      <span className="flex items-center gap-2">
+        <IconMerger size={18} /> Merger
+      </span>
+    ),
+  },
+  {
+    href: `${basePath}/creator`,
+    label: (
+      <span className="flex items-center gap-2">
+        <IconCreator size={18} /> Creator
+      </span>
+    ),
+  },
+  {
+    href: `${basePath}/lecturer`,
+    label: (
+      <span className="flex items-center gap-2">
+        <IconLecturer size={18} /> Lecturer
+      </span>
+    ),
+  },
+  {
+    href: `${basePath}/soundwork`,
+    label: (
+      <span className="flex items-center gap-2">
+        <IconSoundWork size={18} /> Sounder
+      </span>
+    ),
+  },
+];
 
   // Boutons d'action
-  const actionButtons = [
-    {
-      label: "⬅️ Go Back",
-      onClick: () => navigate(-1),
-    },
-  ];
+const actionButtons = [
+  {
+    label: (
+      <span className="flex items-center gap-2">
+        <IconBack size={16} /> Go Back
+      </span>
+    ),
+    onClick: () => navigate(-1),
+  },
+];
 
-  const actionButtonsGrid = [
-    {
-      label: "⬅️ Go Back",
-      onClick: () => navigate(-1),
-    },
+const actionButtonsGrid = [
+  {
+    label: (
+      <span className="flex items-center gap-2">
+        <IconBack size={16} /> Go Back
+      </span>
+    ),
+    onClick: () => navigate(-1),
+  },
+  {
+    label: (
+      <span className="flex items-center gap-2">
+        <IconRescan size={16} /> Rescan Books
+      </span>
+    ),
+    onClick: handleRescan,
+  },
+];
 
-    {
-      label: "🔄 Rescan Books",
-      onClick: handleRescan,
-    },
-  ];
 
   // === PRIORITÉ AUX MODES ===
   if (isReader) {

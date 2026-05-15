@@ -8,6 +8,15 @@ import RightSidebar from "./RightSidebar";
 import TopBar from "./TopBar";
 import Footer from "./Footer";
 
+import {
+  IconRules,
+  IconStories,
+  IconDrafts,
+  IconFragments,
+  IconOthers,
+  IconIllustrations,
+} from "@/components/icons";
+
 export default function ClientWrapper({
   children,
   navItemsTop = [],
@@ -31,12 +40,54 @@ export default function ClientWrapper({
   const currentPerson = person;
 
   const navItems = [
-    { href: `/${currentPerson}/Rules`, label: "📜 Les Règles" },
-    { href: `/${currentPerson}/storylist`, label: "📚 Histoires" },
-    { href: `/${currentPerson}/draftlist`, label: "📝 Brouillons" },
-    { href: `/${currentPerson}/fragmentlist`, label: "✂️ Fragments" },
-    { href: `/${currentPerson}/otherlist`, label: "🗂️ Autres" },
-    { href: `/${currentPerson}/illustrationlist`, label: "🎨 Illustrations" },
+    {
+      href: `/${currentPerson}/Rules`,
+      label: (
+        <span className="flex items-center gap-2">
+          <IconRules size={18} /> Les Règles
+        </span>
+      ),
+    },
+    {
+      href: `/${currentPerson}/storylist`,
+      label: (
+        <span className="flex items-center gap-2">
+          <IconStories size={18} /> Histoires
+        </span>
+      ),
+    },
+    {
+      href: `/${currentPerson}/draftlist`,
+      label: (
+        <span className="flex items-center gap-2">
+          <IconDrafts size={18} /> Brouillons
+        </span>
+      ),
+    },
+    {
+      href: `/${currentPerson}/fragmentlist`,
+      label: (
+        <span className="flex items-center gap-2">
+          <IconFragments size={18} /> Fragments
+        </span>
+      ),
+    },
+    {
+      href: `/${currentPerson}/otherlist`,
+      label: (
+        <span className="flex items-center gap-2">
+          <IconOthers size={18} /> Autres
+        </span>
+      ),
+    },
+    {
+      href: `/${currentPerson}/illustrationlist`,
+      label: (
+        <span className="flex items-center gap-2">
+          <IconIllustrations size={18} /> Illustrations
+        </span>
+      ),
+    },
   ];
 
   return (
@@ -47,8 +98,8 @@ export default function ClientWrapper({
           <TopBar
             onToggleLeft={() => setShowLeft(!showLeft)}
             onToggleRight={() => setShowRight(!showRight)}
-           navItems={navItemsTop}
-          actionButtons={actionButtons}
+            navItems={navItemsTop}
+            actionButtons={actionButtons}
           />
         )}
 

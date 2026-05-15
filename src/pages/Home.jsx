@@ -17,10 +17,7 @@ const {
 
 const Home = () => {
   const navigate = useNavigate();
-  const routes = [
-    { label: "C'est par là!", path: "/BILLY/Rules" },
-
-  ];
+  const routes = [{ label: "C'est par là!", path: "/BILLY/Rules" }];
   const handleClick = (path) => {
     navigate(path);
   };
@@ -44,7 +41,7 @@ const Home = () => {
           hover
         >
           <GradientText
-            text="🚀 Notre objectif 🚀"
+            text=" Notre objectif "
             className="text-3xl font-bold text-center"
           />
         </HeroSection>
@@ -66,7 +63,7 @@ const Home = () => {
           hover
         >
           <GradientText
-            text="📖 Lecteur 📖"
+            text=" Lecteur "
             className="text-4xl font-bold text-center"
           />
         </HeroSection>
@@ -87,7 +84,7 @@ const Home = () => {
           hover
         >
           <GradientText
-            text="✍️ Éditeur ✍️"
+            text=" Éditeur "
             className="text-4xl font-bold text-center"
           />
         </HeroSection>
@@ -107,7 +104,7 @@ const Home = () => {
           hover
         >
           <GradientText
-            text="🔀 Mergeur 🔀"
+            text=" Mergeur "
             className="text-4xl font-bold text-center"
           />
         </HeroSection>
@@ -127,7 +124,7 @@ const Home = () => {
           hover
         >
           <GradientText
-            text="🌈 Évolutions futures 🌈"
+            text=" Évolutions futures "
             className="text-4xl font-bold text-center"
           />
         </HeroSection>
@@ -146,7 +143,7 @@ const Home = () => {
           hover
         >
           <GradientText
-            text="👁️Notre Vision👁️"
+            text="Notre Vision"
             className="text-4xl font-bold text-center"
           />
         </HeroSection>
@@ -165,7 +162,7 @@ Pour Jules, c’était Pierre-Jules Hetzel."
         />
         <HeroSection image="/image3.jpg" text="detail de la Lune" hover>
           <GradientText
-            text="🛠️Le projet?🛠️"
+            text="Le projet?"
             className="text-4xl font-bold text-center"
           />
         </HeroSection>
@@ -179,7 +176,7 @@ Pour ce que l'on aime, pour ceux que l'on aime."
         />
 
         <AnimatedText
-          text="📚 Comment contribuer?"
+          text=" Comment contribuer?"
           duration={10}
           className="text-4xl font-semibold"
         />
