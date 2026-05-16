@@ -1,0 +1,7 @@
+
+change this file name to .env and change fill in data
+Visual_Data_Source_URL=
+FORGEJO_USER=
+FORGEJO_REPO=
+FORGEJO_TOKEN=
+

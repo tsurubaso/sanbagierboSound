@@ -115,6 +115,90 @@ const Home = () => {
           </h2>
         </SlideIn>
 
+        {/* Nouvelle section 5.2026 */}
+        <HeroSection
+          direction="right"
+          duration="3"
+          text="Screenshot creator"
+          image="/screenShotCreator.png"
+          hover
+        >
+          <GradientText
+            text="Creator"
+            className="text-4xl font-bold text-center"
+          />
+        </HeroSection>
+
+        <SlideIn duration="3" from="left" className="bg-gray-600">
+          <h2 className="text-4xl font-bold">
+            Créez de nouveaux textes et enregistrez-les directement sur Forgejo.
+            Chaque idée peut devenir une base de travail versionnée, modifiable
+            et partageable avec vos collaborateurs.
+          </h2>
+        </SlideIn>
+
+        <HeroSection
+          direction="right"
+          duration="3"
+          text="Screenshot lecteur"
+          image="/screenShotLecteur.png"
+          hover
+        >
+          <GradientText
+            text="Lecteur"
+            className="text-4xl font-bold text-center"
+          />
+        </HeroSection>
+
+        <SlideIn duration="3" from="left" className="bg-gray-600">
+          <h2 className="text-4xl font-bold">
+            Accédez instantanément aux histoires. Lecture fluide, sans
+            distraction, pour se concentrer uniquement sur le contenu.
+          </h2>
+        </SlideIn>
+
+        <HeroSection
+          direction="right"
+          duration="3"
+          text="Reconnaissance vocale"
+          image="/screenShotSpeech.png"
+          hover
+        >
+          <GradientText
+            text="Dictée"
+            className="text-4xl font-bold text-center"
+          />
+        </HeroSection>
+
+        <SlideIn duration="3" from="left" className="bg-gray-600">
+          <h2 className="text-4xl font-bold">
+            Transformez votre voix en texte. Dictez vos idées à la volée et
+            laissez l’application générer une base de travail immédiatement
+            exploitable.
+          </h2>
+        </SlideIn>
+
+        <HeroSection
+          direction="right"
+          duration="3"
+          text="Audio et écoute"
+          image="/screenShotSound.png"
+          hover
+        >
+          <GradientText
+            text="Soundeur"
+            className="text-4xl font-bold text-center"
+          />
+        </HeroSection>
+
+        <SlideIn duration="3" from="left" className="bg-gray-600">
+          <h2 className="text-4xl font-bold">
+            Enregistrez, écoutez et retravaillez vos textes sous forme audio.
+            Une autre manière de ressentir le rythme, corriger et affiner vos
+            créations.
+          </h2>
+        </SlideIn>
+
         {/* Évolutions futures */}
         <HeroSection
           direction="right"
