@@ -1,5 +1,5 @@
-
 import { useState, useEffect } from "react";
+import { IconDark, IconLight } from "@/components/icons";
 
 export default function ThemeToggle() {
   const [isDark, setIsDark] = useState(true);
@@ -24,7 +24,15 @@ export default function ThemeToggle() {
       onClick={() => setIsDark(!isDark)}
       className="fixed bottom-4 left-20 z-50 px-3 py-1 rounded bg-gray-700 text-white hover:bg-gray-600"
     >
-      {isDark ? "☀️ Light" : "🌙 Dark"}
+      {isDark ? (
+        <span className="flex items-center gap-2">
+          <IconLight size={16} /> Light
+        </span>
+      ) : (
+        <span className="flex items-center gap-2">
+          <IconDark size={16} /> Dark
+        </span>
+      )}
     </button>
   );
 }

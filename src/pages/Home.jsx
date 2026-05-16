@@ -145,7 +145,7 @@ const Home = () => {
           hover
         >
           <GradientText
-            text="Lecteur"
+            text="Readeur"
             className="text-4xl font-bold text-center"
           />
         </HeroSection>

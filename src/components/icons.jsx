@@ -23,6 +23,8 @@ import {
   Eye,
   Wrench,
   Users,
+  Sun, 
+  Moon 
 } from "lucide-react";
 
 // Home page
@@ -57,3 +59,7 @@ export const IconSoundWork = Music;
 // Actions
 export const IconBack = ArrowLeft;
 export const IconRescan = RefreshCw;
+
+// Theme
+export const IconLight = Sun;
+export const IconDark = Moon;
