@@ -1,7 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import ClientWrapper from "@/components/ClientWrapper";
-import DictionarySidebarSimple from "@/components/DicoSimplePourSidebare";
-import DictionarySidebarFull from "@/components/DicoCompletPourSidebare";
 import SpeechToTextLauncher from "@/components/SpeechToTextLauncher";
 import ImportTranscriptionButton from "@/components/ImportTranscriptionButton";
 import AudioPlayerWaveform from "@/components/AudioPlayerWaveform";
@@ -39,6 +37,9 @@ export default function PersonLayout({ children }) {
   const isSoundWork = pathname.endsWith("/soundwork");
 
 
+  //not in use now:
+  // rightSidebarContent
+
   // Base path
   const basePath = pathname.split("/").slice(0, -1).join("/");
   // const basePath = pathname.replace(/\/(reader|editor|creator|lecturer|merger|soundwork|audioprocessing)$/, "");
@@ -55,88 +56,87 @@ export default function PersonLayout({ children }) {
     }
   };
 
-const navItemsTop = [
-  {
-    href: `${basePath}/reader`,
-    label: (
-      <span className="flex items-center gap-2">
-        <IconReader size={18} /> Reader
-      </span>
-    ),
-  },
-  {
-    href: `${basePath}/editor`,
-    label: (
-      <span className="flex items-center gap-2">
-        <IconEditor size={18} /> Editor
-      </span>
-    ),
-  },
-  {
-    href: `${basePath}/merger`,
-    label: (
-      <span className="flex items-center gap-2">
-        <IconMerger size={18} /> Merger
-      </span>
-    ),
-  },
-  {
-    href: `${basePath}/creator`,
-    label: (
-      <span className="flex items-center gap-2">
-        <IconCreator size={18} /> Creator
-      </span>
-    ),
-  },
-  {
-    href: `${basePath}/lecturer`,
-    label: (
-      <span className="flex items-center gap-2">
-        <IconLecturer size={18} /> Lecturer
-      </span>
-    ),
-  },
-  {
-    href: `${basePath}/soundwork`,
-    label: (
-      <span className="flex items-center gap-2">
-        <IconSoundWork size={18} /> Sounder
-      </span>
-    ),
-  },
-];
+  const navItemsTop = [
+    {
+      href: `${basePath}/reader`,
+      label: (
+        <span className="flex items-center gap-2">
+          <IconReader size={18} /> Reader
+        </span>
+      ),
+    },
+    {
+      href: `${basePath}/editor`,
+      label: (
+        <span className="flex items-center gap-2">
+          <IconEditor size={18} /> Editor
+        </span>
+      ),
+    },
+    {
+      href: `${basePath}/merger`,
+      label: (
+        <span className="flex items-center gap-2">
+          <IconMerger size={18} /> Merger
+        </span>
+      ),
+    },
+    {
+      href: `${basePath}/creator`,
+      label: (
+        <span className="flex items-center gap-2">
+          <IconCreator size={18} /> Creator
+        </span>
+      ),
+    },
+    {
+      href: `${basePath}/lecturer`,
+      label: (
+        <span className="flex items-center gap-2">
+          <IconLecturer size={18} /> Lecturer
+        </span>
+      ),
+    },
+    {
+      href: `${basePath}/soundwork`,
+      label: (
+        <span className="flex items-center gap-2">
+          <IconSoundWork size={18} /> Sounder
+        </span>
+      ),
+    },
+  ];
 
   // Boutons d'action
-const actionButtons = [
-  {
-    label: (
-      <span className="flex items-center gap-2">
-        <IconBack size={16} /> Go Back
-      </span>
-    ),
-    onClick: () => navigate(-1),
-  },
-];
+  const actionButtons = [
+    {
+      label: (
+        <span className="flex items-center gap-2">
+          <IconBack size={16} /> Go Back
+        </span>
+      ),
+      onClick: () => navigate(-1),
+    },
+  ];
 
-const actionButtonsGrid = [
-  {
-    label: (
-      <span className="flex items-center gap-2">
-        <IconBack size={16} /> Go Back
-      </span>
-    ),
-    onClick: () => navigate(-1),
-  },
-  {
-    label: (
-      <span className="flex items-center gap-2">
-        <IconRescan size={16} /> Rescan Books
-      </span>
-    ),
-    onClick: handleRescan,
-  },
-];
-
+  const actionButtonsGrid = [
+    {
+      label: (
+        <span className="flex items-center gap-2">
+          <IconBack size={16} /> Go Back
+        </span>
+      ),
+      onClick: () => navigate(-1),
+    },
+    {
+      label: (
+        <span className="flex items-center gap-2">
+          <IconRescan size={16} /> Rescan Books
+        </span>
+      ),
+      onClick: handleRescan,
+    },
+  ];
 
   // === PRIORITÉ AUX MODES ===
   if (isReader) {
@@ -144,7 +144,6 @@ const actionButtonsGrid = [
       <ClientWrapper
         navItemsTop={navItemsTop}
         actionButtons={actionButtons} // ✅ Passer les boutons
-        rightSidebarContent={<DictionarySidebarSimple />}
         showRightDefault={false}
       >
         {children}
@@ -157,12 +156,7 @@ const actionButtonsGrid = [
       <ClientWrapper
         navItemsTop={navItemsTop}
         actionButtons={actionButtons} // ✅ Passer les boutons
-        rightSidebarContent={
-          <div>
-            <SpeechToTextLauncher />
-            <ImportTranscriptionButton />
-          </div>
-        }
+
         showRightDefault={false}
       >
         {isLecturer && <AudioPlayerWaveform />}
@@ -176,7 +170,6 @@ const actionButtonsGrid = [
       <ClientWrapper
         navItemsTop={navItemsTop}
         actionButtons={actionButtons}
-        rightSidebarContent={<DictionarySidebarFull />}
         showRightDefault={false}
       >
         {children}
@@ -189,7 +182,6 @@ const actionButtonsGrid = [
       <ClientWrapper
         navItemsTop={navItemsTop}
         actionButtons={actionButtons}
-        rightSidebarContent={<DictionarySidebarFull />}
         showRightDefault={false}
       >
         {children}
@@ -204,23 +196,18 @@ const actionButtonsGrid = [
         // navItemsTop={navItemsTop}
         actionButtons={actionButtons}
         showRightDefault={false}
-        rightSidebarContent={
-          <div>
-            <p> Nothing now </p>
-          </div>
-        } //
       >
         {children}
       </ClientWrapper>
     );
   }
 
+  // === les grids ===
   if (isDraft || isFragment || isIllustration || isOther || isStory) {
     return (
       <ClientWrapper
         // navItemsTop={navItemsTop}
         actionButtons={actionButtonsGrid}
-        rightSidebarContent={<div>Nothing yet, maybe later?</div>} //
         showRightDefault={false}
       >
         {children}

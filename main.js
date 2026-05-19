@@ -526,5 +526,16 @@ ipcMain.handle("ask-pinterest-url", async () => {
     value: "",
   });
 
+
+
+
   return result.value; // la valeur saisie
 });
+
+
+// =======================================================
+// DICO FR definitions + synonymes + antonymes + champ lexical
+// =======================================================
+
+
+//chercher un truc open source

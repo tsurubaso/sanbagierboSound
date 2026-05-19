@@ -105,11 +105,12 @@ contextBridge.exposeInMainWorld("electronAPI", {
 
   readTextFile: (path) => ipcRenderer.invoke("read-text-file", path),
 
-   askPinterestUrl: () => ipcRenderer.invoke("ask-pinterest-url"),
+  askPinterestUrl: () => ipcRenderer.invoke("ask-pinterest-url"),
+
 });
 
 console.log("preload loaded");
 
 // ...
 
-// ...
+
