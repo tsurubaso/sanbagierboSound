@@ -17,7 +17,7 @@ const {
 
 const Home = () => {
   const navigate = useNavigate();
-  const routes = [{ label: "C'est par là!", path: "/BILLY/Rules" }];
+  const routes = [{ label: "En Avant!!!", path: "/BILLY/Rules" }];
   const handleClick = (path) => {
     navigate(path);
   };
@@ -48,9 +48,12 @@ const Home = () => {
 
         <SlideIn duration="3" from="left" className="bg-gray-600">
           <h2 className="text-4xl font-bold">
-            Un nouveau médium pour aider la créativité de nos auteurs. Chacun
-            d&apos;eux pourra partager et promouvoir son travail facilement,
-            collaborer et échanger sans complications.
+            Un nouveau médium pensé pour stimuler la créativité des auteurs.
+            Partagez vos créations, collaborez librement et faites évoluer vos
+            textes simplement. Lecteurs, auteurs et collaborateurs utilisent le
+            même environnement. Selon vos droits d’accès, vous pouvez lire,
+            écrire, éditer ou fusionner les différentes versions d’un
+            texte.{" "}
           </h2>
         </SlideIn>
 
@@ -70,8 +73,8 @@ const Home = () => {
 
         <SlideIn duration="3" from="left" className="bg-gray-600">
           <h2 className="text-4xl font-bold">
-            Simplicité et accès direct au contenu avant tout. Profitez de la
-            lecture sans effort.
+            Un accès direct aux œuvres, sans distraction. Lire doit rester
+            simple, fluide et naturel.
           </h2>
         </SlideIn>
 
@@ -90,8 +93,9 @@ const Home = () => {
         </HeroSection>
         <SlideIn duration="3" from="left" className="bg-gray-600">
           <h2 className="text-4xl font-bold">
-            Travaillez main dans la main avec vos collaborateurs, partagez et
-            corrigez sans jamais toucher à l’original.
+            Travaillez avec vos collaborateurs. Corrigez, échangez et
+            expérimentez librement avec la sécurité d’un historique complet de
+            vos modifications.
           </h2>
         </SlideIn>
 
@@ -110,8 +114,8 @@ const Home = () => {
         </HeroSection>
         <SlideIn duration="3" from="left" className="bg-gray-600">
           <h2 className="text-4xl font-bold">
-            Cette partie de l&apos;app permet de relire, comparer et fusionner
-            les corrections pour créer une version finale harmonisée.
+            Relisez, comparez et fusionnez les corrections afin de construire
+            une version finale cohérente et harmonisée.
           </h2>
         </SlideIn>
 
@@ -131,29 +135,9 @@ const Home = () => {
 
         <SlideIn duration="3" from="left" className="bg-gray-600">
           <h2 className="text-4xl font-bold">
-            Créez de nouveaux textes et enregistrez-les directement sur Forgejo.
-            Chaque idée peut devenir une base de travail versionnée, modifiable
-            et partageable avec vos collaborateurs.
-          </h2>
-        </SlideIn>
-
-        <HeroSection
-          direction="right"
-          duration="3"
-          text="Screenshot lecteur"
-          image="/screenShotLecteur.png"
-          hover
-        >
-          <GradientText
-            text="Readeur"
-            className="text-4xl font-bold text-center"
-          />
-        </HeroSection>
-
-        <SlideIn duration="3" from="left" className="bg-gray-600">
-          <h2 className="text-4xl font-bold">
-            Accédez instantanément aux histoires. Lecture fluide, sans
-            distraction, pour se concentrer uniquement sur le contenu.
+            Créez de nouveaux textes et sauvegardez-les directement sur Forgejo.
+            Chaque idée devient une base de travail versionnée, modifiable et
+            partageable.
           </h2>
         </SlideIn>
 
@@ -165,16 +149,14 @@ const Home = () => {
           hover
         >
           <GradientText
-            text="Dictée"
+            text="Lecteur audio"
             className="text-4xl font-bold text-center"
           />
         </HeroSection>
 
         <SlideIn duration="3" from="left" className="bg-gray-600">
           <h2 className="text-4xl font-bold">
-            Transformez votre voix en texte. Dictez vos idées à la volée et
-            laissez l’application générer une base de travail immédiatement
-            exploitable.
+            Écoutez et visualisez vos enregistrements audio simplement.
           </h2>
         </SlideIn>
 
@@ -186,16 +168,15 @@ const Home = () => {
           hover
         >
           <GradientText
-            text="Soundeur"
+            text="Visualiseur audio"
             className="text-4xl font-bold text-center"
           />
         </HeroSection>
 
         <SlideIn duration="3" from="left" className="bg-gray-600">
           <h2 className="text-4xl font-bold">
-            Enregistrez, écoutez et retravaillez vos textes sous forme audio.
-            Une autre manière de ressentir le rythme, corriger et affiner vos
-            créations.
+            Transformez votre voix en texte instantanément. Dictez vos idées et
+            obtenez immédiatement une base de travail exploitable.
           </h2>
         </SlideIn>
 
@@ -255,8 +236,7 @@ Pour Jules, c’était Pierre-Jules Hetzel."
           text="
         L’objectif est de promouvoir, et à terme, de rémunérer les créateurs :
 Illustrateurs, Graphistes, Peintres, Photographes, Artistes 3D... c’est open bar !
-Mais tout reste à faire, et à tous les niveaux...Mais Parbleu que c'est amusant de faire ce qu'on aime.
-Pour ce que l'on aime, pour ceux que l'on aime."
+Mais tout reste à faire, et à tous les niveaux..."
         />
 
         <AnimatedText
@@ -267,17 +247,10 @@ Pour ce que l'on aime, pour ceux que l'on aime."
 
         <SlideIn from="left" className="bg-blue-200">
           <p className="p-10 bg-gray  rounded-xl text-2xl font-bold">
-            Je vous invite à lire les histoires, à repérer où des illustrations
-            pourraient s’intégrer — nous nous chargerons du reste.
+            Je vous invite à lire, créer et modifier vos textes. Illustrer et
+            partager vos créations.
           </p>
         </SlideIn>
-
-        <HeroSection
-          image="/image5.jpg"
-          text="En avant!"
-          direction="right"
-          hover
-        />
 
         <div className="relative flex justify-center mt-6">
           {/* --- IMAGE DE FOND --- */}

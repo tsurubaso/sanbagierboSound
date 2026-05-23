@@ -20,6 +20,7 @@ export default function NotFoundIllustrations() {
         Le système d’illustrations n’est pas encore actif, mais il est déjà
         pensé. À terme, vous pourrez intégrer images, dessins, modèles 3D et
         autres médias, directement dans les histoires.
+        Pour l'heure vous pouver ajouter les images hebergées ailleurs.
       </p>
 
       <FadeIn delay={1}>

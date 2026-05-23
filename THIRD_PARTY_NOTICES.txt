@@ -1,0 +1,1049 @@
+├─ @monaco-editor/loader@1.7.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/suren-atoyan/monaco-loader
+│  ├─ publisher: Suren Atoyan
+│  ├─ email: contact@surenatoyan.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\@monaco-editor\loader
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\@monaco-editor\loader\LICENSE
+├─ @monaco-editor/react@4.7.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/suren-atoyan/monaco-react
+│  ├─ publisher: Suren Atoyan
+│  ├─ email: contact@surenatoyan.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\@monaco-editor\react
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\@monaco-editor\react\LICENSE
+├─ @types/debug@4.1.13
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/DefinitelyTyped/DefinitelyTyped
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\@types\debug
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\@types\debug\LICENSE
+├─ @types/estree-jsx@1.0.5
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/DefinitelyTyped/DefinitelyTyped
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\@types\estree-jsx
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\@types\estree-jsx\LICENSE
+├─ @types/estree@1.0.8
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/DefinitelyTyped/DefinitelyTyped
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\@types\estree
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\@types\estree\LICENSE
+├─ @types/hast@3.0.4
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/DefinitelyTyped/DefinitelyTyped
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\@types\hast
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\@types\hast\LICENSE
+├─ @types/mdast@4.0.4
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/DefinitelyTyped/DefinitelyTyped
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\@types\mdast
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\@types\mdast\LICENSE
+├─ @types/ms@2.1.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/DefinitelyTyped/DefinitelyTyped
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\@types\ms
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\@types\ms\LICENSE
+├─ @types/react@19.2.14
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/DefinitelyTyped/DefinitelyTyped
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\@types\react
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\@types\react\LICENSE
+├─ @types/unist@2.0.11
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/DefinitelyTyped/DefinitelyTyped
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\parse-entities\node_modules\@types\unist
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\parse-entities\node_modules\@types\unist\LICENSE
+├─ @types/unist@3.0.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/DefinitelyTyped/DefinitelyTyped
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\@types\unist
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\@types\unist\LICENSE
+├─ @ungap/structured-clone@1.3.0
+│  ├─ licenses: ISC
+│  ├─ repository: https://github.com/ungap/structured-clone
+│  ├─ publisher: Andrea Giammarchi
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\@ungap\structured-clone
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\@ungap\structured-clone\LICENSE
+├─ ajv-formats@3.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ajv-validator/ajv-formats
+│  ├─ publisher: Evgeny Poberezkin
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\ajv-formats
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\ajv-formats\LICENSE
+├─ ajv@8.20.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/ajv-validator/ajv
+│  ├─ publisher: Evgeny Poberezkin
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\conf\node_modules\ajv
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\conf\node_modules\ajv\LICENSE
+├─ argparse@1.0.10
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/nodeca/argparse
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\gray-matter\node_modules\argparse
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\gray-matter\node_modules\argparse\LICENSE
+├─ atomically@2.1.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/fabiospampinato/atomically
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\atomically
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\atomically\license
+├─ bail@2.0.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/wooorm/bail
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\bail
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\bail\license
+├─ ccount@2.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/wooorm/ccount
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\ccount
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\ccount\license
+├─ character-entities-html4@2.1.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/wooorm/character-entities-html4
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\character-entities-html4
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\character-entities-html4\license
+├─ character-entities-legacy@3.0.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/wooorm/character-entities-legacy
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\character-entities-legacy
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\character-entities-legacy\license
+├─ character-entities@2.0.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/wooorm/character-entities
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\character-entities
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\character-entities\license
+├─ character-reference-invalid@2.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/wooorm/character-reference-invalid
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\character-reference-invalid
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\character-reference-invalid\license
+├─ comma-separated-tokens@2.0.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/wooorm/comma-separated-tokens
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\comma-separated-tokens
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\comma-separated-tokens\license
+├─ conf@15.1.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/sindresorhus/conf
+│  ├─ publisher: Sindre Sorhus
+│  ├─ email: sindresorhus@gmail.com
+│  ├─ url: https://sindresorhus.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\conf
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\conf\license
+├─ cookie@1.1.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/jshttp/cookie
+│  ├─ publisher: Roman Shtylman
+│  ├─ email: shtylman@gmail.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\cookie
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\cookie\LICENSE
+├─ csstype@3.2.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/frenic/csstype
+│  ├─ publisher: Fredrik Nicol
+│  ├─ email: fredrik.nicol@gmail.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\csstype
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\csstype\LICENSE
+├─ debounce-fn@6.0.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/sindresorhus/debounce-fn
+│  ├─ publisher: Sindre Sorhus
+│  ├─ email: sindresorhus@gmail.com
+│  ├─ url: https://sindresorhus.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\debounce-fn
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\debounce-fn\license
+├─ debug@4.4.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/debug-js/debug
+│  ├─ publisher: Josh Junon
+│  ├─ url: https://github.com/qix-
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\debug
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\debug\LICENSE
+├─ decode-named-character-reference@1.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/wooorm/decode-named-character-reference
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\decode-named-character-reference
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\decode-named-character-reference\license
+├─ dequal@2.0.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/lukeed/dequal
+│  ├─ publisher: Luke Edwards
+│  ├─ email: luke.edwards05@gmail.com
+│  ├─ url: https://lukeed.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\dequal
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\dequal\license
+├─ devlop@1.1.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/wooorm/devlop
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\devlop
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\devlop\license
+├─ diff@9.0.0
+│  ├─ licenses: BSD-3-Clause
+│  ├─ repository: https://github.com/kpdecker/jsdiff
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\diff
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\diff\LICENSE
+├─ dot-prop@10.1.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/sindresorhus/dot-prop
+│  ├─ publisher: Sindre Sorhus
+│  ├─ email: sindresorhus@gmail.com
+│  ├─ url: https://sindresorhus.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\dot-prop
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\dot-prop\license
+├─ dotenv@17.4.2
+│  ├─ licenses: BSD-2-Clause
+│  ├─ repository: https://github.com/motdotla/dotenv
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\dotenv
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\dotenv\LICENSE
+├─ electron-store@11.0.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/sindresorhus/electron-store
+│  ├─ publisher: Sindre Sorhus
+│  ├─ email: sindresorhus@gmail.com
+│  ├─ url: https://sindresorhus.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\electron-store
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\electron-store\license
+├─ entities@6.0.1
+│  ├─ licenses: BSD-2-Clause
+│  ├─ repository: https://github.com/fb55/entities
+│  ├─ publisher: Felix Boehm
+│  ├─ email: me@feedic.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\entities
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\entities\LICENSE
+├─ env-paths@3.0.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/sindresorhus/env-paths
+│  ├─ publisher: Sindre Sorhus
+│  ├─ email: sindresorhus@gmail.com
+│  ├─ url: https://sindresorhus.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\conf\node_modules\env-paths
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\conf\node_modules\env-paths\license
+├─ esprima@4.0.1
+│  ├─ licenses: BSD-2-Clause
+│  ├─ repository: https://github.com/jquery/esprima
+│  ├─ publisher: Ariya Hidayat
+│  ├─ email: ariya.hidayat@gmail.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\esprima
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\esprima\LICENSE.BSD
+├─ estree-util-is-identifier-name@3.0.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/syntax-tree/estree-util-is-identifier-name
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\estree-util-is-identifier-name
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\estree-util-is-identifier-name\license
+├─ extend-shallow@2.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/jonschlinkert/extend-shallow
+│  ├─ publisher: Jon Schlinkert
+│  ├─ url: https://github.com/jonschlinkert
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\extend-shallow
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\extend-shallow\LICENSE
+├─ extend@3.0.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/justmoon/node-extend
+│  ├─ publisher: Stefan Thomas
+│  ├─ email: justmoon@members.fsf.org
+│  ├─ url: http://www.justmoon.net
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\extend
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\extend\LICENSE
+├─ fast-deep-equal@3.1.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/epoberezkin/fast-deep-equal
+│  ├─ publisher: Evgeny Poberezkin
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\fast-deep-equal
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\fast-deep-equal\LICENSE
+├─ fast-uri@3.1.0
+│  ├─ licenses: BSD-3-Clause
+│  ├─ repository: https://github.com/fastify/fast-uri
+│  ├─ publisher: Vincent Le Goff
+│  ├─ email: vince.legoff@gmail.com
+│  ├─ url: https://github.com/zekth
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\fast-uri
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\fast-uri\LICENSE
+├─ framer-motion@12.38.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/motiondivision/motion
+│  ├─ publisher: Matt Perry
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\framer-motion
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\framer-motion\LICENSE.md
+├─ gray-matter@4.0.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/jonschlinkert/gray-matter
+│  ├─ publisher: Jon Schlinkert
+│  ├─ url: https://github.com/jonschlinkert
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\gray-matter
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\gray-matter\LICENSE
+├─ hast-util-from-parse5@8.0.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/syntax-tree/hast-util-from-parse5
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\hast-util-from-parse5
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\hast-util-from-parse5\license
+├─ hast-util-parse-selector@4.0.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/syntax-tree/hast-util-parse-selector
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\hast-util-parse-selector
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\hast-util-parse-selector\license
+├─ hast-util-raw@9.1.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/syntax-tree/hast-util-raw
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\hast-util-raw
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\hast-util-raw\license
+├─ hast-util-to-jsx-runtime@2.3.6
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/syntax-tree/hast-util-to-jsx-runtime
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\hast-util-to-jsx-runtime
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\hast-util-to-jsx-runtime\license
+├─ hast-util-to-parse5@8.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/syntax-tree/hast-util-to-parse5
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\hast-util-to-parse5
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\hast-util-to-parse5\license
+├─ hast-util-whitespace@3.0.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/syntax-tree/hast-util-whitespace
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\hast-util-whitespace
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\hast-util-whitespace\license
+├─ hastscript@9.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/syntax-tree/hastscript
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\hastscript
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\hastscript\license
+├─ html-url-attributes@3.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/rehypejs/rehype-minify/tree/main/packages/html-url-attributes
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\html-url-attributes
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\html-url-attributes\license
+├─ html-void-elements@3.0.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/wooorm/html-void-elements
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\html-void-elements
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\html-void-elements\license
+├─ inline-style-parser@0.2.7
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/remarkablemark/inline-style-parser
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\inline-style-parser
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\inline-style-parser\LICENSE
+├─ is-alphabetical@2.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/wooorm/is-alphabetical
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\is-alphabetical
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\is-alphabetical\license
+├─ is-alphanumerical@2.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/wooorm/is-alphanumerical
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\is-alphanumerical
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\is-alphanumerical\license
+├─ is-decimal@2.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/wooorm/is-decimal
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\is-decimal
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\is-decimal\license
+├─ is-extendable@0.1.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/jonschlinkert/is-extendable
+│  ├─ publisher: Jon Schlinkert
+│  ├─ url: https://github.com/jonschlinkert
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\is-extendable
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\is-extendable\LICENSE
+├─ is-hexadecimal@2.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/wooorm/is-hexadecimal
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\is-hexadecimal
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\is-hexadecimal\license
+├─ is-plain-obj@4.1.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/sindresorhus/is-plain-obj
+│  ├─ publisher: Sindre Sorhus
+│  ├─ email: sindresorhus@gmail.com
+│  ├─ url: https://sindresorhus.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\is-plain-obj
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\is-plain-obj\license
+├─ js-yaml@3.14.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/nodeca/js-yaml
+│  ├─ publisher: Vladimir Zapparov
+│  ├─ email: dervus.grim@gmail.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\gray-matter\node_modules\js-yaml
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\gray-matter\node_modules\js-yaml\LICENSE
+├─ json-schema-traverse@1.0.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/epoberezkin/json-schema-traverse
+│  ├─ publisher: Evgeny Poberezkin
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\conf\node_modules\json-schema-traverse
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\conf\node_modules\json-schema-traverse\LICENSE
+├─ json-schema-typed@8.0.2
+│  ├─ licenses: BSD-2-Clause
+│  ├─ repository: https://github.com/RemyRylan/json-schema-typed
+│  ├─ publisher: Remy Rylan
+│  ├─ url: https://github.com/RemyRylan
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\json-schema-typed
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\json-schema-typed\LICENSE.md
+├─ kind-of@6.0.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/jonschlinkert/kind-of
+│  ├─ publisher: Jon Schlinkert
+│  ├─ url: https://github.com/jonschlinkert
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\kind-of
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\kind-of\LICENSE
+├─ longest-streak@3.1.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/wooorm/longest-streak
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\longest-streak
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\longest-streak\license
+├─ lucide-react@1.14.0
+│  ├─ licenses: ISC
+│  ├─ repository: https://github.com/lucide-icons/lucide
+│  ├─ publisher: Eric Fennis
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\lucide-react
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\lucide-react\LICENSE
+├─ mdast-util-from-markdown@2.0.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/syntax-tree/mdast-util-from-markdown
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\mdast-util-from-markdown
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\mdast-util-from-markdown\license
+├─ mdast-util-mdx-expression@2.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/syntax-tree/mdast-util-mdx-expression
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\mdast-util-mdx-expression
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\mdast-util-mdx-expression\license
+├─ mdast-util-mdx-jsx@3.2.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/syntax-tree/mdast-util-mdx-jsx
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\mdast-util-mdx-jsx
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\mdast-util-mdx-jsx\license
+├─ mdast-util-mdxjs-esm@2.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/syntax-tree/mdast-util-mdxjs-esm
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\mdast-util-mdxjs-esm
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\mdast-util-mdxjs-esm\license
+├─ mdast-util-phrasing@4.1.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/syntax-tree/mdast-util-phrasing
+│  ├─ publisher: Victor Felder
+│  ├─ email: victor@draft.li
+│  ├─ url: https://draft.li
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\mdast-util-phrasing
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\mdast-util-phrasing\license
+├─ mdast-util-to-hast@13.2.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/syntax-tree/mdast-util-to-hast
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\mdast-util-to-hast
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\mdast-util-to-hast\license
+├─ mdast-util-to-markdown@2.1.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/syntax-tree/mdast-util-to-markdown
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\mdast-util-to-markdown
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\mdast-util-to-markdown\license
+├─ mdast-util-to-string@4.0.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/syntax-tree/mdast-util-to-string
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\mdast-util-to-string
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\mdast-util-to-string\license
+├─ micromark-core-commonmark@2.0.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/micromark/micromark/tree/main/packages/micromark-core-commonmark
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark-core-commonmark
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark-core-commonmark\license
+├─ micromark-factory-destination@2.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/micromark/micromark/tree/main/packages/micromark-factory-destination
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark-factory-destination
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark-factory-destination\license
+├─ micromark-factory-label@2.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/micromark/micromark/tree/main/packages/micromark-factory-label
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark-factory-label
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark-factory-label\license
+├─ micromark-factory-space@2.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/micromark/micromark/tree/main/packages/micromark-factory-space
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark-factory-space
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark-factory-space\license
+├─ micromark-factory-title@2.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/micromark/micromark/tree/main/packages/micromark-factory-title
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark-factory-title
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark-factory-title\license
+├─ micromark-factory-whitespace@2.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/micromark/micromark/tree/main/packages/micromark-factory-whitespace
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark-factory-whitespace
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark-factory-whitespace\license
+├─ micromark-util-character@2.1.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/micromark/micromark/tree/main/packages/micromark-util-character
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark-util-character
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark-util-character\license
+├─ micromark-util-chunked@2.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/micromark/micromark/tree/main/packages/micromark-util-chunked
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark-util-chunked
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark-util-chunked\license
+├─ micromark-util-classify-character@2.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/micromark/micromark/tree/main/packages/micromark-util-classify-character
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark-util-classify-character
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark-util-classify-character\license
+├─ micromark-util-combine-extensions@2.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/micromark/micromark/tree/main/packages/micromark-util-combine-extensions
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark-util-combine-extensions
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark-util-combine-extensions\license
+├─ micromark-util-decode-numeric-character-reference@2.0.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/micromark/micromark/tree/main/packages/micromark-util-decode-numeric-character-reference
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark-util-decode-numeric-character-reference
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark-util-decode-numeric-character-reference\license
+├─ micromark-util-decode-string@2.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/micromark/micromark/tree/main/packages/micromark-util-decode-string
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark-util-decode-string
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark-util-decode-string\license
+├─ micromark-util-encode@2.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/micromark/micromark/tree/main/packages/micromark-util-encode
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark-util-encode
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark-util-encode\license
+├─ micromark-util-html-tag-name@2.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/micromark/micromark/tree/main/packages/micromark-util-html-tag-name
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark-util-html-tag-name
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark-util-html-tag-name\license
+├─ micromark-util-normalize-identifier@2.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/micromark/micromark/tree/main/packages/micromark-util-normalize-identifier
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark-util-normalize-identifier
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark-util-normalize-identifier\license
+├─ micromark-util-resolve-all@2.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/micromark/micromark/tree/main/packages/micromark-util-resolve-all
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark-util-resolve-all
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark-util-resolve-all\license
+├─ micromark-util-sanitize-uri@2.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/micromark/micromark/tree/main/packages/micromark-util-sanitize-uri
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark-util-sanitize-uri
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark-util-sanitize-uri\license
+├─ micromark-util-subtokenize@2.1.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/micromark/micromark/tree/main/packages/micromark-util-subtokenize
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark-util-subtokenize
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark-util-subtokenize\license
+├─ micromark-util-symbol@2.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/micromark/micromark/tree/main/packages/micromark-util-symbol
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark-util-symbol
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark-util-symbol\license
+├─ micromark-util-types@2.0.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/micromark/micromark/tree/main/packages/micromark-util-types
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark-util-types
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark-util-types\license
+├─ micromark@4.0.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/micromark/micromark/tree/main/packages/micromark
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\micromark\license
+├─ mimic-function@5.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/sindresorhus/mimic-function
+│  ├─ publisher: Sindre Sorhus
+│  ├─ email: sindresorhus@gmail.com
+│  ├─ url: https://sindresorhus.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\mimic-function
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\mimic-function\license
+├─ motion-dom@12.38.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/motiondivision/motion
+│  ├─ publisher: Matt Perry
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\motion-dom
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\motion-dom\LICENSE.md
+├─ motion-utils@12.36.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/motiondivision/motion
+│  ├─ publisher: Matt Perry
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\motion-utils
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\motion-utils\LICENSE.md
+├─ ms@2.1.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/vercel/ms
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\ms
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\ms\license.md
+├─ parse-entities@4.0.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/wooorm/parse-entities
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\parse-entities
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\parse-entities\license
+├─ parse5@7.3.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/inikulin/parse5
+│  ├─ publisher: Ivan Nikulin
+│  ├─ email: ifaaan@gmail.com
+│  ├─ url: https://github.com/inikulin
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\parse5
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\parse5\LICENSE
+├─ property-information@7.1.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/wooorm/property-information
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\property-information
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\property-information\license
+├─ react-dom@19.2.5
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/facebook/react
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\react-dom
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\react-dom\LICENSE
+├─ react-markdown@10.1.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/remarkjs/react-markdown
+│  ├─ publisher: Espen Hovlandsdal
+│  ├─ email: espen@hovlandsdal.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\react-markdown
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\react-markdown\license
+├─ react-router-dom@7.14.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/remix-run/react-router
+│  ├─ publisher: Remix Software
+│  ├─ email: hello@remix.run
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\react-router-dom
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\react-router-dom\LICENSE.md
+├─ react-router@7.14.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/remix-run/react-router
+│  ├─ publisher: Remix Software
+│  ├─ email: hello@remix.run
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\react-router
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\react-router\LICENSE.md
+├─ react@19.2.5
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/facebook/react
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\react
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\react\LICENSE
+├─ rehype-raw@7.0.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/rehypejs/rehype-raw
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\rehype-raw
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\rehype-raw\license
+├─ remark-parse@11.0.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/remarkjs/remark/tree/main/packages/remark-parse
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\remark-parse
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\remark-parse\license
+├─ remark-rehype@11.1.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/remarkjs/remark-rehype
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\remark-rehype
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\remark-rehype\license
+├─ require-from-string@2.0.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/floatdrop/require-from-string
+│  ├─ publisher: Vsevolod Strukchinsky
+│  ├─ email: floatdrop@gmail.com
+│  ├─ url: github.com/floatdrop
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\require-from-string
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\require-from-string\license
+├─ sanbagierbo_desk@1.0.0
+│  ├─ licenses: ISC
+│  ├─ repository: sanbagiersound
+│  ├─ publisher: tsurubaso
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\README.md
+├─ scheduler@0.27.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/facebook/react
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\scheduler
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\scheduler\LICENSE
+├─ section-matter@1.0.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/jonschlinkert/section-matter
+│  ├─ publisher: Jon Schlinkert
+│  ├─ url: https://github.com/jonschlinkert
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\section-matter
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\section-matter\LICENSE
+├─ semver@7.7.4
+│  ├─ licenses: ISC
+│  ├─ repository: https://github.com/npm/node-semver
+│  ├─ publisher: GitHub Inc.
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\conf\node_modules\semver
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\conf\node_modules\semver\LICENSE
+├─ set-cookie-parser@2.7.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/nfriedly/set-cookie-parser
+│  ├─ publisher: Nathan Friedly
+│  ├─ url: http://nfriedly.com/
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\set-cookie-parser
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\set-cookie-parser\LICENSE
+├─ space-separated-tokens@2.0.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/wooorm/space-separated-tokens
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\space-separated-tokens
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\space-separated-tokens\license
+├─ sprintf-js@1.0.3
+│  ├─ licenses: BSD-3-Clause
+│  ├─ repository: https://github.com/alexei/sprintf.js
+│  ├─ publisher: Alexandru Marasteanu
+│  ├─ email: hello@alexei.ro
+│  ├─ url: http://alexei.ro/
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\gray-matter\node_modules\sprintf-js
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\gray-matter\node_modules\sprintf-js\LICENSE
+├─ state-local@1.0.7
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/suren-atoyan/state-local
+│  ├─ publisher: Suren Atoyan
+│  ├─ email: contact@surenatoyan.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\state-local
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\state-local\LICENSE
+├─ stringify-entities@4.0.4
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/wooorm/stringify-entities
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\stringify-entities
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\stringify-entities\license
+├─ strip-bom-string@1.0.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/jonschlinkert/strip-bom-string
+│  ├─ publisher: Jon Schlinkert
+│  ├─ url: https://github.com/jonschlinkert
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\strip-bom-string
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\strip-bom-string\LICENSE
+├─ stubborn-fs@2.0.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/fabiospampinato/stubborn-fs
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\stubborn-fs
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\stubborn-fs\license
+├─ stubborn-utils@1.0.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/fabiospampinato/stubborn-utils
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\stubborn-utils
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\stubborn-utils\license
+├─ style-to-js@1.1.21
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/remarkablemark/style-to-js
+│  ├─ publisher: Mark
+│  ├─ email: mark@remarkablemark.org
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\style-to-js
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\style-to-js\LICENSE
+├─ style-to-object@1.0.14
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/remarkablemark/style-to-object
+│  ├─ publisher: Mark
+│  ├─ email: mark@remarkablemark.org
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\style-to-object
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\style-to-object\LICENSE
+├─ tagged-tag@1.0.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/sindresorhus/tagged-tag
+│  ├─ publisher: Sindre Sorhus
+│  ├─ email: sindresorhus@gmail.com
+│  ├─ url: https://sindresorhus.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\tagged-tag
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\tagged-tag\license
+├─ trim-lines@3.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/wooorm/trim-lines
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\trim-lines
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\trim-lines\license
+├─ trough@2.2.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/wooorm/trough
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\trough
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\trough\license
+├─ tslib@2.8.1
+│  ├─ licenses: 0BSD
+│  ├─ repository: https://github.com/Microsoft/tslib
+│  ├─ publisher: Microsoft Corp.
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\tslib
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\tslib\LICENSE.txt
+├─ type-fest@5.6.0
+│  ├─ licenses: (MIT OR CC0-1.0)
+│  ├─ repository: https://github.com/sindresorhus/type-fest
+│  ├─ publisher: Sindre Sorhus
+│  ├─ email: sindresorhus@gmail.com
+│  ├─ url: https://sindresorhus.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\dot-prop\node_modules\type-fest
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\dot-prop\node_modules\type-fest\license-cc0
+├─ uint8array-extras@1.5.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/sindresorhus/uint8array-extras
+│  ├─ publisher: Sindre Sorhus
+│  ├─ email: sindresorhus@gmail.com
+│  ├─ url: https://sindresorhus.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\uint8array-extras
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\uint8array-extras\license
+├─ unified@11.0.5
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/unifiedjs/unified
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\unified
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\unified\license
+├─ unist-util-is@6.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/syntax-tree/unist-util-is
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\unist-util-is
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\unist-util-is\license
+├─ unist-util-position@5.0.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/syntax-tree/unist-util-position
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\unist-util-position
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\unist-util-position\license
+├─ unist-util-stringify-position@4.0.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/syntax-tree/unist-util-stringify-position
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\unist-util-stringify-position
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\unist-util-stringify-position\license
+├─ unist-util-visit-parents@6.0.2
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/syntax-tree/unist-util-visit-parents
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\unist-util-visit-parents
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\unist-util-visit-parents\license
+├─ unist-util-visit@5.1.0
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/syntax-tree/unist-util-visit
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\unist-util-visit
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\unist-util-visit\license
+├─ vfile-location@5.0.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/vfile/vfile-location
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\vfile-location
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\vfile-location\license
+├─ vfile-message@4.0.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/vfile/vfile-message
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\vfile-message
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\vfile-message\license
+├─ vfile@6.0.3
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/vfile/vfile
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\vfile
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\vfile\license
+├─ wavesurfer.js@7.12.6
+│  ├─ licenses: BSD-3-Clause
+│  ├─ repository: https://github.com/katspaugh/wavesurfer.js
+│  ├─ publisher: katspaugh
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\wavesurfer.js
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\wavesurfer.js\LICENSE
+├─ web-namespaces@2.0.1
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/wooorm/web-namespaces
+│  ├─ publisher: Titus Wormer
+│  ├─ email: tituswormer@gmail.com
+│  ├─ url: https://wooorm.com
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\web-namespaces
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\web-namespaces\license
+├─ when-exit@2.1.5
+│  ├─ licenses: MIT
+│  ├─ repository: https://github.com/fabiospampinato/when-exit
+│  ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\when-exit
+│  └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\when-exit\license
+└─ zwitch@2.0.4
+   ├─ licenses: MIT
+   ├─ repository: https://github.com/wooorm/zwitch
+   ├─ publisher: Titus Wormer
+   ├─ email: tituswormer@gmail.com
+   ├─ url: https://wooorm.com
+   ├─ path: D:\Here all new data\src\sanbagierboDesk\node_modules\zwitch
+   └─ licenseFile: D:\Here all new data\src\sanbagierboDesk\node_modules\zwitch\license
