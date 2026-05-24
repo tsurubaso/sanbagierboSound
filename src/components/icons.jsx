@@ -24,7 +24,8 @@ import {
   Wrench,
   Users,
   Sun, 
-  Moon 
+  Moon,
+  Library,
 } from "lucide-react";
 
 // Home page
@@ -33,6 +34,8 @@ export const IconFuture = Sparkles;
 export const IconVision = Eye;
 export const IconProject = Wrench;
 export const IconContribution = Users;
+export const IconLibrary = Library;
+
 
 //Client wrapper
 export const IconRules = ScrollText;
@@ -63,3 +66,5 @@ export const IconRescan = RefreshCw;
 // Theme
 export const IconLight = Sun;
 export const IconDark = Moon;
+
+

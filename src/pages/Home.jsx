@@ -227,7 +227,7 @@ Pour Jules, c’était Pierre-Jules Hetzel."
         />
         <HeroSection image="/image3.jpg" text="detail de la Lune" hover>
           <GradientText
-            text="Le projet?"
+            text="Le projet"
             className="text-4xl font-bold text-center"
           />
         </HeroSection>

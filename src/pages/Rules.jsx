@@ -6,6 +6,7 @@ import {
   IconStories,
   IconOthers,
   IconIllustrations,
+  IconLibrary,
 } from "@/components/icons";
 
 export default function Rules() {
@@ -42,15 +43,15 @@ export default function Rules() {
           </li>
           <li>
             <strong>Liens souples</strong> — Les connexions entre histoires sont
-            légères ; des éléments récurrents peuvent apparaître sans continuité
-            stricte.
+            légères ; Certains lieux, personnages ou éléments peuvent
+            réapparaître sans continuité stricte.
           </li>
         </ol>
 
         <hr className="my-8 border-gray-500" />
 
         <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
-          <IconOthers size={20} /> Répartition des histoires
+          <IconLibrary size={20} /> Répartition des histoires
         </h2>
         <ul className="list-disc pl-6 text-lg mb-6 space-y-4">
           <li>
@@ -71,8 +72,8 @@ export default function Rules() {
               <strong>Fragments</strong>
             </div>
             <p className="ml-6 text-gray-400">
-              Parties incomplètes ou extraits, parfois placés ici avant de
-              rejoindre la section <em>histoires</em>.
+              Extraits, scènes isolées ou histoires incomplètes, parfois placés
+              ici avant de rejoindre la section <em>Brouillons</em>.
             </p>
           </li>
 
@@ -82,8 +83,8 @@ export default function Rules() {
               <strong>Histoires</strong>
             </div>
             <p className="ml-6 text-gray-400">
-              Les œuvres terminées, ou du moins ce que je souhaite qu’elles
-              soient.
+              Les œuvres terminées, ou du moins les versions considérées comme
+              suffisamment stables pour être partagées et lues.
             </p>
           </li>
 
@@ -93,8 +94,8 @@ export default function Rules() {
               <strong>Autres</strong>
             </div>
             <p className="ml-6 text-gray-400">
-              Textes anciens. Parce que les vieilles choses sont aussi agréables
-              à lire.
+              Archives, anciens textes ou contenus plus difficiles à classer.
+              Parce que les vieilles choses sont aussi agréables à lire.
             </p>
           </li>
 
@@ -104,9 +105,11 @@ export default function Rules() {
               <strong>Illustrations</strong>
             </div>
             <p className="ml-6 text-gray-400">
-              <span className="text-red-500">Inactive now. </span>
-              D’Illustration en Illustrations, entrez par les images dans
-              l&apos;histoire, passez par le carrousel...
+              <span className="text-red-500 font-semibold">
+                Section actuellement inactive.
+              </span>{" "}
+              L’objectif est de permettre une navigation dans les histoires à
+              travers les illustrations, images et galeries visuelles.
             </p>
           </li>
         </ul>

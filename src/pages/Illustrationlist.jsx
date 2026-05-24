@@ -1,5 +1,6 @@
 import MotionEffects from "@/components/MotionEffects";
 const { PulseText, FadeIn, GradientText, HoverZoom } = MotionEffects;
+import { Link } from "react-router-dom";
 
 export default function NotFoundIllustrations() {
   return (
@@ -19,8 +20,8 @@ export default function NotFoundIllustrations() {
       <p className="text-gray-400 mb-6 max-w-xl">
         Le système d’illustrations n’est pas encore actif, mais il est déjà
         pensé. À terme, vous pourrez intégrer images, dessins, modèles 3D et
-        autres médias, directement dans les histoires.
-        Pour l'heure vous pouver ajouter les images hebergées ailleurs.
+        autres médias, directement dans les histoires. Pour l'heure vous pouver
+        ajouter les images hebergées ailleurs.
       </p>
 
       <FadeIn delay={1}>
@@ -37,6 +38,16 @@ export default function NotFoundIllustrations() {
           Pour l’instant, tout est en veille… mais la structure est en place.
         </p>
       </FadeIn>
+      <div className="mt-8">
+        <HoverZoom>
+          <Link
+            to="/"
+            className="px-6 py-3 bg-purple-200 text-white rounded-lg hover:bg-pink-200 font-semibold"
+          >
+            Retour à la premiere page
+          </Link>
+        </HoverZoom>
+      </div>
     </div>
   );
 }
