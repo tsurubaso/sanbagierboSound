@@ -11,7 +11,7 @@ node_modules
 dist
 dist-ssr
 *.local
-.env
+*.env
 .env.*.local
 .vite
 # Editor directories and files
@@ -32,3 +32,6 @@ knip*
 eraseme*
 graph*
 knip*
+*.ps1
+*.bash
+*.sh
